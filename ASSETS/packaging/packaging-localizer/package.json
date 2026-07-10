@@ -1,0 +1,12 @@
+{
+  "name": "packaging-localizer",
+  "version": "0.1.0",
+  "type": "module",
+  "private": true,
+  "description": "Das Experten — freeze packaging design, vary only text per country, render approval previews",
+  "scripts": { "render": "node render.mjs" },
+  "dependencies": {
+    "@resvg/resvg-js": "^2.6.2",
+    "opentype.js": "^1.3.4"
+  }
+}

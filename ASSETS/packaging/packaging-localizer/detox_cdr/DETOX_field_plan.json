@@ -1,0 +1,207 @@
+{
+  "panels": [
+    {
+      "panel": "FRONT (170x40mm — primary display panel)",
+      "fields": [
+        {
+          "field_key": "front.brand_logo",
+          "role": "cert-icon-label",
+          "editable": false,
+          "wrap": false
+        },
+        {
+          "field_key": "front.sku_name",
+          "role": "headline",
+          "editable": false,
+          "wrap": false
+        },
+        {
+          "field_key": "front.h1",
+          "role": "headline",
+          "editable": true,
+          "wrap": true
+        },
+        {
+          "field_key": "front.h2",
+          "role": "claim",
+          "editable": true,
+          "wrap": true
+        },
+        {
+          "field_key": "front.claim",
+          "role": "claim",
+          "editable": true,
+          "wrap": true
+        },
+        {
+          "field_key": "front.volume",
+          "role": "volume",
+          "editable": true,
+          "wrap": false
+        }
+      ]
+    },
+    {
+      "panel": "BACK (170x40mm — regulatory / INCI panel)",
+      "fields": [
+        {
+          "field_key": "back.inci_label",
+          "role": "inci",
+          "editable": true,
+          "wrap": false
+        },
+        {
+          "field_key": "back.inci",
+          "role": "inci",
+          "editable": false,
+          "wrap": true
+        },
+        {
+          "field_key": "back.usage_label",
+          "role": "warning",
+          "editable": true,
+          "wrap": false
+        },
+        {
+          "field_key": "back.usage",
+          "role": "warning",
+          "editable": false,
+          "wrap": true
+        },
+        {
+          "field_key": "back.warning",
+          "role": "warning",
+          "editable": false,
+          "wrap": true
+        },
+        {
+          "field_key": "back.storage",
+          "role": "warning",
+          "editable": false,
+          "wrap": true
+        },
+        {
+          "field_key": "back.manufacturer",
+          "role": "importer",
+          "editable": false,
+          "wrap": true
+        },
+        {
+          "field_key": "back.trademark",
+          "role": "warning",
+          "editable": false,
+          "wrap": false
+        },
+        {
+          "field_key": "back.batch",
+          "role": "batch",
+          "editable": false,
+          "wrap": false
+        },
+        {
+          "field_key": "back.expiry",
+          "role": "expiry",
+          "editable": false,
+          "wrap": false
+        },
+        {
+          "field_key": "back.barcode",
+          "role": "barcode",
+          "editable": false,
+          "wrap": false
+        }
+      ]
+    },
+    {
+      "panel": "LEFT side (170x30mm — importer / distributor strip)",
+      "fields": [
+        {
+          "field_key": "side_l.importer_label",
+          "role": "importer",
+          "editable": true,
+          "wrap": false
+        },
+        {
+          "field_key": "side_l.importer",
+          "role": "importer",
+          "editable": false,
+          "wrap": true
+        }
+      ]
+    },
+    {
+      "panel": "RIGHT side (170x30mm — short marketing / cert-icon strip)",
+      "fields": [
+        {
+          "field_key": "side_r.tagline",
+          "role": "claim",
+          "editable": true,
+          "wrap": true
+        },
+        {
+          "field_key": "side_r.cert_icon_labels",
+          "role": "cert-icon-label",
+          "editable": false,
+          "wrap": false
+        }
+      ]
+    },
+    {
+      "panel": "TOP flap (glue/tuck flap)",
+      "fields": [
+        {
+          "field_key": "top.sku_name",
+          "role": "headline",
+          "editable": false,
+          "wrap": false
+        },
+        {
+          "field_key": "top.volume",
+          "role": "volume",
+          "editable": true,
+          "wrap": false
+        }
+      ]
+    },
+    {
+      "panel": "BOTTOM flap (glue/tuck flap — batch/expiry overprint zone)",
+      "fields": [
+        {
+          "field_key": "bottom.batch",
+          "role": "batch",
+          "editable": false,
+          "wrap": false
+        },
+        {
+          "field_key": "bottom.expiry",
+          "role": "expiry",
+          "editable": false,
+          "wrap": false
+        }
+      ]
+    }
+  ],
+  "frozen_blocks": [
+    "INCI / Состав (verbatim, ingredient list per regulatory filing — translated only via the fixed inci_label, the INCI string itself stays in INCI nomenclature unchanged across all countries): Aqua, ... essential oils of Cinnamon & Clove ... — NEVER free-edited, sourced from the SKU regulatory dossier.",
+    "Importer list block (8 markets — ME/RU/UA/KG/PL/RO/GE/AM): each market's importer legal name, tax/INN, address and phone is a verbatim record pulled from SECRETS/legal-entities.md + distributors.md. Per-country render selects the matching one row; the row text itself is frozen-legal, never paraphrased.",
+    "Manufacturer block (verbatim): manufacturer legal name + address (Guangzhou Honghui / Yangzhou Jinxia per SECRETS/manufacturers.md) — frozen.",
+    "Warnings / storage / usage block (verbatim regulatory wording): 'Не глотать. Хранить в недоступном для детей месте. Хранить при t не выше 25°C.' + usage directions — frozen, translated only as an approved per-locale equivalent, never free-rewritten.",
+    "Trademark notice: International Registration IR 1550919 — verbatim, identical on every locale.",
+    "Batch / expiry: 'Партия: ...' / 'Годен до: ...' — value is overprinted at fill time; the label wording is a fixed per-locale equivalent, the format frozen.",
+    "Barcode / EAN-13 digit string — frozen, identical across all locales (one GTIN per SKU).",
+    "Certification icon labels (CE, GMP, EAC/ЕАС, 12M, cruelty-free, fluoride-free, paraben-free, SLS-free, recycling, Ukrainian cert ukrsert1) — these are PLACED IMAGES, not <text>; never marked with data-field, never edited."
+  ],
+  "notes": [
+    "Key convention is locked to the PROVEN SYMBIOS template (~/packaging-localizer/template/SYMBIOS.svg) so this plan drops straight into worker/src/substitute.js with zero renderer changes. Existing markers reused verbatim: front.sku_name, front.h1, front.h2, front.claim, front.volume, back.inci_label, back.inci, back.warning, back.batch, back.expiry, back.barcode, back.importer.",
+    "DETOX-specific known copy maps as: front.h1='Зубная паста с эфирными маслами корицы и гвоздики.' ; front.h2='Обеспечивает комплексный уход за зубами и деснами. Успокаивает десны и укрепляет их.' ; front.claim (italic)='Масло гвоздики давно известно своими спазмолитическим и лечебными свойствами.' — all three are editable-per-country (translated by the designer/legalizer chain).",
+    "Wrap blocks (data-wrap=\"1\"): front.h1, front.h2, front.claim, back.inci, back.usage, back.warning, back.storage, back.manufacturer, side_l.importer, side_r.tagline. Headlines also carry data-maxlines (h1/h2 = 2, matching SYMBIOS) so fit-to-box shrinks font rather than widening tracking — enforces the anti-tracking rule.",
+    "_dir is set per LOCALE in strings.json (ltr default, rtl for AR), NOT per field — same as SYMBIOS. No field needs its own direction marker.",
+    "EDITABLE-PER-COUNTRY (true): front.h1, front.h2, front.claim, front.volume, back.inci_label, back.usage_label, side_l.importer_label, side_r.tagline, top.volume, plus the per-market SELECTION of which frozen importer row renders. Everything else is frozen-legal or a placed image.",
+    "FROZEN even though they are <text> nodes (editable=false): back.inci, back.usage, back.warning, back.storage, back.manufacturer, back.trademark, back.batch, back.expiry, back.barcode, side_l.importer, bottom.batch, bottom.expiry, front.sku_name, top.sku_name, side_r.cert_icon_labels, front.brand_logo. These get a data-field key so the renderer can still validate/place them, but they are sourced verbatim from SECRETS, never from free copy.",
+    "back.inci_label / back.usage_label / side_l.importer_label / front.volume are the only places where a 'frozen' block has an editable wrapper: the LABEL ('Состав:', 'Применение:', 'Импортёр:', unit 'мл/ml') is translated per locale, the BODY it introduces stays frozen. This split exists in SYMBIOS (back.inci_label editable, back.inci frozen) and is preserved.",
+    "21 placed design images (CINNAMON.png, CLOVE.png, GMP2.jpg, ce-mark.png, dasexperten_qr.png, all cert icons, знак ЕАС, знак утилизации, ukrsert1.png, toothpaste contours, etc.) are confirmed in detox_cdr/META-INF/textinfo.xml ObjectNames and are NEVER given data-field keys — they are frozen vector/raster and freeze_check.mjs already asserts byte-identity on all non-<text> nodes.",
+    "Real editable text strings are NOT extractable from the unzipped sample (content/data has only data1.dat 384B + data2.dat 56KB; the 12MB page1.dat with the text runs is not in this checkout, and Corel stores runs in proprietary binary regardless). This is expected and matches the BLOCKER: the plan is authored now from known copy + frozen rules, and the data-field keys get applied to <text> nodes ONCE on the real exported SVG (unblock path A = Accessibility grant for GUI export, or path B = designer exports SVG once).",
+    "Application step when SVG exists: mark each <text> node with data-field=<key>, add data-wrap=\"1\" + data-maxlines on the wrap/headline blocks listed above, then run freeze_check.mjs to assert only <text> differs between master and each locale render — the same gate that PASSED for SYMBIOS across Latin/Cyrillic/Arabic-RTL/Armenian/Georgian.",
+    "Relevant files (all absolute): /Users/dasexperten/packaging-localizer/template/SYMBIOS.svg (proven marker convention), /Users/dasexperten/packaging-localizer/strings.json (proven per-locale string map to extend with a \"DETOX\" block), /Users/dasexperten/packaging-localizer/worker/src/substitute.js (renderer, no change needed), /Users/dasexperten/packaging-localizer/freeze_check.mjs (freeze gate), /Users/dasexperten/packaging-localizer/detox_cdr/META-INF/textinfo.xml (confirmed 21 frozen placed-image inventory + single 'Слой 1')."
+  ]
+}

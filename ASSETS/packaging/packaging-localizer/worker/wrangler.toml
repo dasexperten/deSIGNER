@@ -1,0 +1,28 @@
+name = "packaging-localizer"
+main = "src/index.js"
+compatibility_date = "2025-01-01"
+account_id = "081ddb85cb399ad62a70210328d744fc"
+
+# resvg ships as wasm; bundle it as a module
+rules = [{ type = "CompiledWasm", globs = ["**/*.wasm"], fallthrough = true }]
+
+# --- D1: per-country strings (single source of truth) -----------------------
+# Create once:  wrangler d1 create packaging_localizer   (use CF D1 Admin token)
+# then paste the returned database_id below.
+[[d1_databases]]
+binding = "DB"
+database_name = "packaging_localizer"
+database_id = "REPLACE_AFTER_d1_create"
+
+# --- R2: frozen SVG templates + font files ----------------------------------
+# Create once:  wrangler r2 bucket create packaging-assets   (CF Cloud Master)
+# Upload:  templates/SYMBIOS.svg  +  fonts/Arial.ttf, fonts/SFArabic.ttf, ...
+[[r2_buckets]]
+binding = "ASSETS"
+bucket_name = "packaging-assets"
+
+# --- KV: rendered preview cache (optional) ----------------------------------
+# Create once:  wrangler kv namespace create CACHE
+[[kv_namespaces]]
+binding = "CACHE"
+id = "REPLACE_AFTER_kv_create"
