@@ -9,6 +9,7 @@ disciplines every design task obeys regardless of surface.
 | `principles.md` | Overall design direction — the challenger-apothecary direction, anti-simplicity, asset-truth rules |
 | `ui-ux-rules.md` | Interface rules — tokens-only styling, motion, hairlines, radii, layout, iconography |
 | `mobile-first.md` | Mobile discipline — touch targets, tap delay, breakpoints, font loading (from the 2026-07-06 mobile-friendly pass) |
+| `web-implementation.md` | As-built implementation of the live `dasexperten.com` site — CSS files, flag-eyebrow/nav/logo gotchas, guide pages, brush-tech modal, zonal IP pricing (worker-embedded), deploy model, category taxonomy (from the 2026-07-10 menu → category-guides overhaul) |
 | `partner-standards/` | B2B / distributor-facing design standards |
 
 Rules are promoted here from `GOVERNANCE/corrections-log.md`: when a mistake
