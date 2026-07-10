@@ -1,0 +1,68 @@
+<!-- Das Experten branded WhatsApp CTA starter
+Replace PHONE_E164_DIGITS with international digits only, no plus sign.
+Example: 491701234567
+Place the <a> near the end of <body>; place <style> in the site stylesheet.
+-->
+
+<a
+  class="de-whatsapp-cta"
+  href="https://wa.me/PHONE_E164_DIGITS?text=Hello%20Das%20Experten%2C%20I%20would%20like%20advice%20on%20your%20oral%20care%20products"
+  target="_blank"
+  rel="noopener"
+  aria-label="Chat with Das Experten on WhatsApp"
+>
+  <span class="de-whatsapp-cta__eyebrow">Need product advice?</span>
+  <span class="de-whatsapp-cta__main">Chat on WhatsApp</span>
+</a>
+
+<style>
+  .de-whatsapp-cta {
+    position: fixed;
+    right: clamp(16px, 3vw, 28px);
+    bottom: clamp(16px, 3vw, 28px);
+    z-index: 9999;
+    display: grid;
+    gap: 2px;
+    min-width: 210px;
+    padding: 13px 18px 14px;
+    border: 1px solid rgba(255,255,255,.20);
+    border-radius: 999px;
+    color: #282229;
+    background:
+      radial-gradient(circle at 20% 10%, rgba(255,255,255,.90), rgba(255,255,255,0) 34%),
+      linear-gradient(135deg, #2ee66f 0%, #21c95c 52%, #16a84d 100%);
+    box-shadow: 0 18px 44px rgba(20, 70, 38, .26), 0 4px 14px rgba(0,0,0,.18);
+    text-decoration: none;
+    transform: translateZ(0);
+    transition: transform .18s ease, box-shadow .18s ease;
+  }
+
+  .de-whatsapp-cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 22px 54px rgba(20, 70, 38, .32), 0 5px 16px rgba(0,0,0,.20);
+  }
+
+  .de-whatsapp-cta__eyebrow {
+    font-size: 11px;
+    line-height: 1.1;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    opacity: .72;
+  }
+
+  .de-whatsapp-cta__main {
+    font-size: 15px;
+    line-height: 1.1;
+    font-weight: 800;
+  }
+
+  @media (max-width: 520px) {
+    .de-whatsapp-cta {
+      left: 14px;
+      right: 14px;
+      bottom: 14px;
+      justify-items: center;
+      border-radius: 22px;
+    }
+  }
+</style>
