@@ -1,0 +1,413 @@
+{
+  "schema_version": "v1",
+  "created_at": "2026-05-23T21:38:49.667836Z",
+  "purpose": "Higgsfield media_input IDs for Das Experten character reference library, mapped from R2 dasexperten-images/refs/characters/",
+  "url_pattern": "https://d276s3zg8h21b2.cloudfront.net/user_31bCXuXwRcI0SkdqaXCziQKQMzC/{media_id}.png",
+  "characters": {
+    "Abdulova": {
+      "media_id": "6fe8a6f1-b1fb-492a-949f-143c248c27bc",
+      "url": "https://d276s3zg8h21b2.cloudfront.net/user_31bCXuXwRcI0SkdqaXCziQKQMzC/6fe8a6f1-b1fb-492a-949f-143c248c27bc.png",
+      "r2_source": "refs/characters/Abdulova.png"
+    },
+    "Alina": {
+      "media_id": "03831606-d36e-402d-a2d1-92f04ac9cf56",
+      "url": "https://d276s3zg8h21b2.cloudfront.net/user_31bCXuXwRcI0SkdqaXCziQKQMzC/03831606-d36e-402d-a2d1-92f04ac9cf56.png",
+      "r2_source": "refs/characters/Alina.png"
+    },
+    "Andrea": {
+      "media_id": "0bb6ec67-cd41-46e7-a745-97feca82c640",
+      "url": "https://d276s3zg8h21b2.cloudfront.net/user_31bCXuXwRcI0SkdqaXCziQKQMzC/0bb6ec67-cd41-46e7-a745-97feca82c640.png",
+      "r2_source": "refs/characters/Andrea.png"
+    },
+    "ArminePapazjan": {
+      "media_id": "6f5808ad-0c38-4031-8ce2-178a044ee0af",
+      "url": "https://d276s3zg8h21b2.cloudfront.net/user_31bCXuXwRcI0SkdqaXCziQKQMzC/6f5808ad-0c38-4031-8ce2-178a044ee0af.png",
+      "r2_source": "refs/characters/ArminePapazjan.png"
+    },
+    "Ashley": {
+      "media_id": "cb724326-fe37-4c7b-90ef-482235e2e044",
+      "url": "https://d276s3zg8h21b2.cloudfront.net/user_31bCXuXwRcI0SkdqaXCziQKQMzC/cb724326-fe37-4c7b-90ef-482235e2e044.png",
+      "r2_source": "refs/characters/Ashley.png"
+    },
+    "Aura": {
+      "media_id": "a81f4155-fe3d-4ecd-b8ae-5fb2d5a329c5",
+      "url": "https://d276s3zg8h21b2.cloudfront.net/user_31bCXuXwRcI0SkdqaXCziQKQMzC/a81f4155-fe3d-4ecd-b8ae-5fb2d5a329c5.png",
+      "r2_source": "refs/characters/Aura.png"
+    },
+    "Aura_2": {
+      "media_id": "bdbadcf1-c6f9-4935-a894-af784462fb86",
+      "url": "https://d276s3zg8h21b2.cloudfront.net/user_31bCXuXwRcI0SkdqaXCziQKQMzC/bdbadcf1-c6f9-4935-a894-af784462fb86.png",
+      "r2_source": "refs/characters/Aura_2.png"
+    },
+    "Ayka": {
+      "media_id": "9690ea01-d809-4c75-a25b-19c610b151ee",
+      "url": "https://d276s3zg8h21b2.cloudfront.net/user_31bCXuXwRcI0SkdqaXCziQKQMzC/9690ea01-d809-4c75-a25b-19c610b151ee.png",
+      "r2_source": "refs/characters/Ayka.png"
+    },
+    "Bodrova": {
+      "media_id": "2da7f447-b8c8-4baf-b090-b46fe4ab0d44",
+      "url": "https://d276s3zg8h21b2.cloudfront.net/user_31bCXuXwRcI0SkdqaXCziQKQMzC/2da7f447-b8c8-4baf-b090-b46fe4ab0d44.png",
+      "r2_source": "refs/characters/Bodrova.png"
+    },
+    "Brucelda": {
+      "media_id": "05f69949-3eba-4e71-9b74-3cf1303a9293",
+      "url": "https://d276s3zg8h21b2.cloudfront.net/user_31bCXuXwRcI0SkdqaXCziQKQMzC/05f69949-3eba-4e71-9b74-3cf1303a9293.png",
+      "r2_source": "refs/characters/Brucelda.png"
+    },
+    "Brucella": {
+      "media_id": "3a4a86f8-aa87-4225-8ea3-dc2999605374",
+      "url": "https://d276s3zg8h21b2.cloudfront.net/user_31bCXuXwRcI0SkdqaXCziQKQMzC/3a4a86f8-aa87-4225-8ea3-dc2999605374.png",
+      "r2_source": "refs/characters/Brucella.png"
+    },
+    "Chegga": {
+      "media_id": "b12faa5d-250c-48a1-aa39-b1972ac1946a",
+      "url": "https://d276s3zg8h21b2.cloudfront.net/user_31bCXuXwRcI0SkdqaXCziQKQMzC/b12faa5d-250c-48a1-aa39-b1972ac1946a.png",
+      "r2_source": "refs/characters/Chegga.png"
+    },
+    "Coli": {
+      "media_id": "f9e50f9e-077b-493f-a9b0-c0936c3d6203",
+      "url": "https://d276s3zg8h21b2.cloudfront.net/user_31bCXuXwRcI0SkdqaXCziQKQMzC/f9e50f9e-077b-493f-a9b0-c0936c3d6203.png",
+      "r2_source": "refs/characters/Coli.png"
+    },
+    "Colina": {
+      "media_id": "1d1e2200-2aec-4c21-9d56-8ebf846e3c31",
+      "url": "https://d276s3zg8h21b2.cloudfront.net/user_31bCXuXwRcI0SkdqaXCziQKQMzC/1d1e2200-2aec-4c21-9d56-8ebf846e3c31.png",
+      "r2_source": "refs/characters/Colina.png"
+    },
+    "Dalla": {
+      "media_id": "499468c5-c89c-42fa-af84-cb319e17ccf2",
+      "url": "https://d276s3zg8h21b2.cloudfront.net/user_31bCXuXwRcI0SkdqaXCziQKQMzC/499468c5-c89c-42fa-af84-cb319e17ccf2.png",
+      "r2_source": "refs/characters/Dalla.png"
+    },
+    "Delona": {
+      "media_id": "90ddfdc8-0ebe-4d62-a4f8-93ad8eed84cb",
+      "url": "https://d276s3zg8h21b2.cloudfront.net/user_31bCXuXwRcI0SkdqaXCziQKQMzC/90ddfdc8-0ebe-4d62-a4f8-93ad8eed84cb.png",
+      "r2_source": "refs/characters/Delona.png"
+    },
+    "Delona_2": {
+      "media_id": "2a52bae0-e7f2-44dd-a0bb-4af4581ca474",
+      "url": "https://d276s3zg8h21b2.cloudfront.net/user_31bCXuXwRcI0SkdqaXCziQKQMzC/2a52bae0-e7f2-44dd-a0bb-4af4581ca474.png",
+      "r2_source": "refs/characters/Delona_2.png"
+    },
+    "Faeze": {
+      "media_id": "f167b65d-ee63-4598-82f2-cdcbb6f6fa4e",
+      "url": "https://d276s3zg8h21b2.cloudfront.net/user_31bCXuXwRcI0SkdqaXCziQKQMzC/f167b65d-ee63-4598-82f2-cdcbb6f6fa4e.png",
+      "r2_source": "refs/characters/Faeze.png"
+    },
+    "Faeze_2": {
+      "media_id": "e30caa2d-b05e-4ebe-b296-00d679b03756",
+      "url": "https://d276s3zg8h21b2.cloudfront.net/user_31bCXuXwRcI0SkdqaXCziQKQMzC/e30caa2d-b05e-4ebe-b296-00d679b03756.png",
+      "r2_source": "refs/characters/Faeze_2.png"
+    },
+    "Garrieta": {
+      "media_id": "ae83c53a-3ab1-4a2e-ac8c-8d4575ce369b",
+      "url": "https://d276s3zg8h21b2.cloudfront.net/user_31bCXuXwRcI0SkdqaXCziQKQMzC/ae83c53a-3ab1-4a2e-ac8c-8d4575ce369b.png",
+      "r2_source": "refs/characters/Garrieta.png"
+    },
+    "Gerardina": {
+      "media_id": "bbf567f5-202b-41ce-94e9-e254d5fe77a9",
+      "url": "https://d276s3zg8h21b2.cloudfront.net/user_31bCXuXwRcI0SkdqaXCziQKQMzC/bbf567f5-202b-41ce-94e9-e254d5fe77a9.png",
+      "r2_source": "refs/characters/Gerardina.png"
+    },
+    "Gozde": {
+      "media_id": "994b2c04-e1df-499d-8875-22b3741911ca",
+      "url": "https://d276s3zg8h21b2.cloudfront.net/user_31bCXuXwRcI0SkdqaXCziQKQMzC/994b2c04-e1df-499d-8875-22b3741911ca.png",
+      "r2_source": "refs/characters/Gozde.png"
+    },
+    "Gozde_2": {
+      "media_id": "294a4ab1-3bd9-497f-aa3c-d2b27cc3b766",
+      "url": "https://d276s3zg8h21b2.cloudfront.net/user_31bCXuXwRcI0SkdqaXCziQKQMzC/294a4ab1-3bd9-497f-aa3c-d2b27cc3b766.png",
+      "r2_source": "refs/characters/Gozde_2.png"
+    },
+    "Grishna": {
+      "media_id": "688dd947-9cb7-49b2-8014-0903d2193a4a",
+      "url": "https://d276s3zg8h21b2.cloudfront.net/user_31bCXuXwRcI0SkdqaXCziQKQMzC/688dd947-9cb7-49b2-8014-0903d2193a4a.png",
+      "r2_source": "refs/characters/Grishna.png"
+    },
+    "Haide": {
+      "media_id": "bb558f0f-76c6-4a03-a825-a48332f55294",
+      "url": "https://d276s3zg8h21b2.cloudfront.net/user_31bCXuXwRcI0SkdqaXCziQKQMzC/bb558f0f-76c6-4a03-a825-a48332f55294.png",
+      "r2_source": "refs/characters/Haide.png"
+    },
+    "Hamda": {
+      "media_id": "0c18da88-af29-433f-a6f0-27b934b3adea",
+      "url": "https://d276s3zg8h21b2.cloudfront.net/user_31bCXuXwRcI0SkdqaXCziQKQMzC/0c18da88-af29-433f-a6f0-27b934b3adea.png",
+      "r2_source": "refs/characters/Hamda.png"
+    },
+    "Hardy": {
+      "media_id": "3c8280d4-1bda-4658-99e7-fc756d66b170",
+      "url": "https://d276s3zg8h21b2.cloudfront.net/user_31bCXuXwRcI0SkdqaXCziQKQMzC/3c8280d4-1bda-4658-99e7-fc756d66b170.png",
+      "r2_source": "refs/characters/Hardy.png"
+    },
+    "Harreth": {
+      "media_id": "d9831c1c-8da5-4cd6-a57b-44bc5f720f71",
+      "url": "https://d276s3zg8h21b2.cloudfront.net/user_31bCXuXwRcI0SkdqaXCziQKQMzC/d9831c1c-8da5-4cd6-a57b-44bc5f720f71.png",
+      "r2_source": "refs/characters/Harreth.png"
+    },
+    "Helga": {
+      "media_id": "7f910746-c7a5-4a30-a238-c4e800a28b0b",
+      "url": "https://d276s3zg8h21b2.cloudfront.net/user_31bCXuXwRcI0SkdqaXCziQKQMzC/7f910746-c7a5-4a30-a238-c4e800a28b0b.png",
+      "r2_source": "refs/characters/Helga.png"
+    },
+    "Henrietta": {
+      "media_id": "d7486008-f4a0-48c4-9f2d-09820b825797",
+      "url": "https://d276s3zg8h21b2.cloudfront.net/user_31bCXuXwRcI0SkdqaXCziQKQMzC/d7486008-f4a0-48c4-9f2d-09820b825797.png",
+      "r2_source": "refs/characters/Henrietta.png"
+    },
+    "Hrista": {
+      "media_id": "3d14da64-eb4d-46a3-af9d-023428966567",
+      "url": "https://d276s3zg8h21b2.cloudfront.net/user_31bCXuXwRcI0SkdqaXCziQKQMzC/3d14da64-eb4d-46a3-af9d-023428966567.png",
+      "r2_source": "refs/characters/Hrista.png"
+    },
+    "Joanna": {
+      "media_id": "31a07f2f-f9be-475d-a29b-f160763642dd",
+      "url": "https://d276s3zg8h21b2.cloudfront.net/user_31bCXuXwRcI0SkdqaXCziQKQMzC/31a07f2f-f9be-475d-a29b-f160763642dd.png",
+      "r2_source": "refs/characters/Joanna.png"
+    },
+    "Kinsy": {
+      "media_id": "7d2d4556-5026-480e-bc45-2b65d592690d",
+      "url": "https://d276s3zg8h21b2.cloudfront.net/user_31bCXuXwRcI0SkdqaXCziQKQMzC/7d2d4556-5026-480e-bc45-2b65d592690d.png",
+      "r2_source": "refs/characters/Kinsy.png"
+    },
+    "Kirienka": {
+      "media_id": "8c34240d-f495-400f-86b4-592355512be7",
+      "url": "https://d276s3zg8h21b2.cloudfront.net/user_31bCXuXwRcI0SkdqaXCziQKQMzC/8c34240d-f495-400f-86b4-592355512be7.png",
+      "r2_source": "refs/characters/Kirienka.png"
+    },
+    "Klinsy": {
+      "media_id": "f52b8169-770b-4532-8de1-e80bb59c3594",
+      "url": "https://d276s3zg8h21b2.cloudfront.net/user_31bCXuXwRcI0SkdqaXCziQKQMzC/f52b8169-770b-4532-8de1-e80bb59c3594.png",
+      "r2_source": "refs/characters/Klinsy.png"
+    },
+    "Klinsy_2": {
+      "media_id": "e9eac580-2c34-4330-8a59-4c0b54b81007",
+      "url": "https://d276s3zg8h21b2.cloudfront.net/user_31bCXuXwRcI0SkdqaXCziQKQMzC/e9eac580-2c34-4330-8a59-4c0b54b81007.png",
+      "r2_source": "refs/characters/Klinsy_2.png"
+    },
+    "Klinsy_3": {
+      "media_id": "cdde7ac0-41a1-42fe-b41b-934e1326a693",
+      "url": "https://d276s3zg8h21b2.cloudfront.net/user_31bCXuXwRcI0SkdqaXCziQKQMzC/cdde7ac0-41a1-42fe-b41b-934e1326a693.png",
+      "r2_source": "refs/characters/Klinsy_3.png"
+    },
+    "Kozlovskaya": {
+      "media_id": "0b758e04-0fe1-43aa-a82b-9b8195c8dc5d",
+      "url": "https://d276s3zg8h21b2.cloudfront.net/user_31bCXuXwRcI0SkdqaXCziQKQMzC/0b758e04-0fe1-43aa-a82b-9b8195c8dc5d.png",
+      "r2_source": "refs/characters/Kozlovskaya.png"
+    },
+    "Krasochkina": {
+      "media_id": "20eda524-0719-4108-89ef-9281d7440fae",
+      "url": "https://d276s3zg8h21b2.cloudfront.net/user_31bCXuXwRcI0SkdqaXCziQKQMzC/20eda524-0719-4108-89ef-9281d7440fae.png",
+      "r2_source": "refs/characters/Krasochkina.png"
+    },
+    "Kristina": {
+      "media_id": "51f24117-0386-4d37-bc34-7a92f8b3fe6b",
+      "url": "https://d276s3zg8h21b2.cloudfront.net/user_31bCXuXwRcI0SkdqaXCziQKQMzC/51f24117-0386-4d37-bc34-7a92f8b3fe6b.png",
+      "r2_source": "refs/characters/Kristina.png"
+    },
+    "Kumi": {
+      "media_id": "0325e7bf-916a-4b4f-bcec-ff0c6e3fc27a",
+      "url": "https://d276s3zg8h21b2.cloudfront.net/user_31bCXuXwRcI0SkdqaXCziQKQMzC/0325e7bf-916a-4b4f-bcec-ff0c6e3fc27a.png",
+      "r2_source": "refs/characters/Kumi.png"
+    },
+    "Kumi_2": {
+      "media_id": "270a63e8-11b7-4618-93cd-ed7db1dbae87",
+      "url": "https://d276s3zg8h21b2.cloudfront.net/user_31bCXuXwRcI0SkdqaXCziQKQMzC/270a63e8-11b7-4618-93cd-ed7db1dbae87.png",
+      "r2_source": "refs/characters/Kumi_2.png"
+    },
+    "Kuravleva": {
+      "media_id": "a16d7d8d-380d-4d94-8645-ba9fb485e365",
+      "url": "https://d276s3zg8h21b2.cloudfront.net/user_31bCXuXwRcI0SkdqaXCziQKQMzC/a16d7d8d-380d-4d94-8645-ba9fb485e365.png",
+      "r2_source": "refs/characters/Kuravleva.png"
+    },
+    "Leona": {
+      "media_id": "6d3cff97-438d-462e-8e41-dfb0c38e062d",
+      "url": "https://d276s3zg8h21b2.cloudfront.net/user_31bCXuXwRcI0SkdqaXCziQKQMzC/6d3cff97-438d-462e-8e41-dfb0c38e062d.png",
+      "r2_source": "refs/characters/Leona.png"
+    },
+    "Lewandowskaya": {
+      "media_id": "19ab3560-e6f2-425b-be10-b60105eb4e3b",
+      "url": "https://d276s3zg8h21b2.cloudfront.net/user_31bCXuXwRcI0SkdqaXCziQKQMzC/19ab3560-e6f2-425b-be10-b60105eb4e3b.png",
+      "r2_source": "refs/characters/Lewandowskaya.png"
+    },
+    "Lia": {
+      "media_id": "b7b76440-0a80-4c28-abc7-ab163dac6f56",
+      "url": "https://d276s3zg8h21b2.cloudfront.net/user_31bCXuXwRcI0SkdqaXCziQKQMzC/b7b76440-0a80-4c28-abc7-ab163dac6f56.png",
+      "r2_source": "refs/characters/Lia.png"
+    },
+    "Lota": {
+      "media_id": "227923af-83f7-4796-b6b8-e95a6fd1411f",
+      "url": "https://d276s3zg8h21b2.cloudfront.net/user_31bCXuXwRcI0SkdqaXCziQKQMzC/227923af-83f7-4796-b6b8-e95a6fd1411f.png",
+      "r2_source": "refs/characters/Lota.png"
+    },
+    "Manuka": {
+      "media_id": "55815d03-986d-4103-8f4a-31e6d52d8727",
+      "url": "https://d276s3zg8h21b2.cloudfront.net/user_31bCXuXwRcI0SkdqaXCziQKQMzC/55815d03-986d-4103-8f4a-31e6d52d8727.png",
+      "r2_source": "refs/characters/Manuka.png"
+    },
+    "Marianna": {
+      "media_id": "efbe183f-e33c-4241-9ba1-d07e40258cad",
+      "url": "https://d276s3zg8h21b2.cloudfront.net/user_31bCXuXwRcI0SkdqaXCziQKQMzC/efbe183f-e33c-4241-9ba1-d07e40258cad.png",
+      "r2_source": "refs/characters/Marianna.png"
+    },
+    "Marianna_2": {
+      "media_id": "d7f5f009-cf85-4d08-b591-5c8de53d79a0",
+      "url": "https://d276s3zg8h21b2.cloudfront.net/user_31bCXuXwRcI0SkdqaXCziQKQMzC/d7f5f009-cf85-4d08-b591-5c8de53d79a0.png",
+      "r2_source": "refs/characters/Marianna_2.png"
+    },
+    "Marianna_3": {
+      "media_id": "aca0d016-dbf5-4342-85d8-e9027e7e59d6",
+      "url": "https://d276s3zg8h21b2.cloudfront.net/user_31bCXuXwRcI0SkdqaXCziQKQMzC/aca0d016-dbf5-4342-85d8-e9027e7e59d6.png",
+      "r2_source": "refs/characters/Marianna_3.png"
+    },
+    "Marianna_4": {
+      "media_id": "b5531419-55b9-4545-9127-db35208bb350",
+      "url": "https://d276s3zg8h21b2.cloudfront.net/user_31bCXuXwRcI0SkdqaXCziQKQMzC/b5531419-55b9-4545-9127-db35208bb350.png",
+      "r2_source": "refs/characters/Marianna_4.png"
+    },
+    "Medvedeva": {
+      "media_id": "7c552f7e-071a-48f8-948a-62b6fceb2a16",
+      "url": "https://d276s3zg8h21b2.cloudfront.net/user_31bCXuXwRcI0SkdqaXCziQKQMzC/7c552f7e-071a-48f8-948a-62b6fceb2a16.png",
+      "r2_source": "refs/characters/Medvedeva.png"
+    },
+    "Menshova": {
+      "media_id": "dc6109cf-5bf5-49cd-be12-229bd3e95e70",
+      "url": "https://d276s3zg8h21b2.cloudfront.net/user_31bCXuXwRcI0SkdqaXCziQKQMzC/dc6109cf-5bf5-49cd-be12-229bd3e95e70.png",
+      "r2_source": "refs/characters/Menshova.png"
+    },
+    "Menshova_2": {
+      "media_id": "9a5da83c-a7d2-4649-b8d2-7e8e43616783",
+      "url": "https://d276s3zg8h21b2.cloudfront.net/user_31bCXuXwRcI0SkdqaXCziQKQMzC/9a5da83c-a7d2-4649-b8d2-7e8e43616783.png",
+      "r2_source": "refs/characters/Menshova_2.png"
+    },
+    "Menuar": {
+      "media_id": "36a4bc88-1a78-490d-9d9f-e61db0e64466",
+      "url": "https://d276s3zg8h21b2.cloudfront.net/user_31bCXuXwRcI0SkdqaXCziQKQMzC/36a4bc88-1a78-490d-9d9f-e61db0e64466.png",
+      "r2_source": "refs/characters/Menuar.png"
+    },
+    "Michellanghela": {
+      "media_id": "a5ab6ec2-a1bd-4ba1-9c9f-5774a877afd7",
+      "url": "https://d276s3zg8h21b2.cloudfront.net/user_31bCXuXwRcI0SkdqaXCziQKQMzC/a5ab6ec2-a1bd-4ba1-9c9f-5774a877afd7.png",
+      "r2_source": "refs/characters/Michellanghela.png"
+    },
+    "Mironova": {
+      "media_id": "78878688-2621-45a8-882e-d9b2a022543c",
+      "url": "https://d276s3zg8h21b2.cloudfront.net/user_31bCXuXwRcI0SkdqaXCziQKQMzC/78878688-2621-45a8-882e-d9b2a022543c.png",
+      "r2_source": "refs/characters/Mironova.png"
+    },
+    "MissKosmoss": {
+      "media_id": "b89bbed5-7ad7-4e08-84cc-4dafdaa753f2",
+      "url": "https://d276s3zg8h21b2.cloudfront.net/user_31bCXuXwRcI0SkdqaXCziQKQMzC/b89bbed5-7ad7-4e08-84cc-4dafdaa753f2.png",
+      "r2_source": "refs/characters/MissKosmoss.png"
+    },
+    "MrsWaltz": {
+      "media_id": "6677cc00-eb59-4631-8497-39fa86048736",
+      "url": "https://d276s3zg8h21b2.cloudfront.net/user_31bCXuXwRcI0SkdqaXCziQKQMzC/6677cc00-eb59-4631-8497-39fa86048736.png",
+      "r2_source": "refs/characters/MrsWaltz.png"
+    },
+    "Nagieva": {
+      "media_id": "28625f82-d806-4bc6-917c-7835dc5dc289",
+      "url": "https://d276s3zg8h21b2.cloudfront.net/user_31bCXuXwRcI0SkdqaXCziQKQMzC/28625f82-d806-4bc6-917c-7835dc5dc289.png",
+      "r2_source": "refs/characters/Nagieva.png"
+    },
+    "Obnorskaya": {
+      "media_id": "2ffd3098-5466-4b57-ab45-c6f1f85b1d97",
+      "url": "https://d276s3zg8h21b2.cloudfront.net/user_31bCXuXwRcI0SkdqaXCziQKQMzC/2ffd3098-5466-4b57-ab45-c6f1f85b1d97.png",
+      "r2_source": "refs/characters/Obnorskaya.png"
+    },
+    "Paola": {
+      "media_id": "57e30846-847e-47e6-b781-a37c5da73cd5",
+      "url": "https://d276s3zg8h21b2.cloudfront.net/user_31bCXuXwRcI0SkdqaXCziQKQMzC/57e30846-847e-47e6-b781-a37c5da73cd5.png",
+      "r2_source": "refs/characters/Paola.png"
+    },
+    "Pevtsova": {
+      "media_id": "8c657359-f5ad-4602-8cb7-064bb17c4b96",
+      "url": "https://d276s3zg8h21b2.cloudfront.net/user_31bCXuXwRcI0SkdqaXCziQKQMzC/8c657359-f5ad-4602-8cb7-064bb17c4b96.png",
+      "r2_source": "refs/characters/Pevtsova.png"
+    },
+    "Roberta": {
+      "media_id": "4ffd485f-04fa-492e-8dce-0f2cd9125f69",
+      "url": "https://d276s3zg8h21b2.cloudfront.net/user_31bCXuXwRcI0SkdqaXCziQKQMzC/4ffd485f-04fa-492e-8dce-0f2cd9125f69.png",
+      "r2_source": "refs/characters/Roberta.png"
+    },
+    "Romaria": {
+      "media_id": "4bd54810-ce16-45b4-b7ab-231dd55f3517",
+      "url": "https://d276s3zg8h21b2.cloudfront.net/user_31bCXuXwRcI0SkdqaXCziQKQMzC/4bd54810-ce16-45b4-b7ab-231dd55f3517.png",
+      "r2_source": "refs/characters/Romaria.png"
+    },
+    "Rona": {
+      "media_id": "c4abdf25-14aa-4121-8383-8c7b42714406",
+      "url": "https://d276s3zg8h21b2.cloudfront.net/user_31bCXuXwRcI0SkdqaXCziQKQMzC/c4abdf25-14aa-4121-8383-8c7b42714406.png",
+      "r2_source": "refs/characters/Rona.png"
+    },
+    "Ronalda": {
+      "media_id": "f3de911a-09dd-418f-a9e1-ecc7e36c36c0",
+      "url": "https://d276s3zg8h21b2.cloudfront.net/user_31bCXuXwRcI0SkdqaXCziQKQMzC/f3de911a-09dd-418f-a9e1-ecc7e36c36c0.png",
+      "r2_source": "refs/characters/Ronalda.png"
+    },
+    "Ronalda_2": {
+      "media_id": "d4d6bb62-2512-4403-b76f-53abd8748ee9",
+      "url": "https://d276s3zg8h21b2.cloudfront.net/user_31bCXuXwRcI0SkdqaXCziQKQMzC/d4d6bb62-2512-4403-b76f-53abd8748ee9.png",
+      "r2_source": "refs/characters/Ronalda_2.png"
+    },
+    "Rubi": {
+      "media_id": "ed294e16-356e-43e0-9619-c73054b9fd55",
+      "url": "https://d276s3zg8h21b2.cloudfront.net/user_31bCXuXwRcI0SkdqaXCziQKQMzC/ed294e16-356e-43e0-9619-c73054b9fd55.png",
+      "r2_source": "refs/characters/Rubi.png"
+    },
+    "Rubina": {
+      "media_id": "02ee924e-f7e0-41ab-9f04-e78638e0d284",
+      "url": "https://d276s3zg8h21b2.cloudfront.net/user_31bCXuXwRcI0SkdqaXCziQKQMzC/02ee924e-f7e0-41ab-9f04-e78638e0d284.png",
+      "r2_source": "refs/characters/Rubina.png"
+    },
+    "Ruda": {
+      "media_id": "05ad198b-fd1d-46b8-b4da-fd0b27d27d6c",
+      "url": "https://d276s3zg8h21b2.cloudfront.net/user_31bCXuXwRcI0SkdqaXCziQKQMzC/05ad198b-fd1d-46b8-b4da-fd0b27d27d6c.png",
+      "r2_source": "refs/characters/Ruda.png"
+    },
+    "Ruslana": {
+      "media_id": "664ee6a3-79c9-42a9-8411-06481c5c012f",
+      "url": "https://d276s3zg8h21b2.cloudfront.net/user_31bCXuXwRcI0SkdqaXCziQKQMzC/664ee6a3-79c9-42a9-8411-06481c5c012f.png",
+      "r2_source": "refs/characters/Ruslana.png"
+    },
+    "Shura": {
+      "media_id": "30b7117b-5728-446a-b6e3-74a56379444c",
+      "url": "https://d276s3zg8h21b2.cloudfront.net/user_31bCXuXwRcI0SkdqaXCziQKQMzC/30b7117b-5728-446a-b6e3-74a56379444c.png",
+      "r2_source": "refs/characters/Shura.png"
+    },
+    "Sollda": {
+      "media_id": "5972b298-bbb7-4324-a72b-4d9f76a33009",
+      "url": "https://d276s3zg8h21b2.cloudfront.net/user_31bCXuXwRcI0SkdqaXCziQKQMzC/5972b298-bbb7-4324-a72b-4d9f76a33009.png",
+      "r2_source": "refs/characters/Sollda.png"
+    },
+    "Tika": {
+      "media_id": "588af72a-6abb-4e79-98c6-5941229a41fe",
+      "url": "https://d276s3zg8h21b2.cloudfront.net/user_31bCXuXwRcI0SkdqaXCziQKQMzC/588af72a-6abb-4e79-98c6-5941229a41fe.png",
+      "r2_source": "refs/characters/Tika.png"
+    },
+    "Toma": {
+      "media_id": "8713c0bc-2b0c-4aac-8f14-ff6e26c9f424",
+      "url": "https://d276s3zg8h21b2.cloudfront.net/user_31bCXuXwRcI0SkdqaXCziQKQMzC/8713c0bc-2b0c-4aac-8f14-ff6e26c9f424.png",
+      "r2_source": "refs/characters/Toma.png"
+    },
+    "Tupa": {
+      "media_id": "5568134f-ec5c-4e95-b8c0-64db284e4c8b",
+      "url": "https://d276s3zg8h21b2.cloudfront.net/user_31bCXuXwRcI0SkdqaXCziQKQMzC/5568134f-ec5c-4e95-b8c0-64db284e4c8b.png",
+      "r2_source": "refs/characters/Tupa.png"
+    },
+    "Varda": {
+      "media_id": "c871af98-ab50-4aeb-beea-e3cdab0cd3fb",
+      "url": "https://d276s3zg8h21b2.cloudfront.net/user_31bCXuXwRcI0SkdqaXCziQKQMzC/c871af98-ab50-4aeb-beea-e3cdab0cd3fb.png",
+      "r2_source": "refs/characters/Varda.png"
+    },
+    "Yakovleva": {
+      "media_id": "12a6ef3a-a7da-4609-974c-2382a51890b0",
+      "url": "https://d276s3zg8h21b2.cloudfront.net/user_31bCXuXwRcI0SkdqaXCziQKQMzC/12a6ef3a-a7da-4609-974c-2382a51890b0.png",
+      "r2_source": "refs/characters/Yakovleva.png"
+    },
+    "Zina": {
+      "media_id": "6f8de286-2624-4462-871a-cfb8452e1c75",
+      "url": "https://d276s3zg8h21b2.cloudfront.net/user_31bCXuXwRcI0SkdqaXCziQKQMzC/6f8de286-2624-4462-871a-cfb8452e1c75.png",
+      "r2_source": "refs/characters/Zina.png"
+    }
+  }
+}
