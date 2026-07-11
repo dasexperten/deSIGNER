@@ -20,6 +20,21 @@ that prevents recurrence — where the rule now lives.
   `touch-action: manipulation` on every tappable control.
 - **Lives in:** `FOUNDATION/mobile-first.md` rules 1–2.
 
+## 2026-07-11 — header nav wider than the ribbon (overflow) + dead icon buttons
+
+- **Wrong:** the header nav row (logo · 12 menu links · 2 icon buttons · Cart)
+  needed ~1479px and overflowed the 1280px layout by ~200px, so the icons and
+  Cart poked out **past the black language ribbon's right edge**; long-label
+  languages (RU/DE/FR/PL) overflowed worst. The two header icon buttons
+  (search ⌕, account ◎) were also dead UI with no behavior.
+- **Rule:** the nav row must **always be exactly as wide as the ribbon above it —
+  no wider, no narrower — in every language and at every viewport.** The menu item
+  set and their order are fixed; no ⌕/◎ icons in the header. The **only** two
+  levers allowed to make it fit are the menu **font-size** and the **Shop/Cart
+  button width** — never resize the logo, drop/reorder items, or let it overflow.
+- **Lives in:** `FOUNDATION/ui-ux-rules.md` (Header menu — nav ↔ ribbon parity);
+  and in the site repo `dasexperten.com/CLAUDE.md` (HARD RULES).
+
 ## 2026-07-10 — consolidation-time inventory discrepancy (characters count)
 
 - **Wrong:** planning estimate said "~95" character reference models; the live

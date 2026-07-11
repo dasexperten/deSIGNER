@@ -39,6 +39,27 @@ checks a reviewer applies to any Das Experten interface.
   (white fill, hairline, 10px radius, 4px product-line accent strip on top,
   shot on `--paper-sunk` ground).
 
+## Header menu — nav ↔ ribbon parity (HARD RULE, never relax)
+
+The header is two stacked rows: the black language **ribbon** on top, the white
+**nav** row below (logo · menu links · Shop/Cart button). These two rows must
+**always be exactly the same width — no wider, no narrower** — at every viewport
+and in **every language**. The nav content must never spill past the ribbon's
+right edge (the classic bug: buttons/Cart poking out), and never sit visibly
+narrower than it either.
+
+- **The menu is fixed.** The set of menu items and their **order** do not change.
+  The header carries **no** search (⌕) or account (◎) icon buttons.
+- **Only two levers may be used to make the row fit** the ribbon width:
+  1. the menu link **font-size**, and
+  2. the **width of the Shop / Cart ("Магазин") button**.
+  Never fix a fit problem any other way — do **not** resize the logo, drop or
+  reorder items, wrap the row, or let it overflow. Longer-label languages
+  (RU/DE/FR/PL) are the binding case: size the font down just enough that the
+  **longest** language still fits on one line within the layout width.
+- Below the width where the full row can't fit, the menu collapses to the
+  burger — it never overflows.
+
 ## Motion
 
 - Durations 120/200/360ms; `--ease-standard` `cubic-bezier(.2,.7,.2,1)`;
