@@ -3,6 +3,18 @@
 One entry per caught design mistake. Format: date — what was wrong — the rule
 that prevents recurrence — where the rule now lives.
 
+## 2026-07-11 — mobile flags wrapped / centered (now frozen)
+
+- **Wrong:** the mobile language-flags row was first centered (blank gaps at the
+  edges), then wrapped to a second row (Chinese/ZH flag dropped down). Both are
+  unacceptable — the row must be one line, spread edge-to-edge.
+- **Rule:** flags row = single `nowrap` row, `justify-content:space-between`,
+  fluid `vw` flag size + gap so all 14 fit from ~320px up. **FROZEN by owner —
+  do not change without a new owner instruction.**
+- **Lives in:** `GOVERNANCE/direction.md` (🔒 FROZEN entry, 2026-07-11);
+  live CSS in `dasexperten.com/site/com/styles.css`.
+
+
 ## 2026-07-06 — hardcoded hex instead of tokens (quiz CSS)
 
 - **Wrong:** System Diagnostic Chamber v15 quiz CSS used ~40 hardcoded hex
