@@ -1,0 +1,285 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Das Experten — Dashboard</title>
+<link rel="stylesheet" href="../../colors_and_type.css"/>
+<style>
+  *,*::before,*::after{box-sizing:border-box;}
+  html,body{margin:0;background:var(--paper-sunk);}
+  .wrap{max-width:1080px;margin:0 auto;padding:var(--space-6) var(--space-5) var(--space-8);}
+
+  /* ---------- board shell ---------- */
+  .board{background:var(--paper);border-radius:var(--radius-lg);box-shadow:var(--shadow-raised);overflow:hidden;}
+  .board .dx-ribbon-rule{border-radius:0;height:6px;}
+  .board .inner{padding:var(--space-6) var(--space-6) var(--space-7);display:flex;flex-direction:column;gap:var(--space-5);}
+
+  /* ---------- header ---------- */
+  .head{display:flex;justify-content:space-between;align-items:flex-start;gap:var(--space-4);flex-wrap:wrap;}
+  .head .eyebrow{display:flex;align-items:center;gap:12px;margin-bottom:8px;}
+  .head .eyebrow .dx-ribbon-rule{width:40px;height:5px;}
+  .head h1{font:800 26px/1.05 var(--font-display);letter-spacing:var(--tr-tight);margin:0;color:var(--fg-1);}
+  .head p{font:400 15px/1.4 var(--font-body);color:var(--fg-2);margin:6px 0 0;}
+  .head-right{display:flex;align-items:center;gap:18px;padding-top:6px;}
+  .stamp{display:inline-flex;align-items:center;gap:6px;font:500 13px/1 var(--font-narrow);color:var(--fg-3);letter-spacing:.02em;}
+  .link-out{display:inline-flex;align-items:center;gap:5px;font:700 13px/1 var(--font-body);color:var(--fg-link);text-decoration:none;white-space:nowrap;padding:4px 0;border-bottom:2px solid transparent;}
+  .link-out:hover{border-bottom-color:var(--brand-rot);}
+  .ico{width:15px;height:15px;stroke:currentColor;stroke-width:1.5;fill:none;stroke-linecap:round;stroke-linejoin:round;flex:none;}
+
+  /* ---------- top grid ---------- */
+  .toprow{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr 1fr;gap:var(--space-3);}
+  .card{background:var(--paper-raised);border-radius:var(--radius-md);box-shadow:var(--shadow-hairline);padding:18px 18px 16px;}
+  .label{font:700 11px/1 var(--font-narrow);text-transform:uppercase;letter-spacing:var(--tr-widest);color:var(--fg-2);}
+
+  /* hero authority card */
+  .hero{background:var(--brand-schwarz);box-shadow:none;color:var(--fg-on-dark);display:flex;flex-direction:column;padding:20px 20px 18px;}
+  .hero .label{color:var(--stone-300);}
+  .hero-mid{display:flex;align-items:center;gap:16px;margin:14px 0 4px;}
+  .donut{position:relative;width:74px;height:74px;flex:none;}
+  .donut .pct{position:absolute;inset:0;display:grid;place-items:center;font:700 18px/1 var(--font-accent);font-variant-numeric:tabular-nums;color:var(--paper);}
+  .hero-desc{font:400 14.5px/1.35 var(--font-body);color:var(--paper);}
+  .badge{display:inline-flex;align-items:center;gap:6px;align-self:flex-start;margin-top:12px;background:rgba(254,240,4,.12);color:var(--brand-gold);border:1px solid rgba(254,240,4,.34);font:800 12.5px/1 var(--font-body);padding:5px 11px;border-radius:var(--radius-pill);}
+  .hero-rule{height:1px;background:rgba(255,255,255,.14);margin:14px 0 10px;}
+  .hero-comp{font:500 12.5px/1.4 var(--font-mono);color:var(--stone-300);}
+  .hero-comp b{color:var(--stone-100);font-weight:600;}
+
+  /* engine cards */
+  .eng-top{display:flex;align-items:center;gap:8px;}
+  .eng-name{font:700 15px/1 var(--font-body);color:var(--fg-1);}
+  .dot{width:9px;height:9px;border-radius:50%;flex:none;}
+  .dot.ok{background:var(--status-success);}
+  .dot.watch{background:var(--status-warning);}
+  .eng-num{font:700 34px/1 var(--font-accent);font-variant-numeric:tabular-nums;letter-spacing:-.01em;color:var(--fg-1);margin:12px 0 6px;}
+  .eng-sub{font:400 13px/1.3 var(--font-body);color:var(--fg-2);display:flex;align-items:center;gap:6px;flex-wrap:wrap;}
+  .delta{display:inline-flex;align-items:center;gap:3px;font-weight:800;font-variant-numeric:tabular-nums;}
+  .delta.up{color:var(--status-success);}
+  .delta.down{color:var(--brand-rot);}
+  .delta .ico{width:13px;height:13px;stroke-width:2;}
+  .eng-foot{margin-top:14px;padding-top:12px;border-top:1px solid var(--border-hairline);font:500 12px/1 var(--font-narrow);letter-spacing:.03em;color:var(--fg-3);}
+
+  /* ---------- mid grid ---------- */
+  .midrow{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-3);}
+  .panel-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:14px;gap:12px;}
+  .panel-title{font:700 12px/1.2 var(--font-narrow);text-transform:uppercase;letter-spacing:var(--tr-wider);color:var(--fg-1);}
+  .panel-src{font:600 11px/1 var(--font-narrow);letter-spacing:.06em;color:var(--fg-3);text-transform:uppercase;}
+
+  .stat-pair{display:flex;gap:44px;}
+  .stat .big{font:700 34px/1 var(--font-accent);font-variant-numeric:tabular-nums;letter-spacing:-.01em;color:var(--fg-1);}
+  .stat .cap{font:400 12.5px/1.3 var(--font-body);color:var(--fg-2);margin-top:6px;display:flex;align-items:center;gap:5px;}
+  .cap .delta{font-size:12.5px;}
+  .spark{margin-top:10px;display:block;width:100%;height:64px;}
+
+  /* traffic bars */
+  .conv{display:flex;align-items:flex-start;gap:40px;margin-bottom:16px;}
+  .conv .mult{font:700 30px/1 var(--font-accent);color:var(--status-success);font-variant-numeric:tabular-nums;}
+  .conv .mult small{display:block;font:400 12.5px/1.3 var(--font-body);color:var(--fg-2);margin-top:7px;}
+  .bars{display:flex;flex-direction:column;gap:10px;}
+  .bar-row{display:grid;grid-template-columns:76px 1fr auto;align-items:center;gap:12px;}
+  .bar-name{font:400 13.5px/1 var(--font-body);color:var(--fg-2);}
+  .track{height:12px;background:var(--bone);border-radius:var(--radius-pill);overflow:hidden;}
+  .fill{height:100%;border-radius:var(--radius-pill);}
+  .bar-val{font:700 14px/1 var(--font-accent);font-variant-numeric:tabular-nums;color:var(--fg-1);}
+
+  /* ---------- grounding ---------- */
+  .ground{background:var(--paper-raised);border-radius:var(--radius-md);box-shadow:var(--shadow-hairline);padding:20px 22px 22px;}
+  .chips{display:flex;flex-wrap:wrap;gap:10px;}
+  .chip{display:inline-flex;align-items:center;gap:8px;background:var(--paper);border:1px solid var(--border-subtle);border-radius:var(--radius-pill);padding:8px 15px;font:400 14px/1 var(--font-body);color:var(--fg-1);}
+  .chip .tag{display:inline-flex;align-items:center;gap:4px;font:700 12.5px/1 var(--font-body);}
+  .chip .tag.cited{color:var(--status-success);}
+  .chip .tag.missing{color:var(--brand-rot);}
+  .chip .ico{width:13px;height:13px;stroke-width:2;}
+
+  @media (max-width:860px){
+    .toprow{grid-template-columns:1fr 1fr;}
+    .hero{grid-column:1 / -1;}
+    .midrow{grid-template-columns:1fr;}
+  }
+  @media (max-width:520px){
+    .wrap{padding:var(--space-4) var(--space-3) var(--space-6);}
+    .board .inner{padding:var(--space-5) var(--space-4);}
+    .toprow{grid-template-columns:1fr;}
+    .stat-pair,.conv{gap:28px;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="board">
+    <div class="dx-ribbon-rule"><i></i><i></i><i></i></div>
+    <div class="inner">
+
+      <!-- header -->
+      <div class="head">
+        <div>
+          <div class="eyebrow"><span class="dx-ribbon-rule"><i></i><i></i><i></i></span></div>
+          <h1>AI Visibility Overview</h1>
+          <p>How AI assistants and Google see dasexperten.com</p>
+        </div>
+        <div class="head-right">
+          <span class="stamp">
+            <svg class="ico" viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-2.64-6.36"/><path d="M21 3v5h-5"/></svg>
+            updated 07:00
+          </span>
+          <a class="link-out" href="#">Full report
+            <svg class="ico" viewBox="0 0 24 24"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- top row -->
+      <div class="toprow">
+        <!-- share of authority -->
+        <div class="card hero">
+          <span class="label">Share of Authority</span>
+          <div class="hero-mid">
+            <div class="donut">
+              <svg width="74" height="74" viewBox="0 0 74 74" aria-hidden="true">
+                <circle cx="37" cy="37" r="30" fill="none" stroke="rgba(255,255,255,.16)" stroke-width="8"/>
+                <circle cx="37" cy="37" r="30" fill="none" stroke="var(--brand-gold)" stroke-width="8"
+                  stroke-linecap="round" stroke-dasharray="35.8 152.6" transform="rotate(-90 37 37)"/>
+              </svg>
+              <span class="pct">19%</span>
+            </div>
+            <div class="hero-desc">of AI citations<br>in your query set</div>
+          </div>
+          <span class="badge">
+            <svg class="ico" viewBox="0 0 24 24" style="width:13px;height:13px;stroke:var(--brand-gold)"><path d="m5 3 2.5 6L14 9l-4.8 4 1.8 6L5 15.5 -0.9 19 1 13l-4.8-4 6.5 0z" transform="translate(6.5 0.5) scale(0.62)"/></svg>
+            #1 vs competitors
+          </span>
+          <div class="hero-rule"></div>
+          <div class="hero-comp"><b>Aster DM</b> 10% &middot; <b>ORAL7</b> 5% &middot; <b>Biofarma</b> 0%</div>
+        </div>
+
+        <!-- engine cards -->
+        <div class="card">
+          <div class="eng-top"><span class="eng-name">ChatGPT</span><span class="dot ok"></span></div>
+          <div class="eng-num">113</div>
+          <div class="eng-sub">citations
+            <span class="delta down"><svg class="ico" viewBox="0 0 24 24"><path d="M12 5v14"/><path d="m19 12-7 7-7-7"/></svg>42%</span>
+          </div>
+          <div class="eng-foot">crawled Jul 7</div>
+        </div>
+        <div class="card">
+          <div class="eng-top"><span class="eng-name">Gemini</span><span class="dot ok"></span></div>
+          <div class="eng-num">48</div>
+          <div class="eng-sub">citations
+            <span class="delta up"><svg class="ico" viewBox="0 0 24 24"><path d="M12 19V5"/><path d="m5 12 7-7 7 7"/></svg>12%</span>
+          </div>
+          <div class="eng-foot">crawled Jul 8</div>
+        </div>
+        <div class="card">
+          <div class="eng-top"><span class="eng-name">Perplexity</span><span class="dot watch"></span></div>
+          <div class="eng-num">26</div>
+          <div class="eng-sub">citations
+            <span class="delta up"><svg class="ico" viewBox="0 0 24 24"><path d="M12 19V5"/><path d="m5 12 7-7 7 7"/></svg>225%</span>
+          </div>
+          <div class="eng-foot">crawled Jul 1</div>
+        </div>
+        <div class="card">
+          <div class="eng-top"><span class="eng-name">Claude</span><span class="dot ok"></span></div>
+          <div class="eng-num">14</div>
+          <div class="eng-sub">citations
+            <span class="delta down"><svg class="ico" viewBox="0 0 24 24"><path d="M12 5v14"/><path d="m19 12-7 7-7-7"/></svg>55%</span>
+          </div>
+          <div class="eng-foot">crawled Jul 7</div>
+        </div>
+      </div>
+
+      <!-- mid row -->
+      <div class="midrow">
+        <!-- google search -->
+        <div class="card">
+          <div class="panel-head">
+            <span class="panel-title">Google Search &middot; 7 days</span>
+            <span class="panel-src">GSC</span>
+          </div>
+          <div class="stat-pair">
+            <div class="stat">
+              <div class="big">187</div>
+              <div class="cap">impressions
+                <span class="delta down"><svg class="ico" viewBox="0 0 24 24"><path d="M12 5v14"/><path d="m19 12-7 7-7-7"/></svg>45%</span>
+              </div>
+            </div>
+            <div class="stat">
+              <div class="big">8</div>
+              <div class="cap">clicks
+                <span class="delta down"><svg class="ico" viewBox="0 0 24 24"><path d="M12 5v14"/><path d="m19 12-7 7-7-7"/></svg>47%</span>
+              </div>
+            </div>
+          </div>
+          <svg class="spark" viewBox="0 0 460 64" preserveAspectRatio="none" aria-hidden="true">
+            <defs>
+              <linearGradient id="sg" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="var(--brand-rot)" stop-opacity="0.14"/>
+                <stop offset="1" stop-color="var(--brand-rot)" stop-opacity="0"/>
+              </linearGradient>
+            </defs>
+            <path d="M0,40 L77,46 L153,42 L230,28 L307,24 L384,17 L460,38 L460,64 L0,64 Z" fill="url(#sg)"/>
+            <path d="M0,40 L77,46 L153,42 L230,28 L307,24 L384,17 L460,38" fill="none" stroke="var(--brand-rot)" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/>
+            <circle cx="384" cy="17" r="3.4" fill="var(--brand-rot)"/>
+          </svg>
+        </div>
+
+        <!-- traffic from AI -->
+        <div class="card">
+          <div class="panel-head">
+            <span class="panel-title">Traffic from AI &middot; 7 days</span>
+            <span class="panel-src">GA4 + Clarity</span>
+          </div>
+          <div class="conv">
+            <div class="stat">
+              <div class="big">31</div>
+              <div class="cap">sessions
+                <span class="delta up"><svg class="ico" viewBox="0 0 24 24"><path d="M12 19V5"/><path d="m5 12 7-7 7 7"/></svg>64%</span>
+              </div>
+            </div>
+            <div class="mult">7&times;<small>conversion vs search</small></div>
+          </div>
+          <div class="bars">
+            <div class="bar-row">
+              <span class="bar-name">ChatGPT</span>
+              <div class="track"><div class="fill" style="width:82%;background:var(--brand-schwarz)"></div></div>
+              <span class="bar-val">19</span>
+            </div>
+            <div class="bar-row">
+              <span class="bar-name">Perplexity</span>
+              <div class="track"><div class="fill" style="width:36%;background:var(--brand-rot)"></div></div>
+              <span class="bar-val">8</span>
+            </div>
+            <div class="bar-row">
+              <span class="bar-name">Gemini</span>
+              <div class="track"><div class="fill" style="width:20%;background:var(--brand-gold)"></div></div>
+              <span class="bar-val">4</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- grounding -->
+      <div class="ground">
+        <div class="panel-head" style="margin-bottom:16px">
+          <span class="panel-title">What AI asks about you &mdash; grounding queries</span>
+          <a class="link-out" href="#" style="font-size:12.5px">all 21
+            <svg class="ico" viewBox="0 0 24 24" style="width:13px;height:13px"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </a>
+        </div>
+        <div class="chips">
+          <span class="chip">enzyme toothpaste UAE
+            <span class="tag cited"><svg class="ico" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>cited</span>
+          </span>
+          <span class="chip">probiotic mouthwash
+            <span class="tag cited"><svg class="ico" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>cited</span>
+          </span>
+          <span class="chip">oral care B2B Germany
+            <span class="tag missing"><svg class="ico" viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="M6 6l12 12"/></svg>missing</span>
+          </span>
+          <span class="chip">sensitive teeth enzyme
+            <span class="tag missing"><svg class="ico" viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="M6 6l12 12"/></svg>missing</span>
+          </span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+</body></html>
