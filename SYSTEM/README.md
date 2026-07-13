@@ -238,3 +238,16 @@ All HTML files import `colors_and_type.css` with a relative path. Assets are ref
 4. **Iconography.** Lucide is a placeholder-quality default. If the brand has a proper icon set, swap it in.
 5. **No photography was provided**, so product cards use CSS placeholders. Shoot on stone/ceramic props with warm natural light per the *Visual foundations → Backgrounds & imagery* spec.
 6. **Tone chosen: challenger DTC.** Per the intake, the design leans into the provocative register. If the brand wants to dial toward the clinical/science voice for certain surfaces (e.g. dentist-facing distributor portal), pass that note and I'll soften accordingly.
+
+---
+
+## Das Operator mobile UI (2026-07-13)
+
+ERP phone chrome and dashboard pattern (canonical in deSIGNER):
+
+- [mobile-ui.md](./mobile-ui.md) — global Operator mobile shell
+- [das-dashboard.md](./das-dashboard.md) — command-center pattern (mobile default)
+- App icon masters: `assets/app-icon-1024.png`, `assets/app-icon-squircle-1024.png`
+- Foundation rules: `../FOUNDATION/das-operator-mobile.md`
+
+Live code: `dasoperator` (`web/app/globals.css`, `web/components/layout/mobile-shell.tsx`).

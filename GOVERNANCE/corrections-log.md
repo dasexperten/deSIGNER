@@ -3,6 +3,27 @@
 One entry per caught design mistake. Format: date — what was wrong — the rule
 that prevents recurrence — where the rule now lives.
 
+## 2026-07-13 — ERP mobile chrome + app icon locked in deSIGNER
+
+- **What shipped:** Das Operator phone UI defaulted to das-dashboard pattern
+  (tricolor ribbon, paper-sunk canvas, raised cards); new PWA app icon
+  (heritage waves on schwarz).
+- **Rule:** ERP mobile language is canonical in deSIGNER
+  (`SYSTEM/mobile-ui.md`, `SYSTEM/das-dashboard.md`,
+  `FOUNDATION/das-operator-mobile.md`). Working copies in dasoperator Design/
+  and das-architektura Design/ must stay mirrors; deSIGNER wins on conflict.
+- **Lives in:** `FOUNDATION/das-operator-mobile.md`, `SYSTEM/mobile-ui.md`,
+  `ASSETS/logos/app-icon-*.png`.
+
+## 2026-07-13 — fake SEO metrics on ERP home (design-adjacent honesty)
+
+- **Wrong:** AI Visibility demo showed invented DA 26 / linking 164 /
+  backlinks 412 on the home dashboard.
+- **Rule:** dashboard numbers must be real source or marked `· demo data`
+  (das-dashboard rule). Authority KPIs come from Ubersuggest → ERP KV only.
+- **Lives in:** `SYSTEM/das-dashboard.md` (demo marker rule); metrics dossier
+  lives in `das-intelligence/references/domains/dasexperten.com/` (not design).
+
 ## 2026-07-11 — mobile flags wrapped / centered (now frozen)
 
 - **Wrong:** the mobile language-flags row was first centered (blank gaps at the

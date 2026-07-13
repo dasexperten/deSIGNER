@@ -36,3 +36,19 @@ standing rules for every Das Experten web surface, not a one-off fix.
 
 When any of these gaps is closed, update this file and log the correction in
 `GOVERNANCE/corrections-log.md`.
+
+---
+
+## Das Operator ERP mobile (2026-07-13)
+
+Storefront rules above (≤720 / ≤480) apply to **dasexperten.com**.
+
+The **ERP** (`erp.dasexperten.com`) has its own phone chrome, approved as the
+global default for all Operator pages &lt;768px:
+
+→ full rules: [`FOUNDATION/das-operator-mobile.md`](./das-operator-mobile.md)  
+→ pattern: [`SYSTEM/das-dashboard.md`](../SYSTEM/das-dashboard.md)  
+→ implementation map: [`SYSTEM/mobile-ui.md`](../SYSTEM/mobile-ui.md)
+
+ERP breakpoint is **767px** (Tailwind `md`), tricolor ribbon + paper-sunk tray.
+Do not mix storefront and ERP chrome casually.

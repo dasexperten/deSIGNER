@@ -9,8 +9,8 @@
 | Block | What lives there | Copied from (source of the copy) |
 | --- | --- | --- |
 | `FOUNDATION/` | Design disciplines: principles, UI/UX rules, mobile-first, partner standards | Distilled from `dasexperten.com/Design/README.md`, `dasexperten.com/BACKLOGS/2026-07-06_mobile-friendly-design-discipline.md`, ui-kit READMEs |
-| `SYSTEM/` | Canonical Das Experten design system: `colors_and_type.css`, fonts, 17 preview pages, 4 UI kits | `dasexperten.com/Design/` (see freshness note below) |
-| `ASSETS/logos/` | logo-full / logo-mark / logo-wordmark, de-logo, de-loyalty-icon, logo_dark / logo_light | `dasexperten.com/Design/assets/`, `das-architektura/DESIGNS/`, `SKILLS/das-presenter/assets/` |
+| `SYSTEM/` | Canonical Das Experten design system: `colors_and_type.css`, fonts, 17 preview pages, 4 UI kits, **das-dashboard + Operator mobile-ui**, app-icon masters | `dasexperten.com/Design/` + `dasoperator/Design/` (2026-07-13) |
+| `ASSETS/logos/` | logo-full / logo-mark / logo-wordmark, de-logo, de-loyalty-icon, logo_dark / logo_light, **Operator app-icon set** | `dasexperten.com/Design/assets/`, `das-architektura/DESIGNS/`, `SKILLS/das-presenter/assets/`, `dasoperator/Design/assets/` |
 | `ASSETS/products/` | 21 product PNGs (DE1xx / DE2xx) | `SKILLS/das-presenter/assets/products/` |
 | `ASSETS/characters/` | 86 character reference models + `characters_mapping.json` | `das-architektura/CHARACTERS (reference models)/`; mapping from `dasexperten.com/SKILLS/atlascloud/references/` |
 | `ASSETS/packaging/` | packaging-localizer full tree (SVG templates, detox_cdr, out/ renders, worker src), `Das Experten Design System-handoff.zip`, `Microbiome Friendly-handoff.zip`, innoweiss 70ml dieline photo | `das-architektura/DESIGNS/`, `dasexperten.com/Design/assets/` |
@@ -24,6 +24,21 @@ at consolidation time (`diff -rq` clean). The `.com` copy carried the newer
 commit (2026-07-09 13:18 +0400, `209cea3` vs 13:13, `ce7ba04`), so
 `dasexperten.com/Design/` is recorded as the canonical origin. No discrepancy
 to log.
+
+## SYSTEM refresh 2026-07-13 — Das Operator mobile + app icon
+
+Copied from live `dasoperator/Design/` (and brand runtime exports):
+
+| Path | Content |
+| --- | --- |
+| `SYSTEM/das-dashboard.md` | Command-center pattern; **also ERP mobile default** |
+| `SYSTEM/mobile-ui.md` | Global phone chrome for Operator (&lt;768px) |
+| `SYSTEM/assets/app-icon-1024.png` | Full-square app icon master |
+| `SYSTEM/assets/app-icon-squircle-1024.png` | Squircle preview |
+| `ASSETS/logos/app-icon-*.png` + `favicon-32.png` | Runtime sizes |
+| `FOUNDATION/das-operator-mobile.md` | Discipline rules for ERP mobile |
+
+Live implementation remains in `dasoperator` web shell; deSIGNER is the design SSOT.
 
 ## Inventory (counts at consolidation, 2026-07-10)
 
@@ -58,7 +73,9 @@ Edit flow: change here → sync to hub → hub distributes.
 - Product formulas / clinical data → `technolog`, `product-skill`
   (never re-key clinical numbers here; brand/product SSOT is das-architektura).
 - Website build files → `dasexperten.com/site/com/`.
-- Public design-methods showcase → `das-intelligence` (separate initiative).
+- **SEO / GEO / Ubersuggest / domain metrics** → `das-intelligence/references/domains/`
+  (not design; numbers are not brand assets).
+- Public design-methods showcase → `das-intelligence` skills (separate initiative).
 - Estate secrets → `das-architektura/SECRETS/` (nothing secret lives here).
 
 ## Declaration
