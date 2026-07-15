@@ -20,6 +20,7 @@ If the user invokes this skill without any other guidance, ask them what they wa
 - `ui_kits/ecommerce/` — product detail page + cart drawer.
 - `ui_kits/distributor/` — B2B partner portal dashboard.
 - `ui_kits/packaging/` — carton chassis, anatomy, claim strips, seals.
+- `ui_kits/organizacia/` — DASORG agent board dashboard (stage `2026-07-15-backlog-v5`: dual knowledge/compete bars, `#rank` bubble).
 - `slides/` — distributor pitch deck (deck-stage based, 1920×1080).
 - `preview/` — design-system preview cards.
 

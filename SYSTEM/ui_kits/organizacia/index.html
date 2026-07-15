@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="dasorg-ui" content="2026-07-15-backlog-v5">
+<meta name="designer-kit" content="organizacia-dashboard">
+<title>deSIGNER · organizacia dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=Archivo+Narrow:wght@500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* Frozen design stage 2026-07-15-backlog-v5 — tokens from live DASORG board */
+:root{
+  --brand-schwarz:#282229;--brand-rot:#E5202C;--brand-gold:#FEF004;--brand-schwarz-ink:#1A1519;
+  --paper:#FBFAF6;--paper-raised:#FFFFFF;--paper-sunk:#F3F0E8;--bone:#EDE8DD;
+  --stone-300:#9C9384;--stone-400:#6E6558;--stone-500:#4A4238;
+  --fg-1:var(--brand-schwarz-ink);--fg-2:var(--stone-500);--fg-3:var(--stone-400);
+  --border-hairline:rgba(26,21,25,.08);--border-subtle:rgba(26,21,25,.14);--border-strong:rgba(26,21,25,.32);
+  --status-success:#2E7D4F;--status-warning:#C77A00;
+  --radius-sm:4px;--radius-md:6px;--radius-lg:10px;--radius-pill:999px;
+  --shadow-card:0 1px 2px rgba(26,21,25,.05),0 0 0 1px var(--border-hairline);
+  --shadow-raised:0 4px 16px -6px rgba(26,21,25,.12),0 0 0 1px var(--border-hairline);
+  --font-display:"Archivo",system-ui,sans-serif;
+  --font-meta:"Archivo Narrow",system-ui,sans-serif;
+  --font-mono:"Manrope",ui-monospace,monospace;
+  --ease:cubic-bezier(.2,.7,.2,1);
+}
+*{box-sizing:border-box;margin:0}
+body{background:var(--paper);color:var(--fg-1);font:15px/1.5 var(--font-display);min-height:100vh}
+.ribbon{height:4px;background:linear-gradient(90deg,var(--brand-schwarz) 0 33.33%,var(--brand-rot) 33.33% 66.66%,var(--brand-gold) 66.66% 100%)}
+.top{
+  background:var(--paper-raised);border-bottom:1px solid var(--border-subtle);
+  padding:14px 20px 12px;position:sticky;top:0;z-index:8;
+}
+.top-inner{max-width:1120px;margin:0 auto;display:flex;flex-wrap:wrap;gap:12px 16px;align-items:center;justify-content:space-between}
+.brand h1{font-weight:900;font-size:20px;letter-spacing:.04em}
+.brand .sub{font-family:var(--font-meta);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--fg-3);font-weight:600}
+.stage-pill{
+  font-family:var(--font-mono);font-size:11px;font-weight:800;
+  padding:6px 12px;border-radius:var(--radius-pill);
+  background:rgba(13,25,158,.1);border:1px solid rgba(13,25,158,.25);color:#0D199E;
+}
+main{max-width:1120px;margin:0 auto;padding:20px 16px 48px}
+.note{
+  background:var(--paper-raised);border:1px solid var(--border-hairline);border-radius:var(--radius-lg);
+  box-shadow:var(--shadow-card);padding:14px 16px;margin-bottom:16px;font-size:13px;color:var(--fg-2);line-height:1.45;
+}
+.note b{color:var(--fg-1)}
+.note code{font-family:var(--font-mono);font-size:11px;background:var(--paper-sunk);padding:1px 5px;border-radius:3px}
+.hero{
+  background:var(--brand-schwarz);color:var(--paper);border-radius:var(--radius-lg);
+  padding:18px 20px;margin-bottom:16px;box-shadow:var(--shadow-raised);
+}
+.hero h2{font-weight:900;font-size:22px;margin-bottom:4px}
+.hero p{color:rgba(251,250,246,.72);font-size:13px;max-width:560px}
+.dash-panel{
+  background:var(--paper-raised);border:1px solid var(--border-hairline);border-radius:var(--radius-lg);
+  box-shadow:var(--shadow-card);padding:14px 16px;margin-bottom:16px;
+}
+.dash-panel h3{
+  font-family:var(--font-meta);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--fg-3);font-weight:700;margin-bottom:10px;
+}
+.stack-bar{
+  display:flex;height:14px;border-radius:var(--radius-pill);overflow:hidden;
+  background:var(--paper-sunk);border:1px solid var(--border-hairline);
+}
+.stack-bar > i{display:block;height:100%;min-width:0}
+.stack-bar.sm{height:9px}
+.stack-bar.lg{height:16px}
+.seg-gold{background:linear-gradient(90deg,#C9A227,#FEF004)}
+.seg-green{background:linear-gradient(90deg,#1B7A3D,#3DDC84)}
+.seg-blue{background:linear-gradient(90deg,#0D199E,#3d4fd4)}
+.seg-act{background:linear-gradient(90deg,#E67E22,#F5A623)}
+.seg-comp{background:linear-gradient(90deg,#0D9488,#2DD4BF)}
+.seg-res{background:linear-gradient(90deg,#1B7A3D,#3DDC84)}
+.seg-rel{background:linear-gradient(90deg,#6D28D9,#A78BFA)}
+.seg-eng{background:linear-gradient(90deg,#BE185D,#F472B6)}
+.seg-know{background:linear-gradient(90deg,#C9A227,#FEF004)}
+.seg-idle{background:var(--bone)}
+.meter{margin-top:0}
+.meter-row{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:3px;font-size:11px}
+.meter-row .lbl{color:var(--fg-3);font-weight:600}
+.meter-row .val{font-family:var(--font-mono);font-weight:800;font-variant-numeric:tabular-nums;color:var(--fg-1)}
+.dual-bars{margin-top:10px;display:flex;flex-direction:column;gap:10px}
+.know-legend{display:flex;flex-wrap:wrap;gap:8px 12px;margin-top:10px;font-size:11px;color:var(--fg-3);font-weight:600}
+.know-legend span{display:inline-flex;align-items:center;gap:5px}
+.know-legend i{width:9px;height:9px;border-radius:2px;display:inline-block}
+.rank-bubble{
+  flex:0 0 auto;display:inline-flex;align-items:center;justify-content:center;
+  min-width:22px;height:18px;padding:0 6px;border-radius:var(--radius-pill);
+  font-family:var(--font-mono);font-weight:900;font-size:11px;line-height:1;
+  font-variant-numeric:tabular-nums;color:#0D199E;
+  background:rgba(13,25,158,.12);border:1px solid rgba(13,25,158,.28);white-space:nowrap;
+}
+.compete-row{display:flex;align-items:center;gap:8px;min-width:0}
+.compete-row .compete-main{flex:1 1 auto;min-width:0}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px;padding-top:4px}
+.card{
+  background:var(--paper-raised);border:1px solid var(--border-hairline);border-radius:var(--radius-lg);
+  box-shadow:var(--shadow-card);overflow:visible;position:relative;
+}
+.card-top{height:4px;background:var(--stone-300);opacity:.35}
+.card-body{padding:16px 14px 16px 14px;padding-right:16px;position:relative}
+.nm{font-weight:800;font-size:17px;line-height:1.15;margin-bottom:2px}
+.nm .fn,.nm .ln{display:block}
+.rl{color:var(--fg-3);font-size:13px;margin-bottom:10px;font-weight:600;line-height:1.25}
+.badges{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:4px}
+.b{
+  font-family:var(--font-mono);font-size:10px;font-weight:700;padding:2px 6px;border-radius:var(--radius-pill);
+  background:var(--paper-sunk);color:var(--fg-2);border:1px solid var(--border-hairline);
+}
+.b.amber{background:rgba(199,122,0,.12);color:var(--status-warning);border-color:rgba(199,122,0,.25)}
+.b.blue{background:rgba(13,25,158,.08);color:#0D199E;border-color:rgba(13,25,158,.18)}
+.b.green{background:rgba(46,125,79,.1);color:var(--status-success);border-color:rgba(46,125,79,.22)}
+.card-foot{margin-top:12px;font-size:11px;color:var(--fg-3);font-weight:600}
+.card-foot em{color:var(--brand-rot);font-style:normal;font-weight:800}
+.sec{font-family:var(--font-meta);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--fg-3);font-weight:700;margin:18px 0 10px}
+</style>
+</head>
+<body>
+<div class="ribbon"></div>
+<header class="top">
+  <div class="top-inner">
+    <div class="brand">
+      <h1>DASORG</h1>
+      <div class="sub">deSIGNER kit · organizacia dashboard</div>
+    </div>
+    <span class="stage-pill">stage 2026-07-15-backlog-v5</span>
+  </div>
+</header>
+<main>
+  <div class="note">
+    <b>Design SSOT snapshot</b> of the agent board at stage <code>2026-07-15-backlog-v5</code>.
+    Offline preview (mock data). Full runtime UI: <code>board-ui.snapshot.html</code> · live board:
+    <a href="https://org.dasexperten.com" style="color:#0D199E;font-weight:700">org.dasexperten.com</a>.
+    Runtime code remains in <code>dasexperten/organizacia</code>.
+  </div>
+
+  <section class="hero">
+    <div>
+      <h2>Team board · design stage</h2>
+      <p>Two stacked bars per agent: strict Knowledge (gold|green|blue) and relative Compete (multi-driver) with a left <b>#rank</b> bubble.</p>
+    </div>
+  </section>
+
+  <section class="dash-panel">
+    <h3>Org pulse · dual stacked bars</h3>
+    <div class="dual-bars">
+      <div class="meter">
+        <div class="meter-row"><span class="lbl">Knowledge (org avg · gold+green+blue)</span><span class="val">14%</span></div>
+        <div class="stack-bar lg">
+          <i class="seg-gold" style="width:11%"></i>
+          <i class="seg-green" style="width:2%"></i>
+          <i class="seg-blue" style="width:1%"></i>
+        </div>
+      </div>
+      <div class="meter">
+        <div class="meter-row"><span class="lbl">Competitiveness (org · stacked drivers · relative)</span><span class="val">50% · mid ≈ 50</span></div>
+        <div class="stack-bar lg">
+          <i class="seg-act" style="width:9%"></i>
+          <i class="seg-comp" style="width:11%"></i>
+          <i class="seg-res" style="width:10%"></i>
+          <i class="seg-rel" style="width:9%"></i>
+          <i class="seg-eng" style="width:6%"></i>
+          <i class="seg-know" style="width:5%"></i>
+        </div>
+      </div>
+    </div>
+    <div class="know-legend">
+      <span><i class="seg-gold"></i> Corporate</span>
+      <span><i class="seg-green"></i> Self-learned</span>
+      <span><i class="seg-blue"></i> Research</span>
+      <span>Knowledge is strict — most agents under ~30%</span>
+    </div>
+    <div class="know-legend">
+      <span><i class="seg-act"></i> Activity</span>
+      <span><i class="seg-comp"></i> Completion</span>
+      <span><i class="seg-res"></i> Results</span>
+      <span><i class="seg-rel"></i> Reliability</span>
+      <span><i class="seg-eng"></i> Engagement</span>
+      <span><i class="seg-know"></i> Knowledge</span>
+      <span>Compete is relative — top can hit 80–90% when peers idle</span>
+    </div>
+  </section>
+
+  <div class="sec">Agent cards · dual bars · #rank bubble</div>
+  <div class="grid" id="grid"></div>
+</main>
+<script>
+const MOCK = [
+  {
+    name: 'Mina Rutunya', role: 'Sysadmin', rank: 1, knowPct: 15,
+    gold: 12, green: 3, blue: 0, competePct: 75,
+    segs: [8, 18, 16, 12, 14, 7], badges: { prog: 1, due: 4, done7: 2 },
+    foot: 'Infra health · webhook watch'
+  },
+  {
+    name: 'Roberta Di Maria', role: 'Content · SEO · DA · GEO', rank: 2, knowPct: 30,
+    gold: 11, green: 12, blue: 7, competePct: 74,
+    segs: [12, 14, 14, 10, 16, 8], badges: { prog: 2, due: 7, done7: 1 },
+    foot: 'GEO pack · seminar digest'
+  },
+  {
+    name: 'Lena Sergeeva', role: 'Chief of Staff', rank: 3, knowPct: 18,
+    gold: 15, green: 2, blue: 1, competePct: 65,
+    segs: [7, 20, 18, 10, 0, 10], badges: { due: 6, done7: 5 },
+    foot: 'Owner brief · route queue'
+  },
+  {
+    name: 'Julian Farah', role: 'GEO Specialist', rank: 11, knowPct: 4,
+    gold: 4, green: 0, blue: 0, competePct: 16,
+    segs: [4, 0, 0, 8, 0, 4], badges: { due: 5, done7: 0 },
+    foot: 'Early research · finding report'
+  }
+];
+
+function nameTwo(n){
+  const p = n.split(/\s+/);
+  return `<span class="fn">${p[0]}</span><span class="ln">${p.slice(1).join(' ') || '&nbsp;'}</span>`;
+}
+function knowBar(a){
+  return `<div class="card-bars">
+    <div class="meter">
+      <div class="meter-row"><span class="lbl">Knowledge</span><span class="val">${a.knowPct}%</span></div>
+      <div class="stack-bar sm">
+        ${a.gold?`<i class="seg-gold" style="width:${a.gold}%"></i>`:''}
+        ${a.green?`<i class="seg-green" style="width:${a.green}%"></i>`:''}
+        ${a.blue?`<i class="seg-blue" style="width:${a.blue}%"></i>`:''}
+      </div>
+    </div>
+  </div>`;
+}
+function competeBar(a){
+  const keys = ['seg-act','seg-comp','seg-res','seg-rel','seg-eng','seg-know'];
+  let segs = '';
+  a.segs.forEach((w,i)=>{ if(w>0) segs += `<i class="${keys[i]}" style="width:${w}%"></i>`; });
+  return `<div class="card-bars" style="margin-top:8px">
+    <div class="meter-row"><span class="lbl">Compete</span><span class="val">${a.competePct}%</span></div>
+    <div class="compete-row">
+      <span class="rank-bubble">#${a.rank}</span>
+      <div class="compete-main"><div class="stack-bar sm">${segs}</div></div>
+    </div>
+  </div>`;
+}
+function badges(b){
+  let h = '';
+  if (b.due) h += `<span class="b amber">Due ${b.due}</span>`;
+  if (b.prog) h += `<span class="b blue">In work ${b.prog}</span>`;
+  h += `<span class="b green">Done 7d ${b.done7||0}</span>`;
+  return h;
+}
+document.getElementById('grid').innerHTML = MOCK.map(a => `
+  <article class="card">
+    <div class="card-top"></div>
+    <div class="card-body">
+      <div class="nm">${nameTwo(a.name)}</div>
+      <div class="rl">${a.role}</div>
+      <div class="badges">${badges(a.badges)}</div>
+      <div class="dual-bars">
+        ${knowBar(a)}
+        ${competeBar(a)}
+      </div>
+      <div class="card-foot"><em>${a.foot}</em></div>
+    </div>
+  </article>
+`).join('');
+</script>
+</body>
+</html>

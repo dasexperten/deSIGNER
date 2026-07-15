@@ -9,7 +9,7 @@
 | Block | What lives there | Copied from (source of the copy) |
 | --- | --- | --- |
 | `FOUNDATION/` | Design disciplines: principles, UI/UX rules, mobile-first, partner standards | Distilled from `dasexperten.com/Design/README.md`, `dasexperten.com/BACKLOGS/2026-07-06_mobile-friendly-design-discipline.md`, ui-kit READMEs |
-| `SYSTEM/` | Canonical Das Experten design system: `colors_and_type.css`, fonts, 17 preview pages, 4 UI kits, **das-dashboard + Operator mobile-ui**, app-icon masters | `dasexperten.com/Design/` + `dasoperator/Design/` (2026-07-13) |
+| `SYSTEM/` | Canonical Das Experten design system: `colors_and_type.css`, fonts, 17 preview pages, UI kits (distributor/ecommerce/marketing/packaging/**organizacia**/das-dashboard/Operator mobile-ui), app-icon masters | `dasexperten.com/Design/` + `dasoperator/Design/` + `organizacia/api/ui.html` stage snapshot |
 | `ASSETS/logos/` | logo-full / logo-mark / logo-wordmark, de-logo, de-loyalty-icon, logo_dark / logo_light, **Operator app-icon set** | `dasexperten.com/Design/assets/`, `das-architektura/DESIGNS/`, `SKILLS/das-presenter/assets/`, `dasoperator/Design/assets/` |
 | `ASSETS/products/` | 21 product PNGs (DE1xx / DE2xx) | `SKILLS/das-presenter/assets/products/` |
 | `ASSETS/characters/` | 86 character reference models + `characters_mapping.json` | `das-architektura/CHARACTERS (reference models)/`; mapping from `dasexperten.com/SKILLS/atlascloud/references/` |
@@ -49,7 +49,7 @@ Live implementation remains in `dasoperator` web shell; deSIGNER is the design S
 - Products: **21 PNGs** (DE101…DE210; `desktop.ini` Windows junk in the source
   was not copied).
 - Previews: **17 HTML pages** in `SYSTEM/preview/`.
-- UI kits: **4** — distributor, ecommerce, marketing, packaging.
+- UI kits: distributor, ecommerce, marketing, packaging, **organizacia** (agent board stage `2026-07-15-backlog-v5`), plus das-dashboard / Operator mobile-ui where present.
 - Fonts: Eras-Bold_Regular.ttf, megafonts_inc.ttf
   (note from Design SKILL.md: the uploaded Eras TTF is corrupted; system falls
   back to Archivo Black — kept verbatim as in source).

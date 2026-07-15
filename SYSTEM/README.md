@@ -222,7 +222,8 @@ Das Experten's public materials are **not consistent** about iconography. They u
 │   ├─ marketing/                 ← dasexperten.com homepage + PLP
 │   ├─ ecommerce/                 ← PDP + cart + checkout
 │   ├─ distributor/               ← B2B portal (login, catalog, order)
-│   └─ packaging/                 ← carton templates & label system
+│   ├─ packaging/                 ← carton templates & label system
+│   └─ organizacia/               ← DASORG agent board (stage 2026-07-15-backlog-v5)
 └─ slides/                        ← distributor pitch deck template
 ```
 
