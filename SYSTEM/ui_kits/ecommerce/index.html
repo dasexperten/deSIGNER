@@ -126,20 +126,50 @@ nav.top img{height:32px}
 .co-head .close{background:transparent;border:none;font-size:20px;cursor:pointer;width:36px;height:36px;border-radius:var(--radius-sm)}
 .co-head .close:hover{background:var(--bone)}
 .co-rule{margin-bottom:18px}
-.co-rail{display:flex;gap:20px;margin-bottom:24px}
-.co-rs{display:flex;align-items:center;gap:8px;font:700 11px/1 var(--font-narrow);letter-spacing:.14em;text-transform:uppercase;color:var(--fg-3)}
-.co-rs i{width:20px;height:20px;border-radius:50%;border:1px solid var(--border-strong);display:grid;place-items:center;font:700 10px/1 var(--font-body);font-style:normal;color:var(--fg-3)}
-.co-rs.on{color:var(--fg-1)}
-.co-rs.on i{background:var(--brand-schwarz-ink);border-color:var(--brand-schwarz-ink);color:var(--paper)}
-.co-rs.done{color:var(--fg-2)}
-.co-rs.done i{background:var(--paper-sunk);color:var(--fg-2)}
-.co-step{display:none}
-.co-step.on{display:block;animation:coStep var(--dur-base) var(--ease-standard)}
-@keyframes coStep{from{opacity:0}to{opacity:1}}
+@keyframes coFade{from{opacity:0}to{opacity:1}}
 .co-eyebrow{font:700 11px/1 var(--font-narrow);text-transform:uppercase;letter-spacing:.18em;color:var(--fg-2);margin-bottom:12px}
-.co-x{display:flex;gap:10px;margin-bottom:4px}
 .co-xs{width:44px;height:44px;border-radius:var(--radius-lg);border:1px solid var(--border-subtle);background:var(--paper-raised);display:grid;place-items:center;cursor:pointer;touch-action:manipulation;transition:background var(--dur-fast) var(--ease-standard)}
 .co-xs:hover{background:var(--bone)}
+/* payment method tiles — payment first, so the window reads as "pay here" */
+.co-pm{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:14px}
+.co-pmt{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;min-height:58px;padding:10px 6px;border:1px solid var(--border-strong);border-radius:var(--radius-sm);background:var(--paper-raised);cursor:pointer;font:700 11px/1 var(--font-narrow);letter-spacing:.06em;color:var(--fg-2);touch-action:manipulation;transition:background var(--dur-fast) var(--ease-standard)}
+.co-pmt:hover{background:var(--bone)}
+.co-pmt.sel{border-color:var(--brand-rot);box-shadow:0 0 0 1px var(--brand-rot);color:var(--fg-1)}
+/* the credit card — fields live ON the card */
+.co-ccwrap{display:none;gap:16px;align-items:flex-end;flex-wrap:wrap;margin:2px 0 4px}
+.co-ccwrap.on{display:flex;animation:coFade var(--dur-base) var(--ease-standard)}
+.co-cc{position:relative;flex:1 1 300px;max-width:400px;aspect-ratio:1.586;background:var(--brand-schwarz-ink);border-radius:var(--radius-lg);box-shadow:var(--shadow-float);padding:20px 22px;display:flex;flex-direction:column;color:var(--paper)}
+.co-cc .top{display:flex;justify-content:space-between;align-items:flex-start}
+.co-cc .chip{width:40px;height:29px;border-radius:5px;background:var(--brand-gold);position:relative;opacity:.92}
+.co-cc .chip::after{content:'';position:absolute;inset:5px;border:1px solid rgba(26,21,25,.35);border-radius:3px}
+.co-cc .scheme{height:30px;min-width:56px;display:flex;align-items:center;justify-content:flex-end;opacity:0;transition:opacity var(--dur-base) var(--ease-standard)}
+.co-cc .scheme.on{opacity:1}
+.co-cc input{background:transparent;border:none;color:var(--paper);padding:0;border-radius:0}
+.co-cc input:focus{outline:none;box-shadow:0 1px 0 var(--brand-gold)}
+.co-cc input::placeholder{color:rgba(251,250,246,.38)}
+.co-cc .num{margin-top:auto;width:100%;font:600 20px/1.2 var(--font-mono);letter-spacing:.1em;font-variant-numeric:tabular-nums}
+.co-cc .row2{display:flex;justify-content:space-between;align-items:flex-end;gap:14px;margin-top:14px}
+.co-cc .lbl{display:block;font:600 8px/1 var(--font-narrow);letter-spacing:.18em;text-transform:uppercase;color:rgba(251,250,246,.55);margin-bottom:5px}
+.co-cc .nm{width:100%;font:600 12px/1.2 var(--font-narrow);letter-spacing:.14em;text-transform:uppercase}
+.co-cc .exp{width:58px;font:600 12px/1.2 var(--font-mono);letter-spacing:.08em}
+.co-cvc{flex:0 0 120px}
+/* address autocomplete (classifier mock) */
+.co-addrwrap{position:relative}
+.co-sugg{position:absolute;top:calc(100% + 4px);left:0;right:0;background:var(--paper-raised);border-radius:var(--radius-sm);box-shadow:var(--shadow-raised);z-index:5;display:none;overflow:hidden}
+.co-sugg.on{display:block;animation:coFade var(--dur-fast) var(--ease-standard)}
+.co-sugg button{display:block;width:100%;text-align:left;padding:11px 12px;min-height:44px;background:transparent;border:none;border-bottom:1px solid var(--border-hairline);font:500 13px/1.3 var(--font-body);color:var(--fg-1);cursor:pointer;touch-action:manipulation}
+.co-sugg button:last-child{border-bottom:none}
+.co-sugg button:hover{background:var(--bone)}
+.co-sugg .plz{color:var(--fg-3);font:500 11px/1 var(--font-narrow);display:block;margin-top:3px}
+/* delivery ETA clock widget */
+.co-eta{display:none;gap:16px;align-items:center;margin:14px 0;padding:14px 16px;background:var(--paper-sunk);border-radius:var(--radius-md)}
+.co-eta.on{display:flex;animation:coFade var(--dur-base) var(--ease-standard)}
+.co-clock{width:64px;height:64px;flex:none}
+.co-clock .hand{transform-origin:32px 32px;transition:transform var(--dur-slow) var(--ease-standard)}
+.co-eta .etadate{font:italic 600 16px/1.3 var(--font-accent);color:var(--fg-1)}
+.co-eta .sub{font:500 11px/1.4 var(--font-narrow);color:var(--fg-2);margin-top:4px}
+.co-ship{display:none}
+.co-ship.on{display:block;animation:coFade var(--dur-base) var(--ease-standard)}
 .co-div{display:flex;align-items:center;gap:12px;margin:18px 0;font:500 11px/1 var(--font-narrow);text-transform:uppercase;letter-spacing:.14em;color:var(--fg-3)}
 .co-div::before,.co-div::after{content:'';flex:1;height:1px;background:var(--border-hairline)}
 .co-field{margin-bottom:14px}
@@ -155,15 +185,13 @@ nav.top img{height:32px}
 .co-btn:hover{background:#c51824}
 .co-ghost{padding:15px 18px;background:transparent;border:1px solid var(--border-strong);border-radius:var(--radius-sm);font:600 13px/1 var(--font-body);color:var(--fg-1);cursor:pointer;min-height:44px;touch-action:manipulation}
 .co-ghost:hover{background:var(--bone)}
-.co-btn:active,.co-ghost:active,.co-xs:active,.co-wallet:active,.ru-mkt:active{transform:scale(.98)}
+.co-btn:active,.co-ghost:active,.co-xs:active,.co-pmt:active,.ru-mkt:active{transform:scale(.98)}
 .co-rates{display:flex;flex-direction:column;gap:10px;margin-bottom:6px}
 .co-rate{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:13px 16px;min-height:44px;border:1px solid var(--border-strong);border-radius:var(--radius-sm);background:var(--paper-raised);cursor:pointer;touch-action:manipulation}
 .co-rate .rn{font:700 13px/1.2 var(--font-body)}
 .co-rate .re{font:500 11px/1 var(--font-narrow);color:var(--fg-3);text-transform:uppercase;letter-spacing:.1em;margin-top:5px}
 .co-rate .rf{font:700 15px/1 var(--font-accent)}
 .co-rate.sel{border-color:var(--brand-rot);box-shadow:0 0 0 1px var(--brand-rot)}
-.co-wallets{display:flex;gap:8px;margin-bottom:4px}
-.co-wallet{flex:1;min-height:44px;background:var(--brand-schwarz-ink);color:var(--paper);border:none;border-radius:var(--radius-sm);font:700 13px/1 var(--font-body);cursor:pointer;touch-action:manipulation}
 .co-sum{background:var(--paper-sunk);padding:26px 24px;display:flex;flex-direction:column;overflow-y:auto}
 .co-sum .co-eyebrow{margin-bottom:14px}
 .co-si{display:grid;grid-template-columns:48px 1fr auto;gap:12px;padding:12px 0;border-bottom:1px solid var(--border-hairline);align-items:center}
@@ -188,6 +216,8 @@ nav.top img{height:32px}
   .co-card{grid-template-columns:1fr;max-height:94vh;border-radius:var(--radius-lg) var(--radius-lg) 0 0;overflow-y:auto;transform:translateY(24px)}
   .co-form,.co-sum{overflow:visible;padding:22px 20px}
   .co-2col{grid-template-columns:1fr}
+  .co-pm{grid-template-columns:1fr 1fr}
+  .co-cc .num{font-size:17px}
 }
 
 /* RU VARIANT — static design annotation (marketplace fallback, cart.js ruFallback) */
@@ -346,64 +376,69 @@ nav.top img{height:32px}
     <div class="co-form">
       <div class="co-head"><h3>Kasse</h3><button class="close" id="co-close" aria-label="Schließen">×</button></div>
       <div class="dx-ribbon-rule co-rule"><i></i><i></i><i></i></div>
-      <div class="co-rail" id="co-rail">
-        <span class="co-rs on" data-rs="1"><i>1</i>Kontakt</span>
-        <span class="co-rs" data-rs="2"><i>2</i>Versand</span>
-        <span class="co-rs" data-rs="3"><i>3</i>Zahlung</span>
+
+      <!-- ZAHLUNG — first, so the window reads as payment -->
+      <div class="co-eyebrow">Zahlung</div>
+      <div class="co-pm" id="co-pm">
+        <button class="co-pmt" data-pm="apple"><svg viewBox="0 0 60 20" width="54" height="18"><text x="30" y="15" text-anchor="middle" font-family="Archivo" font-weight="800" font-size="14" fill="var(--fg-1)">Pay</text></svg>Apple Pay</button>
+        <button class="co-pmt" data-pm="google"><svg viewBox="0 0 60 20" width="54" height="18"><text x="21" y="15.5" text-anchor="middle" font-family="Archivo" font-weight="800" font-size="15" fill="#4285F4">G</text><text x="40" y="15" text-anchor="middle" font-family="Archivo" font-weight="700" font-size="13" fill="var(--fg-1)">Pay</text></svg>Google Pay</button>
+        <button class="co-pmt" data-pm="paypal"><svg viewBox="0 0 60 20" width="54" height="18"><text x="18" y="15" text-anchor="middle" font-family="Archivo" font-weight="800" font-style="italic" font-size="13" fill="#003087">Pay</text><text x="42" y="15" text-anchor="middle" font-family="Archivo" font-weight="800" font-style="italic" font-size="13" fill="#009CDE">Pal</text></svg>PayPal</button>
+        <button class="co-pmt sel" data-pm="card"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="var(--fg-1)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>Kreditkarte</button>
       </div>
 
-      <!-- STEP 1 — Kontakt & Adresse -->
-      <section class="co-step on" data-step="1">
-        <div class="co-eyebrow">Express — Daten mit einem Klick</div>
-        <div class="co-x">
-          <button class="co-xs" aria-label="Google"><svg viewBox="0 0 24 24" width="20" height="20"><text x="12" y="17.5" text-anchor="middle" font-family="Archivo" font-weight="800" font-size="17" fill="#4285F4">G</text></svg></button>
-          <button class="co-xs" aria-label="Facebook"><svg viewBox="0 0 24 24" width="20" height="20"><text x="12" y="18" text-anchor="middle" font-family="Archivo" font-weight="800" font-size="18" fill="#1877F2">f</text></svg></button>
-          <button class="co-xs" aria-label="VK ID"><svg viewBox="0 0 24 24" width="20" height="20"><text x="12" y="16.5" text-anchor="middle" font-family="Archivo" font-weight="900" font-size="11" fill="#0077FF">VK</text></svg></button>
-          <button class="co-xs" aria-label="Yandex"><svg viewBox="0 0 24 24" width="20" height="20"><text x="12" y="17.5" text-anchor="middle" font-family="Archivo" font-weight="900" font-size="16" fill="#FC3F1D">Я</text></svg></button>
-          <button class="co-xs" aria-label="Mail.ru"><svg viewBox="0 0 24 24" width="20" height="20"><text x="12" y="17" text-anchor="middle" font-family="Archivo" font-weight="800" font-size="15" fill="#005FF9">@</text></svg></button>
-          <button class="co-xs" aria-label="Odnoklassniki"><svg viewBox="0 0 24 24" width="20" height="20"><text x="12" y="16.5" text-anchor="middle" font-family="Archivo" font-weight="900" font-size="12" fill="#EE8208">OK</text></svg></button>
+      <!-- THE CARD — name & number typed directly on the card, scheme logo appears on recognition -->
+      <div class="co-ccwrap on" id="co-ccwrap">
+        <div class="co-cc">
+          <div class="top"><span class="chip"></span><span class="scheme" id="cc-scheme"></span></div>
+          <input class="num" id="cc-num" inputmode="numeric" maxlength="19" placeholder="•••• •••• •••• ••••" aria-label="Kartennummer" autocomplete="off"/>
+          <div class="row2">
+            <span style="flex:1"><span class="lbl">Name auf der Karte</span><input class="nm" id="cc-name" placeholder="Vor- und Nachname" aria-label="Name auf der Karte" autocomplete="off"/></span>
+            <span><span class="lbl">Gültig bis</span><input class="exp" inputmode="numeric" maxlength="5" placeholder="MM/JJ" aria-label="Gültig bis" autocomplete="off"/></span>
+          </div>
         </div>
-        <div class="co-div">oder manuell</div>
-        <div class="co-field"><label>Email</label><input class="co-in" type="email" placeholder="name@email.de"/></div>
-        <div class="co-field"><label>Name</label><input class="co-in" type="text" placeholder="Vor- und Nachname"/></div>
-        <div class="co-field"><label>Adresse</label><input class="co-in" type="text" placeholder="Straße und Hausnummer"/></div>
-        <div class="co-2col">
-          <div class="co-field"><label>PLZ</label><input class="co-in" type="text" placeholder="10115"/></div>
-          <div class="co-field"><label>Stadt</label><input class="co-in" type="text" placeholder="Berlin"/></div>
+        <div class="co-cvc">
+          <div class="co-field" style="margin-bottom:6px"><label>CVC</label><input class="co-in mono" inputmode="numeric" maxlength="4" placeholder="123" aria-label="CVC"/></div>
+          <div class="co-cap" style="margin:0">Rückseite der Karte</div>
         </div>
-        <div class="co-2col">
-          <div class="co-field"><label>Land</label><input class="co-in" type="text" placeholder="Deutschland"/></div>
-          <div class="co-field"><label>Telefon</label><input class="co-in" type="tel" placeholder="+49 30 1234567"/></div>
-        </div>
-        <div class="co-cap">Im Produktiv-Checkout: Stripe Link Authentication + Address Element (Telefon Pflichtfeld). Ein Klick auf den Express-Ring füllt Email + Name vor.</div>
-        <div class="co-actions"><button class="co-btn" id="co-next1">Weiter zum Versand →</button></div>
-      </section>
+      </div>
+      <div class="co-cap">Im Produktiv-Checkout: Stripe Payment Element (Karten · Apple Pay · Google Pay · Link) + PayPal.</div>
 
-      <!-- STEP 2 — Versandart -->
-      <section class="co-step" data-step="2">
-        <div class="co-eyebrow">Versandart</div>
+      <!-- LIEFERUNG — same page -->
+      <div class="co-eyebrow">Lieferung</div>
+      <div class="co-field"><label>Email</label><input class="co-in" type="email" placeholder="name@email.de"/></div>
+      <div class="co-field co-addrwrap"><label>Adresse</label><input class="co-in" id="co-addr" type="text" placeholder="Straße eingeben — Vorschläge erscheinen" autocomplete="off"/>
+        <div class="co-sugg" id="co-sugg"></div>
+      </div>
+      <div class="co-2col">
+        <div class="co-field"><label>PLZ</label><input class="co-in" id="co-plz" type="text" placeholder="—"/></div>
+        <div class="co-field"><label>Stadt</label><input class="co-in" id="co-city" type="text" placeholder="—"/></div>
+      </div>
+      <div class="co-cap">Im Produktiv-Checkout kommen die Vorschläge aus dem Adress-Klassifikator (Address Element / Places).</div>
+
+      <!-- ETA clock widget + rates, revealed once a location is chosen -->
+      <div class="co-eta" id="co-eta">
+        <svg class="co-clock" viewBox="0 0 64 64" aria-hidden="true">
+          <circle cx="32" cy="32" r="29" fill="var(--paper-raised)" stroke="var(--border-subtle)"/>
+          <line x1="32" y1="6" x2="32" y2="11" stroke="var(--border-strong)" stroke-width="1.5"/>
+          <line x1="58" y1="32" x2="53" y2="32" stroke="var(--border-strong)" stroke-width="1.5"/>
+          <line x1="32" y1="58" x2="32" y2="53" stroke="var(--border-strong)" stroke-width="1.5"/>
+          <line x1="6" y1="32" x2="11" y2="32" stroke="var(--border-strong)" stroke-width="1.5"/>
+          <line class="hand" id="co-hh" x1="32" y1="32" x2="32" y2="19" stroke="var(--brand-schwarz-ink)" stroke-width="3" stroke-linecap="round"/>
+          <line class="hand" id="co-mh" x1="32" y1="32" x2="32" y2="12" stroke="var(--brand-schwarz-ink)" stroke-width="2" stroke-linecap="round"/>
+          <circle cx="32" cy="32" r="2.4" fill="var(--brand-rot)"/>
+        </svg>
+        <div><div class="etadate" id="co-etadate">Mi · 22. Juli · bis 18:00</div><div class="sub" id="co-etasub">Zustellung an 10119 Berlin · Versand aus Berlin innerhalb 24h</div></div>
+      </div>
+      <div class="co-ship" id="co-ship">
         <div class="co-rates" id="co-rates">
-          <div class="co-rate sel" data-fee="€ 5,60" data-total="€ 24,40"><div><div class="rn">Standard Tracked</div><div class="re">6–12 Tage</div></div><div class="rf">€ 5,60</div></div>
-          <div class="co-rate" data-fee="€ 11,20" data-total="€ 30,00"><div><div class="rn">Express</div><div class="re">3–6 Tage</div></div><div class="rf">€ 11,20</div></div>
-          <div class="co-rate" data-fee="€ 18,40" data-total="€ 37,20"><div><div class="rn">Premium Express</div><div class="re">2–4 Tage</div></div><div class="rf">€ 18,40</div></div>
+          <div class="co-rate sel" data-fee="€ 5,60" data-total="€ 24,40" data-eta="Mi · 22. Juli · bis 18:00" data-hd="540" data-md="360"><div><div class="rn">Standard Tracked</div><div class="re">6–12 Tage</div></div><div class="rf">€ 5,60</div></div>
+          <div class="co-rate" data-fee="€ 11,20" data-total="€ 30,00" data-eta="Mo · 20. Juli · bis 12:00" data-hd="720" data-md="720"><div><div class="rn">Express</div><div class="re">3–6 Tage</div></div><div class="rf">€ 11,20</div></div>
+          <div class="co-rate" data-fee="€ 18,40" data-total="€ 37,20" data-eta="Sa · 18. Juli · bis 10:00" data-hd="660" data-md="1080"><div><div class="rn">Premium Express</div><div class="re">2–4 Tage</div></div><div class="rf">€ 18,40</div></div>
         </div>
-        <div class="co-cap">Raten werden im Produktiv-Checkout live über NextSmartShip für die Lieferadresse berechnet.</div>
-        <div class="co-actions"><button class="co-ghost" id="co-back1">← Zurück</button><button class="co-btn" id="co-next2">Bezahlen <span class="co-t">€ 24,40</span></button></div>
-      </section>
+        <div class="co-cap">Raten werden im Produktiv-Checkout live über NextSmartShip berechnet; Zustellzeiten illustrativ.</div>
+      </div>
 
-      <!-- STEP 3 — Zahlung -->
-      <section class="co-step" data-step="3">
-        <div class="co-eyebrow">Zahlung</div>
-        <div class="co-wallets"><button class="co-wallet">Apple Pay</button><button class="co-wallet">Google Pay</button><button class="co-wallet">Link</button></div>
-        <div class="co-div">oder mit Karte</div>
-        <div class="co-field"><label>Kartennummer</label><input class="co-in mono" inputmode="numeric" placeholder="1234 5678 9012 3456"/></div>
-        <div class="co-2col">
-          <div class="co-field"><label>Gültig bis</label><input class="co-in mono" inputmode="numeric" placeholder="MM / JJ"/></div>
-          <div class="co-field"><label>CVC</label><input class="co-in mono" inputmode="numeric" placeholder="123"/></div>
-        </div>
-        <div class="co-cap">Im Produktiv-Checkout: Stripe Payment Element (Karten · Apple Pay · Google Pay · Link).</div>
-        <div class="co-actions"><button class="co-ghost" id="co-back2">← Zurück</button><button class="co-btn" id="co-pay">Bezahlen <span class="co-t">€ 24,40</span></button></div>
-      </section>
+      <div class="co-actions"><button class="co-btn" id="co-pay">Bezahlen <span class="co-t">€ 24,40</span></button></div>
     </div>
 
     <!-- ORDER SUMMARY — persistent -->
@@ -421,7 +456,7 @@ nav.top img{height:32px}
       </div>
       <div class="co-totals">
         <div class="row"><span>Zwischensumme</span><span>€ 18,80</span></div>
-        <div class="row"><span>Versand</span><span id="co-ship">€ 5,60</span></div>
+        <div class="row"><span>Versand</span><span id="co-ship-fee">€ 5,60</span></div>
         <div class="row tot"><span>Gesamt</span><span id="co-total">€ 24,40</span></div>
       </div>
       <div class="co-trust">
@@ -439,28 +474,77 @@ nav.top img{height:32px}
   document.getElementById('cart-btn').onclick=open;
   document.getElementById('add-btn').onclick=open;
   document.getElementById('cart-close').onclick=close;
-  // checkout window: drawer hands off to the two-panel checkout
-  const setStep=n=>{
-    document.querySelectorAll('.co-step').forEach(s=>s.classList.toggle('on',+s.dataset.step===n));
-    document.querySelectorAll('.co-rs').forEach(r=>{const k=+r.dataset.rs;
-      r.classList.toggle('on',k===n);r.classList.toggle('done',k<n);
-      r.querySelector('i').textContent=k<n?'✓':k;});
-  };
-  const openCo=()=>{cart.classList.remove('open');co.classList.add('open');ov.classList.add('on');setStep(1)};
+  // checkout window: drawer hands off to the one-page checkout
+  const openCo=()=>{cart.classList.remove('open');co.classList.add('open');ov.classList.add('on')};
   const closeCo=()=>{co.classList.remove('open');ov.classList.remove('on')};
   document.getElementById('to-checkout').onclick=openCo;
   document.getElementById('co-close').onclick=closeCo;
   ov.onclick=()=>{close();closeCo();};
-  document.getElementById('co-next1').onclick=()=>setStep(2);
-  document.getElementById('co-back1').onclick=()=>setStep(1);
-  document.getElementById('co-next2').onclick=()=>setStep(3);
-  document.getElementById('co-back2').onclick=()=>setStep(2);
-  document.querySelectorAll('#co-rates .co-rate').forEach(r=>r.onclick=()=>{
-    document.querySelectorAll('#co-rates .co-rate').forEach(s=>s.classList.remove('sel'));
-    r.classList.add('sel');
-    document.getElementById('co-ship').textContent=r.dataset.fee;
+  // payment method tiles — Kreditkarte opens the card
+  const ccwrap=document.getElementById('co-ccwrap');
+  document.querySelectorAll('.co-pmt').forEach(t=>t.onclick=()=>{
+    document.querySelectorAll('.co-pmt').forEach(s=>s.classList.remove('sel'));
+    t.classList.add('sel');
+    ccwrap.classList.toggle('on',t.dataset.pm==='card');
+  });
+  // card number: digit grouping + BIN detection → scheme logo on the card
+  const num=document.getElementById('cc-num'),scheme=document.getElementById('cc-scheme');
+  const VISA='<svg viewBox="0 0 56 18" width="52" height="17"><text x="28" y="14" text-anchor="middle" font-family="Archivo" font-weight="800" font-style="italic" font-size="14" letter-spacing="2" fill="#FBFAF6">VISA</text></svg>';
+  const MC='<svg viewBox="0 0 48 30" width="44" height="27"><circle cx="19" cy="15" r="12" fill="#EB001B"/><circle cx="33" cy="15" r="12" fill="#F79E1B" fill-opacity=".9"/></svg>';
+  num.addEventListener('input',()=>{
+    const d=num.value.replace(/\D/g,'').slice(0,16);
+    num.value=d.replace(/(.{4})/g,'$1 ').trim();
+    const two=+d.slice(0,2),four=+d.slice(0,4);
+    let s='';
+    if(d[0]==='4')s=VISA;
+    else if((two>=51&&two<=55)||(four>=2221&&four<=2720))s=MC;
+    scheme.innerHTML=s;scheme.classList.toggle('on',!!s);
+  });
+  // expiry MM/JJ mask
+  const exp=document.querySelector('.co-cc .exp');
+  exp.addEventListener('input',()=>{
+    const d=exp.value.replace(/\D/g,'').slice(0,4);
+    exp.value=d.length>2?d.slice(0,2)+'/'+d.slice(2):d;
+  });
+  // address classifier mock: prefix match → structured suggestions
+  const ADDR=[
+    {s:'Torstraße 140',p:'10119',c:'Berlin'},
+    {s:'Torstraße 14',p:'10119',c:'Berlin'},
+    {s:'Torfstraße 3',p:'13353',c:'Berlin'},
+    {s:'Tornquiststraße 21',p:'20259',c:'Hamburg'},
+    {s:'Torgauer Straße 12',p:'80993',c:'München'}
+  ];
+  const addr=document.getElementById('co-addr'),sugg=document.getElementById('co-sugg');
+  const eta=document.getElementById('co-eta'),ship=document.getElementById('co-ship');
+  addr.addEventListener('input',()=>{
+    const q=addr.value.trim().toLowerCase();
+    if(q.length<3){sugg.classList.remove('on');sugg.innerHTML='';return;}
+    const hits=ADDR.filter(a=>a.s.toLowerCase().includes(q));
+    sugg.innerHTML=hits.map((a,i)=>'<button type="button" data-i="'+ADDR.indexOf(a)+'">'+a.s+'<span class="plz">'+a.p+' '+a.c+'</span></button>').join('');
+    sugg.classList.toggle('on',hits.length>0);
+    sugg.querySelectorAll('button').forEach(b=>b.onclick=()=>{
+      const a=ADDR[+b.dataset.i];
+      addr.value=a.s;
+      document.getElementById('co-plz').value=a.p;
+      document.getElementById('co-city').value=a.c;
+      document.getElementById('co-etasub').textContent='Zustellung an '+a.p+' '+a.c+' · Versand aus Berlin innerhalb 24h';
+      sugg.classList.remove('on');sugg.innerHTML='';
+      eta.classList.add('on');ship.classList.add('on');
+      applyRate(document.querySelector('#co-rates .co-rate.sel'));
+    });
+  });
+  // rate selection drives summary, CTA and the ETA clock
+  const applyRate=r=>{
+    document.getElementById('co-ship-fee').textContent=r.dataset.fee;
     document.getElementById('co-total').textContent=r.dataset.total;
     document.querySelectorAll('.co-t').forEach(t=>t.textContent=r.dataset.total);
+    document.getElementById('co-etadate').textContent=r.dataset.eta;
+    document.getElementById('co-hh').style.transform='rotate('+r.dataset.hd+'deg)';
+    document.getElementById('co-mh').style.transform='rotate('+r.dataset.md+'deg)';
+  };
+  document.querySelectorAll('#co-rates .co-rate').forEach(r=>r.onclick=()=>{
+    document.querySelectorAll('#co-rates .co-rate').forEach(s=>s.classList.remove('sel'));
+    r.classList.add('sel');applyRate(r);
   });
   document.querySelectorAll('.opt').forEach(o=>o.onclick=()=>{
     o.parentElement.querySelectorAll('.opt').forEach(s=>s.classList.remove('active'));
