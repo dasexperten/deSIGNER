@@ -17,7 +17,7 @@ If the user invokes this skill without any other guidance, ask them what they wa
 - `fonts/` — Eras Bold ITC (uploaded TTF is corrupted; falls back to Archivo Black). Manrope, Archivo, Archivo Narrow, Fraunces loaded via Google Fonts.
 - `assets/` — logos, packaging renders, product photography.
 - `ui_kits/marketing/` — homepage hero, nav, product grid, footer.
-- `ui_kits/ecommerce/` — product detail page + cart drawer.
+- `ui_kits/ecommerce/` — product detail page + cart drawer + checkout window.
 - `ui_kits/distributor/` — B2B partner portal dashboard.
 - `ui_kits/packaging/` — carton chassis, anatomy, claim strips, seals.
 - `ui_kits/organizacia/` — DASORG agent board dashboard (stage `2026-07-15-backlog-v5`: dual knowledge/compete bars, `#rank` bubble).
