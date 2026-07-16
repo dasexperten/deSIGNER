@@ -16,8 +16,10 @@ to open the checkout window.
 ## Checkout window — one page, payment first (Owner direction 2026-07-16)
 
 Everything on a single page so the window immediately reads as "this is where you pay".
-No steps, no rail. Two-panel shell kept: form `1.55fr` + persistent order summary `1fr`
-on `--paper-sunk`; below 700px a single-column bottom sheet, summary under the form.
+No steps, no rail. **Single-column window at every viewport** (Owner: like the mobile
+version) — centered 560px modal on desktop, full-width bottom sheet below 700px; the
+credit card spans the full window width with the **CVC directly under the card**, and
+the order summary (`--paper-sunk`) follows below the form.
 
 1. **Zahlung (top):** four method tiles — Apple Pay · Google Pay · PayPal · Kreditkarte
    (radio behavior, rot ring on selection, Kreditkarte pre-selected).
@@ -25,7 +27,7 @@ on `--paper-sunk`; below 700px a single-column bottom sheet, summary under the f
    expiry are typed **directly on the card** (embossed transparent inputs, gold chip
    from `--brand-gold`). Live BIN detection while typing the number: leading `4` →
    **VISA** wordmark fades in top-right; `51–55` / `2221–2720` → **MasterCard** circles.
-   CVC is a small separate field beside the card ("Rückseite der Karte").
+   CVC is a small separate field directly under the card ("Rückseite der Karte").
 3. **Lieferung (same page):** Email, then Adresse with a **classifier autocomplete** —
    typing ≥3 characters opens structured suggestions (canned list: Torstraße 140/14
    Berlin, Torfstraße 3 Berlin, Tornquiststraße 21 Hamburg, Torgauer Straße 12 München);
