@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en"><head>
 <meta charset="utf-8"/>
-<title>Das Experten — PDP & Cart</title>
+<title>Das Experten — PDP, Cart & Checkout</title>
 <link rel="stylesheet" href="../../colors_and_type.css"/>
 <style>
 *,*::before,*::after{box-sizing:border-box;}
@@ -114,6 +114,91 @@ nav.top img{height:32px}
 .cart-foot .hint{font:500 11px/1.4 var(--font-narrow);color:var(--fg-3);text-align:center}
 .overlay{position:fixed;inset:0;background:rgba(26,21,25,.35);z-index:99;opacity:0;pointer-events:none;transition:opacity var(--dur-base) var(--ease-standard)}
 .overlay.on{opacity:1;pointer-events:auto}
+
+/* CHECKOUT WINDOW — two-panel (form 1.55fr · summary 1fr), spec: BACKLOGS/Чекаут Одним Кликом.md §4 */
+.co-window{position:fixed;inset:0;z-index:110;display:flex;align-items:center;justify-content:center;padding:24px;opacity:0;pointer-events:none;transition:opacity var(--dur-base) var(--ease-standard)}
+.co-window.open{opacity:1;pointer-events:auto}
+.co-card{width:100%;max-width:960px;max-height:92vh;background:var(--paper);border-radius:var(--radius-lg);box-shadow:var(--shadow-float);display:grid;grid-template-columns:1.55fr 1fr;overflow:hidden;transform:translateY(14px);transition:transform var(--dur-slow) var(--ease-standard)}
+.co-window.open .co-card{transform:none}
+.co-form{padding:26px 32px 32px;overflow-y:auto}
+.co-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.co-head h3{font:900 22px/1 var(--font-display);margin:0}
+.co-head .close{background:transparent;border:none;font-size:20px;cursor:pointer;width:36px;height:36px;border-radius:var(--radius-sm)}
+.co-head .close:hover{background:var(--bone)}
+.co-rule{margin-bottom:18px}
+.co-rail{display:flex;gap:20px;margin-bottom:24px}
+.co-rs{display:flex;align-items:center;gap:8px;font:700 11px/1 var(--font-narrow);letter-spacing:.14em;text-transform:uppercase;color:var(--fg-3)}
+.co-rs i{width:20px;height:20px;border-radius:50%;border:1px solid var(--border-strong);display:grid;place-items:center;font:700 10px/1 var(--font-body);font-style:normal;color:var(--fg-3)}
+.co-rs.on{color:var(--fg-1)}
+.co-rs.on i{background:var(--brand-schwarz-ink);border-color:var(--brand-schwarz-ink);color:var(--paper)}
+.co-rs.done{color:var(--fg-2)}
+.co-rs.done i{background:var(--paper-sunk);color:var(--fg-2)}
+.co-step{display:none}
+.co-step.on{display:block;animation:coStep var(--dur-base) var(--ease-standard)}
+@keyframes coStep{from{opacity:0}to{opacity:1}}
+.co-eyebrow{font:700 11px/1 var(--font-narrow);text-transform:uppercase;letter-spacing:.18em;color:var(--fg-2);margin-bottom:12px}
+.co-x{display:flex;gap:10px;margin-bottom:4px}
+.co-xs{width:44px;height:44px;border-radius:var(--radius-lg);border:1px solid var(--border-subtle);background:var(--paper-raised);display:grid;place-items:center;cursor:pointer;touch-action:manipulation;transition:background var(--dur-fast) var(--ease-standard)}
+.co-xs:hover{background:var(--bone)}
+.co-div{display:flex;align-items:center;gap:12px;margin:18px 0;font:500 11px/1 var(--font-narrow);text-transform:uppercase;letter-spacing:.14em;color:var(--fg-3)}
+.co-div::before,.co-div::after{content:'';flex:1;height:1px;background:var(--border-hairline)}
+.co-field{margin-bottom:14px}
+.co-field label{display:block;font:700 11px/1 var(--font-narrow);text-transform:uppercase;letter-spacing:.18em;color:var(--fg-2);margin-bottom:7px}
+.co-in{width:100%;height:44px;padding:0 12px;border:1px solid var(--border-strong);border-radius:var(--radius-sm);background:var(--paper-raised);box-shadow:var(--shadow-inset);font:500 14px/1 var(--font-body);color:var(--fg-1)}
+.co-in::placeholder{color:var(--fg-muted)}
+.co-in:focus{outline:none;border-color:var(--brand-rot);box-shadow:var(--shadow-inset),0 0 0 1px var(--brand-rot)}
+.co-in.mono{font-family:var(--font-mono)}
+.co-2col{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.co-cap{font:500 11px/1.5 var(--font-narrow);color:var(--fg-muted);margin:4px 0 18px}
+.co-actions{display:flex;gap:10px;margin-top:8px}
+.co-btn{flex:1;padding:15px;background:var(--brand-rot);color:var(--paper);border:none;border-radius:var(--radius-sm);font:700 14px/1 var(--font-display);cursor:pointer;min-height:44px;touch-action:manipulation;transition:background var(--dur-base) var(--ease-standard)}
+.co-btn:hover{background:#c51824}
+.co-ghost{padding:15px 18px;background:transparent;border:1px solid var(--border-strong);border-radius:var(--radius-sm);font:600 13px/1 var(--font-body);color:var(--fg-1);cursor:pointer;min-height:44px;touch-action:manipulation}
+.co-ghost:hover{background:var(--bone)}
+.co-btn:active,.co-ghost:active,.co-xs:active,.co-wallet:active,.ru-mkt:active{transform:scale(.98)}
+.co-rates{display:flex;flex-direction:column;gap:10px;margin-bottom:6px}
+.co-rate{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:13px 16px;min-height:44px;border:1px solid var(--border-strong);border-radius:var(--radius-sm);background:var(--paper-raised);cursor:pointer;touch-action:manipulation}
+.co-rate .rn{font:700 13px/1.2 var(--font-body)}
+.co-rate .re{font:500 11px/1 var(--font-narrow);color:var(--fg-3);text-transform:uppercase;letter-spacing:.1em;margin-top:5px}
+.co-rate .rf{font:700 15px/1 var(--font-accent)}
+.co-rate.sel{border-color:var(--brand-rot);box-shadow:0 0 0 1px var(--brand-rot)}
+.co-wallets{display:flex;gap:8px;margin-bottom:4px}
+.co-wallet{flex:1;min-height:44px;background:var(--brand-schwarz-ink);color:var(--paper);border:none;border-radius:var(--radius-sm);font:700 13px/1 var(--font-body);cursor:pointer;touch-action:manipulation}
+.co-sum{background:var(--paper-sunk);padding:26px 24px;display:flex;flex-direction:column;overflow-y:auto}
+.co-sum .co-eyebrow{margin-bottom:14px}
+.co-si{display:grid;grid-template-columns:48px 1fr auto;gap:12px;padding:12px 0;border-bottom:1px solid var(--border-hairline);align-items:center}
+.co-si .ishot{width:48px;height:48px;background:var(--paper);border-radius:var(--radius-sm);display:grid;place-items:center}
+.co-si .ishot svg{width:20px;height:40px}
+.co-si .nm{font:700 13px/1.25 'Eras Bold ITC', var(--font-body);letter-spacing:0}
+.co-si .ln{font:500 10px/1 var(--font-narrow);color:var(--fg-3);text-transform:uppercase;letter-spacing:.14em;margin-bottom:4px}
+.co-si .q{font:500 11px/1 var(--font-narrow);color:var(--fg-3);margin-top:4px}
+.co-si .p{font:700 14px/1 var(--font-accent);text-align:right}
+.co-totals{margin-top:16px;display:flex;flex-direction:column;gap:10px}
+.co-totals .row{display:flex;justify-content:space-between;font:500 13px/1 var(--font-body);color:var(--fg-1)}
+.co-totals .row span:last-child{font:600 13px/1 var(--font-accent)}
+.co-totals .tot{border-top:2px solid var(--brand-schwarz-ink);padding-top:12px;margin-top:4px}
+.co-totals .tot span:first-child{font:800 16px/1 var(--font-display)}
+.co-totals .tot span:last-child{font:700 18px/1 var(--font-accent)}
+.co-trust{margin-top:auto;padding-top:20px}
+.co-trust .lock{display:flex;gap:8px;align-items:flex-start;font:500 11px/1.5 var(--font-narrow);color:var(--fg-2)}
+.co-trust .lock svg{flex:none;margin-top:1px}
+.co-trust .hint{font:500 11px/1.4 var(--font-narrow);color:var(--fg-3);margin-top:10px}
+@media (max-width:699px){
+  .co-window{padding:0;align-items:flex-end}
+  .co-card{grid-template-columns:1fr;max-height:94vh;border-radius:var(--radius-lg) var(--radius-lg) 0 0;overflow-y:auto;transform:translateY(24px)}
+  .co-form,.co-sum{overflow:visible;padding:22px 20px}
+  .co-2col{grid-template-columns:1fr}
+}
+
+/* RU VARIANT — static design annotation (marketplace fallback, cart.js ruFallback) */
+.ru-note{margin:0 32px 72px;padding:28px 32px;background:var(--paper-sunk);border-radius:var(--radius-lg)}
+.ru-note h2{font:900 24px/1.1 var(--font-display);margin:0 0 8px}
+.ru-note .sub{font:500 12px/1.55 var(--font-narrow);color:var(--fg-2);margin-bottom:18px;max-width:78ch}
+.ru-note .rowx{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:16px}
+.ru-note .mkts{display:flex;gap:10px;flex-wrap:wrap}
+.ru-mkt{display:flex;align-items:center;gap:9px;min-height:44px;padding:0 16px;border:1px solid var(--border-strong);border-radius:var(--radius-sm);background:var(--paper-raised);font:700 13px/1 var(--font-body);color:var(--fg-1);cursor:pointer;touch-action:manipulation}
+.ru-mkt:hover{background:var(--bone)}
+.ru-mkt svg{flex:none}
 </style>
 </head><body>
 
@@ -211,6 +296,23 @@ nav.top img{height:32px}
   </div>
 </section>
 
+<!-- RU VARIANT — design annotation: CIS marketplace fallback (Stripe hidden per DX_PRICING) -->
+<section class="ru-note">
+  <h2>Variante /ru/ — Marktplatz-Fallback</h2>
+  <div class="sub">Für die CIS-Zone ist Stripe ausgeblendet (<code>DX_PRICING.stripe_hidden</code>): der Express-Ring zeigt nur russische Anbieter (Reihenfolge per Owner-Entscheid: VK · Яндекс · Mail.ru · OK), der Kauf läuft über die Marktplätze statt über die Kasse.</div>
+  <div class="rowx">
+    <button class="co-xs" aria-label="VK ID"><svg viewBox="0 0 24 24" width="20" height="20"><text x="12" y="16.5" text-anchor="middle" font-family="Archivo" font-weight="900" font-size="11" fill="#0077FF">VK</text></svg></button>
+    <button class="co-xs" aria-label="Yandex"><svg viewBox="0 0 24 24" width="20" height="20"><text x="12" y="17.5" text-anchor="middle" font-family="Archivo" font-weight="900" font-size="16" fill="#FC3F1D">Я</text></svg></button>
+    <button class="co-xs" aria-label="Mail.ru"><svg viewBox="0 0 24 24" width="20" height="20"><text x="12" y="17" text-anchor="middle" font-family="Archivo" font-weight="800" font-size="15" fill="#005FF9">@</text></svg></button>
+    <button class="co-xs" aria-label="Odnoklassniki"><svg viewBox="0 0 24 24" width="20" height="20"><text x="12" y="16.5" text-anchor="middle" font-family="Archivo" font-weight="900" font-size="12" fill="#EE8208">OK</text></svg></button>
+  </div>
+  <div class="mkts">
+    <button class="ru-mkt"><svg width="10" height="10" viewBox="0 0 10 10"><circle cx="5" cy="5" r="5" fill="#CB11AB"/></svg>Wildberries</button>
+    <button class="ru-mkt"><svg width="10" height="10" viewBox="0 0 10 10"><circle cx="5" cy="5" r="5" fill="#005BFF"/></svg>Ozon</button>
+    <button class="ru-mkt"><svg width="10" height="10" viewBox="0 0 10 10"><circle cx="5" cy="5" r="5" fill="var(--brand-schwarz)"/></svg>dasexperten.ru</button>
+  </div>
+</section>
+
 </div>
 
 <!-- CART DRAWER -->
@@ -233,19 +335,133 @@ nav.top img{height:32px}
     <div class="row"><span>Zwischensumme</span><span>€ 18,80</span></div>
     <div class="row"><span>Versand</span><span style="color:var(--status-success)">Gratis (ab € 30 möglich → € 11,20)</span></div>
     <div class="row tot"><span>Gesamt</span><span>€ 18,80</span></div>
-    <button class="checkout">Zur Kasse →</button>
+    <button class="checkout" id="to-checkout">Zur Kasse →</button>
     <div class="hint">30 Tage Rückgaberecht · Versand aus Berlin</div>
   </div>
 </aside>
 
+<!-- CHECKOUT WINDOW -->
+<div class="co-window" id="co" role="dialog" aria-modal="true" aria-label="Kasse">
+  <div class="co-card">
+    <div class="co-form">
+      <div class="co-head"><h3>Kasse</h3><button class="close" id="co-close" aria-label="Schließen">×</button></div>
+      <div class="dx-ribbon-rule co-rule"><i></i><i></i><i></i></div>
+      <div class="co-rail" id="co-rail">
+        <span class="co-rs on" data-rs="1"><i>1</i>Kontakt</span>
+        <span class="co-rs" data-rs="2"><i>2</i>Versand</span>
+        <span class="co-rs" data-rs="3"><i>3</i>Zahlung</span>
+      </div>
+
+      <!-- STEP 1 — Kontakt & Adresse -->
+      <section class="co-step on" data-step="1">
+        <div class="co-eyebrow">Express — Daten mit einem Klick</div>
+        <div class="co-x">
+          <button class="co-xs" aria-label="Google"><svg viewBox="0 0 24 24" width="20" height="20"><text x="12" y="17.5" text-anchor="middle" font-family="Archivo" font-weight="800" font-size="17" fill="#4285F4">G</text></svg></button>
+          <button class="co-xs" aria-label="Facebook"><svg viewBox="0 0 24 24" width="20" height="20"><text x="12" y="18" text-anchor="middle" font-family="Archivo" font-weight="800" font-size="18" fill="#1877F2">f</text></svg></button>
+          <button class="co-xs" aria-label="VK ID"><svg viewBox="0 0 24 24" width="20" height="20"><text x="12" y="16.5" text-anchor="middle" font-family="Archivo" font-weight="900" font-size="11" fill="#0077FF">VK</text></svg></button>
+          <button class="co-xs" aria-label="Yandex"><svg viewBox="0 0 24 24" width="20" height="20"><text x="12" y="17.5" text-anchor="middle" font-family="Archivo" font-weight="900" font-size="16" fill="#FC3F1D">Я</text></svg></button>
+          <button class="co-xs" aria-label="Mail.ru"><svg viewBox="0 0 24 24" width="20" height="20"><text x="12" y="17" text-anchor="middle" font-family="Archivo" font-weight="800" font-size="15" fill="#005FF9">@</text></svg></button>
+          <button class="co-xs" aria-label="Odnoklassniki"><svg viewBox="0 0 24 24" width="20" height="20"><text x="12" y="16.5" text-anchor="middle" font-family="Archivo" font-weight="900" font-size="12" fill="#EE8208">OK</text></svg></button>
+        </div>
+        <div class="co-div">oder manuell</div>
+        <div class="co-field"><label>Email</label><input class="co-in" type="email" placeholder="name@email.de"/></div>
+        <div class="co-field"><label>Name</label><input class="co-in" type="text" placeholder="Vor- und Nachname"/></div>
+        <div class="co-field"><label>Adresse</label><input class="co-in" type="text" placeholder="Straße und Hausnummer"/></div>
+        <div class="co-2col">
+          <div class="co-field"><label>PLZ</label><input class="co-in" type="text" placeholder="10115"/></div>
+          <div class="co-field"><label>Stadt</label><input class="co-in" type="text" placeholder="Berlin"/></div>
+        </div>
+        <div class="co-2col">
+          <div class="co-field"><label>Land</label><input class="co-in" type="text" placeholder="Deutschland"/></div>
+          <div class="co-field"><label>Telefon</label><input class="co-in" type="tel" placeholder="+49 30 1234567"/></div>
+        </div>
+        <div class="co-cap">Im Produktiv-Checkout: Stripe Link Authentication + Address Element (Telefon Pflichtfeld). Ein Klick auf den Express-Ring füllt Email + Name vor.</div>
+        <div class="co-actions"><button class="co-btn" id="co-next1">Weiter zum Versand →</button></div>
+      </section>
+
+      <!-- STEP 2 — Versandart -->
+      <section class="co-step" data-step="2">
+        <div class="co-eyebrow">Versandart</div>
+        <div class="co-rates" id="co-rates">
+          <div class="co-rate sel" data-fee="€ 5,60" data-total="€ 24,40"><div><div class="rn">Standard Tracked</div><div class="re">6–12 Tage</div></div><div class="rf">€ 5,60</div></div>
+          <div class="co-rate" data-fee="€ 11,20" data-total="€ 30,00"><div><div class="rn">Express</div><div class="re">3–6 Tage</div></div><div class="rf">€ 11,20</div></div>
+          <div class="co-rate" data-fee="€ 18,40" data-total="€ 37,20"><div><div class="rn">Premium Express</div><div class="re">2–4 Tage</div></div><div class="rf">€ 18,40</div></div>
+        </div>
+        <div class="co-cap">Raten werden im Produktiv-Checkout live über NextSmartShip für die Lieferadresse berechnet.</div>
+        <div class="co-actions"><button class="co-ghost" id="co-back1">← Zurück</button><button class="co-btn" id="co-next2">Bezahlen <span class="co-t">€ 24,40</span></button></div>
+      </section>
+
+      <!-- STEP 3 — Zahlung -->
+      <section class="co-step" data-step="3">
+        <div class="co-eyebrow">Zahlung</div>
+        <div class="co-wallets"><button class="co-wallet">Apple Pay</button><button class="co-wallet">Google Pay</button><button class="co-wallet">Link</button></div>
+        <div class="co-div">oder mit Karte</div>
+        <div class="co-field"><label>Kartennummer</label><input class="co-in mono" inputmode="numeric" placeholder="1234 5678 9012 3456"/></div>
+        <div class="co-2col">
+          <div class="co-field"><label>Gültig bis</label><input class="co-in mono" inputmode="numeric" placeholder="MM / JJ"/></div>
+          <div class="co-field"><label>CVC</label><input class="co-in mono" inputmode="numeric" placeholder="123"/></div>
+        </div>
+        <div class="co-cap">Im Produktiv-Checkout: Stripe Payment Element (Karten · Apple Pay · Google Pay · Link).</div>
+        <div class="co-actions"><button class="co-ghost" id="co-back2">← Zurück</button><button class="co-btn" id="co-pay">Bezahlen <span class="co-t">€ 24,40</span></button></div>
+      </section>
+    </div>
+
+    <!-- ORDER SUMMARY — persistent -->
+    <aside class="co-sum">
+      <div class="co-eyebrow">Ihre Bestellung · 2</div>
+      <div class="co-si">
+        <div class="ishot"><svg viewBox="0 0 60 130"><rect x="4" y="10" width="52" height="112" rx="6" fill="#fff" stroke="rgba(0,0,0,.15)"/><text x="30" y="60" text-anchor="middle" font-family="Archivo" font-weight="900" font-size="10" fill="#0D199E">inno</text><text x="30" y="74" text-anchor="middle" font-family="Archivo" font-weight="900" font-size="10" fill="#0D199E">Weiss</text></svg></div>
+        <div><div class="ln" style="color:var(--line-innoweiss)">innoWeiss</div><div class="nm">Enzyme Whitening · 70 ml</div><div class="q">1 ×</div></div>
+        <div class="p">€ 9,90</div>
+      </div>
+      <div class="co-si">
+        <div class="ishot"><svg viewBox="0 0 60 130"><rect x="4" y="10" width="52" height="112" rx="6" fill="#1A1519"/><text x="30" y="68" text-anchor="middle" font-family="Archivo" font-weight="900" font-size="9" fill="#fff">Detox</text></svg></div>
+        <div><div class="ln">Detox</div><div class="nm">Charcoal Detox · 70 ml</div><div class="q">1 ×</div></div>
+        <div class="p">€ 8,90</div>
+      </div>
+      <div class="co-totals">
+        <div class="row"><span>Zwischensumme</span><span>€ 18,80</span></div>
+        <div class="row"><span>Versand</span><span id="co-ship">€ 5,60</span></div>
+        <div class="row tot"><span>Gesamt</span><span id="co-total">€ 24,40</span></div>
+      </div>
+      <div class="co-trust">
+        <div class="lock"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg><span>Sichere Zahlung über Stripe. Preise in USD. Versand wird live für Ihre Adresse berechnet.</span></div>
+        <div class="hint">30 Tage Rückgaberecht · Versand aus Berlin</div>
+      </div>
+    </aside>
+  </div>
+</div>
+
 <script>
-  const cart=document.getElementById('cart'),ov=document.getElementById('ov');
+  const cart=document.getElementById('cart'),ov=document.getElementById('ov'),co=document.getElementById('co');
   const open=()=>{cart.classList.add('open');ov.classList.add('on')};
   const close=()=>{cart.classList.remove('open');ov.classList.remove('on')};
   document.getElementById('cart-btn').onclick=open;
   document.getElementById('add-btn').onclick=open;
   document.getElementById('cart-close').onclick=close;
-  ov.onclick=close;
+  // checkout window: drawer hands off to the two-panel checkout
+  const setStep=n=>{
+    document.querySelectorAll('.co-step').forEach(s=>s.classList.toggle('on',+s.dataset.step===n));
+    document.querySelectorAll('.co-rs').forEach(r=>{const k=+r.dataset.rs;
+      r.classList.toggle('on',k===n);r.classList.toggle('done',k<n);
+      r.querySelector('i').textContent=k<n?'✓':k;});
+  };
+  const openCo=()=>{cart.classList.remove('open');co.classList.add('open');ov.classList.add('on');setStep(1)};
+  const closeCo=()=>{co.classList.remove('open');ov.classList.remove('on')};
+  document.getElementById('to-checkout').onclick=openCo;
+  document.getElementById('co-close').onclick=closeCo;
+  ov.onclick=()=>{close();closeCo();};
+  document.getElementById('co-next1').onclick=()=>setStep(2);
+  document.getElementById('co-back1').onclick=()=>setStep(1);
+  document.getElementById('co-next2').onclick=()=>setStep(3);
+  document.getElementById('co-back2').onclick=()=>setStep(2);
+  document.querySelectorAll('#co-rates .co-rate').forEach(r=>r.onclick=()=>{
+    document.querySelectorAll('#co-rates .co-rate').forEach(s=>s.classList.remove('sel'));
+    r.classList.add('sel');
+    document.getElementById('co-ship').textContent=r.dataset.fee;
+    document.getElementById('co-total').textContent=r.dataset.total;
+    document.querySelectorAll('.co-t').forEach(t=>t.textContent=r.dataset.total);
+  });
   document.querySelectorAll('.opt').forEach(o=>o.onclick=()=>{
     o.parentElement.querySelectorAll('.opt').forEach(s=>s.classList.remove('active'));
     o.classList.add('active');
