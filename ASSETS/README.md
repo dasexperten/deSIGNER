@@ -6,7 +6,7 @@ rule 3 and the asset-catalog gates inside the design skills).
 
 | Folder | Contents | Copied from |
 | --- | --- | --- |
-| `logos/` | logo-full / logo-mark / logo-wordmark (design-system set), de-logo, de-loyalty-icon, logo_dark / logo_light (presenter set) | `dasexperten.com/Design/assets/`, `das-architektura/DESIGNS/`, `SKILLS/das-presenter/assets/` |
+| `logos/` | logo-full / logo-mark / logo-wordmark (design-system set), de-logo, de-loyalty-icon, logo_dark / logo_light (presenter set); app icons (Owner 2026-07-17): `app-icon-operator.svg` (Gold-center network, Das Operator ERP) + `app-icon-dasorg.svg` (Rot-center network, DASORG board) with PNG cuts 1024/512/192 + favicon-32 each; legacy waves `app-icon-*.png` superseded | `dasexperten.com/Design/assets/`, `das-architektura/DESIGNS/`, `SKILLS/das-presenter/assets/`, `organizacia/api/public/assets/brand/` |
 | `products/` | 21 product PNGs, SKU-coded `DE1xx` (brushes/floss) and `DE2xx` (toothpastes) | `SKILLS/das-presenter/assets/products/` |
 | `characters/` | 86 photorealistic character reference models + `characters_mapping.json` (model ↔ element_id mapping) | `das-architektura/CHARACTERS (reference models)/`; mapping from `dasexperten.com/SKILLS/atlascloud/references/` |
 | `packaging/` | `packaging-localizer/` (SVG templates, detox_cdr sources, out/ multilingual renders, worker src), `Das Experten Design System-handoff.zip`, `Microbiome Friendly-handoff.zip`, innoWeiss 70ml carton dieline photo | `das-architektura/DESIGNS/`, `dasexperten.com/Design/assets/` |

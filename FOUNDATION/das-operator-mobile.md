@@ -35,10 +35,17 @@ Do **not** invent a second mobile language for the ERP.
 
 ## App icon
 
-- Three heritage waves on `#282229` with top tricolor strip  
+- **Owner decision 2026-07-17:** org-network glyph — six paper nodes around a
+  glowing **Gold** center — on `#282229` with top tricolor strip. Replaces the
+  three-waves icon (waves stay the company logo mark, not the app icon).
+  Sibling icon: DASORG board uses the same glyph with a **Rot** center.
 - No wordmark on home-screen glyph  
-- Masters: `SYSTEM/assets/app-icon-1024.png`, `ASSETS/logos/app-icon-*.png`  
+- Masters: `ASSETS/logos/app-icon-operator.svg` (vector SSOT),
+  `SYSTEM/assets/app-icon-operator-1024.png`, cuts `ASSETS/logos/app-icon-operator-*.png`,
+  `favicon-operator-32.png`. Legacy waves icon kept at `app-icon-1024.png` (superseded).
 - Theme color: `#282229`  
+- Runtime in `dasoperator` repo (`web/public/brand/*`, `web/app/icon.png`) still
+  carries the waves icon — pending rollout there.
 
 ## Rules
 

@@ -55,11 +55,11 @@ Every phone screen in Das Operator should feel like the **AI Crawlers / das-dash
 
 ## App icon
 
-- **Mark:** three heritage waves (Schwarz / Rot / Gold) on `--brand-schwarz` square with top tricolor hairline.
+- **Mark (Owner decision 2026-07-17):** org-network glyph — six paper nodes around a glowing **Gold** center — on `--brand-schwarz` square with top tricolor hairline. The DASORG board carries the sibling icon (same glyph, **Rot** center). Three heritage waves remain the company logo mark only; the waves app icon is superseded.
 - **No wordmark** on the home-screen glyph (too small).
 - **Theme color:** `#282229` (matches `viewport.themeColor` + `manifest.webmanifest`).
 - **Assets:**
-  - Design master: `Design/assets/app-icon-1024.png` (full square), `app-icon-squircle-1024.png` (preview)
-  - Runtime: `web/public/brand/app-icon-{180,192,512,1024}.png`, `favicon-32.png`
-  - Next metadata: `web/app/icon.png`, `web/app/apple-icon.png`
-  - PWA: `web/public/manifest.webmanifest`
+  - Design master: `ASSETS/logos/app-icon-operator.svg` (vector SSOT), `SYSTEM/assets/app-icon-operator-1024.png` (full square), `app-icon-operator-squircle-1024.png` (preview)
+  - Cuts: `ASSETS/logos/app-icon-operator-{192,512,1024}.png`, `favicon-operator-32.png`
+  - DASORG sibling: `ASSETS/logos/app-icon-dasorg.svg` + same cut set; live on the board (`organizacia` `api/public/assets/brand/*`, wired in `api/ui.html`)
+  - Runtime (`dasoperator` repo): `web/public/brand/app-icon-{180,192,512,1024}.png`, `favicon-32.png`, `web/app/icon.png`, `web/app/apple-icon.png`, `web/public/manifest.webmanifest` — **still waves, pending rollout**
