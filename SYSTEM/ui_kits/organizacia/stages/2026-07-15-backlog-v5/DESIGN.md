@@ -1,14 +1,4 @@
-# organizacia dashboard — design rules (stage 2026-07-21-tokens-a11y)
-
-## Stage 2026-07-21 — Owner verdicts (tokens + a11y)
-
-- **ONE gold:** `--brand-gold:#C9A227` (text-capable surfaces/borders). `--brand-yellow:#FEF004` = accent for gradients/washes — **NEVER text** (1.14:1 on paper).
-- **Blue passport:** `--status-progress:#0D199E` (+`-hi:#3d4fd4`) — functional in-progress hue, same class as `--status-success`. **NOT brand triad**; Schwarz/Rot/Gold stays sacred.
-- **Honest mono:** real stack `ui-monospace, SF Mono, Menlo, Consolas…` for tabular numbers. Manrope evicted from mono but **kept by law** for the Digest *My view* italic (Owner 2026-07-21).
-- **Fraunces:** display serif on exactly 2 spots — board `.brand h1` + login h1 (`--font-serif`). All chrome stays Archivo. Book pair Archivo + Fraunces now real.
-- **Computed a11y inks:** `--status-error-ink:#C91C26` (5.47 paper / 4.67 pink wash), `--status-warning-ink:#955B00` (5.33 / 4.66); btn-warn label = schwarz-ink (5.33 on amber); focus ring = schwarz `--focus-ring` (14.9:1) on all 5 rings.
-- **Allowlists (with math):** rot as UI-state color ×4 (say/mic/call hovers + call dot; threshold 3.0, actual 4.40) · gold as text ×2 dark digest deck only (6.5 scrim / 4.88 wash).
-- **Law:** contrast is *computed*, not trusted — `api/a11y.test.mjs` re-derives WCAG ratios from live tokens on every CI; `api/design-tokens.test.mjs` freezes the verdicts. 136 tests total at this stage.
+# organizacia dashboard — design rules (stage 2026-07-15-backlog-v5)
 
 ## Intent
 
@@ -68,25 +58,25 @@ Dense but calm paper UI. Status first, learning second, competitiveness third �
 
 | Class | Gradient |
 |-------|----------|
-| `.seg-gold` | `var(--brand-gold)` → `var(--brand-yellow)` (#C9A227 → #FEF004) |
+| `.seg-gold` | `#C9A227` → `#FEF004` |
 | `.seg-green` | `#1B7A3D` → `#3DDC84` |
-| `.seg-blue` | `var(--status-progress)` → `var(--status-progress-hi)` (#0D199E → #3d4fd4) |
+| `.seg-blue` | `#0D199E` → `#3d4fd4` |
 | `.seg-act` | `#E67E22` → `#F5A623` |
 | `.seg-comp` | `#0D9488` → `#2DD4BF` |
 | `.seg-res` | `#1B7A3D` → `#3DDC84` |
 | `.seg-rel` | `#6D28D9` → `#A78BFA` |
 | `.seg-eng` | `#BE185D` → `#F472B6` |
-| `.seg-know` | `var(--brand-gold)` → `var(--brand-yellow)` (#C9A227 → #FEF004) |
+| `.seg-know` | `#C9A227` → `#FEF004` |
 
-Rank bubble: text `var(--status-progress)`, fill `rgba(13,25,158,.12)`, border `rgba(13,25,158,.28)`, pill, mono 900.
+Rank bubble: text `#0D199E`, fill `rgba(13,25,158,.12)`, border `rgba(13,25,158,.28)`, pill, mono 900.
 
 ---
 
 ## Typography & chrome
 
-- **Display / body:** Archivo · **display serif:** Fraunces (`--font-serif`, brand h1 + login only)  
+- **Display / body:** Archivo  
 - **Meta labels:** Archivo Narrow, uppercase, tracked  
-- **Numbers:** honest mono (`ui-monospace, SF Mono, Menlo…`) tabular · Manrope reserved for Digest *My view* italic (law)  
+- **Numbers:** Manrope tabular  
 - **Ribbon:** Schwarz | Rot | Gold equal thirds (4px)  
 - **Canvas:** paper `#FBFAF6`  
 - **Cards:** raised paper, hairline border, soft shadow  
@@ -102,8 +92,6 @@ Rank bubble: text `var(--status-progress)`, fill `rgba(13,25,158,.12)`, border `
 | Leave knowledge empty space | Inflate corporate baselines so everyone looks “done” |
 | Label compete as relative / PAS | Present compete as absolute performance % |
 | Paper + rot CTAs (Brighter / deSIGNER) | Generic SaaS blue dashboard chrome |
-| Small red/warning text in computed inks | Text in `--brand-yellow` — anywhere, ever |
-| Gold on borders/washes; ink for its text | Gold as text on paper (2.32) outside the dark-deck allowlist |
 
 ---
 
@@ -114,5 +102,3 @@ Rank bubble: text `var(--status-progress)`, fill `rgba(13,25,158,.12)`, border `
 - Compete engine: `organizacia/api/competitiveness.mjs`  
 - Knowledge engine: `organizacia/api/knowledge-score.mjs`  
 - Backlog: `organizacia/BACKLOGS/2026-07-15_COMPLETE-BOARD-MERGE-COMPETITIVENESS.md`
-- Contrast law: `organizacia/api/a11y.test.mjs` · verdicts: `organizacia/api/design-tokens.test.mjs`
-- Previous stage archived byte-exact: `./stages/2026-07-15-backlog-v5/`

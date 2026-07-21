@@ -1,0 +1,2811 @@
+<!doctype html>
+<!--
+  deSIGNER SSOT — organizacia dashboard design STAGE SNAPSHOT
+  Stage: 2026-07-15-backlog-v5
+  Source: dasexperten/organizacia api/ui.html (live board Worker)
+  Board:  https://org.dasexperten.com
+  Kit:    SYSTEM/ui_kits/organizacia/
+  DO NOT treat this file as the runtime Worker UI — runtime stays in organizacia.
+  This is the frozen design record of the agent board at this stage.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="dasorg-ui" content="2026-07-15-backlog-v5">
+<meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate">
+<title>DASORG — Agent board</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=Archivo+Narrow:wght@500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* deSIGNER SYSTEM tokens + Brighter skill (paper canvas, rot CTAs, display type) */
+:root{
+  --brand-schwarz:#282229;--brand-rot:#E5202C;--brand-gold:#FEF004;--brand-schwarz-ink:#1A1519;
+  --paper:#FBFAF6;--paper-raised:#FFFFFF;--paper-sunk:#F3F0E8;--bone:#EDE8DD;
+  --stone-300:#9C9384;--stone-400:#6E6558;--stone-500:#4A4238;
+  --fg-1:var(--brand-schwarz-ink);--fg-2:var(--stone-500);--fg-3:var(--stone-400);--fg-muted:var(--stone-300);
+  --border-hairline:rgba(26,21,25,.08);--border-subtle:rgba(26,21,25,.14);--border-strong:rgba(26,21,25,.32);
+  --status-success:#2E7D4F;--status-warning:#C77A00;--status-error:var(--brand-rot);
+  --radius-sm:4px;--radius-md:6px;--radius-lg:10px;--radius-pill:999px;
+  --shadow-card:0 1px 2px rgba(26,21,25,.05),0 0 0 1px var(--border-hairline);
+  --shadow-raised:0 4px 16px -6px rgba(26,21,25,.12),0 0 0 1px var(--border-hairline);
+  --shadow-float:0 18px 48px -18px rgba(26,21,25,.22),0 2px 6px rgba(26,21,25,.06);
+  --font-display:"Archivo",system-ui,sans-serif;
+  --font-body:"Archivo",system-ui,sans-serif;
+  --font-meta:"Archivo Narrow",system-ui,sans-serif;
+  --font-mono:"Manrope",ui-monospace,monospace;
+  --ease:cubic-bezier(.2,.7,.2,1);
+}
+*{box-sizing:border-box;margin:0}
+body{background:var(--paper);color:var(--fg-1);font:15px/1.5 var(--font-body);min-height:100vh}
+button,input,textarea{font:inherit}
+button{cursor:pointer}
+
+/* tricolor ribbon */
+.ribbon{height:4px;background:linear-gradient(90deg,var(--brand-schwarz) 0 33.33%,var(--brand-rot) 33.33% 66.66%,var(--brand-gold) 66.66% 100%)}
+
+/* chrome */
+.top{
+  background:var(--paper-raised);border-bottom:1px solid var(--border-subtle);
+  padding:14px 20px 12px;position:sticky;top:0;z-index:8;
+  box-shadow:0 1px 0 var(--border-hairline);
+}
+.top-inner{max-width:1120px;margin:0 auto;display:flex;flex-wrap:wrap;gap:12px 16px;align-items:center;justify-content:space-between}
+.brand{display:flex;flex-direction:column;gap:2px}
+.brand h1{font-family:var(--font-display);font-weight:900;font-size:20px;letter-spacing:.04em;line-height:1.1}
+.brand .sub{font-family:var(--font-meta);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--fg-3);font-weight:600}
+.tabs{display:flex;gap:8px;flex-wrap:wrap}
+.tab{
+  border:1px solid var(--border-subtle);background:var(--paper-sunk);color:var(--fg-2);
+  padding:8px 14px;border-radius:var(--radius-pill);font-weight:700;font-size:13px;
+  transition:background var(--ease) 120ms,color var(--ease) 120ms,box-shadow var(--ease) 120ms;
+}
+.tab:hover{border-color:var(--border-strong)}
+.tab.on{background:var(--brand-rot);color:#fff;border-color:var(--brand-rot);box-shadow:var(--shadow-raised)}
+.actions{display:flex;gap:8px;flex-wrap:wrap}
+.btn{
+  border:0;border-radius:var(--radius-md);padding:9px 14px;font-weight:800;font-size:13px;
+  font-family:var(--font-display);box-shadow:var(--shadow-raised);transition:transform 80ms,filter-color 120ms;
+}
+.btn:active{transform:scale(.98)}
+.btn-primary{background:var(--brand-rot);color:#fff}
+.btn-primary:hover{filter:brightness(.94)}
+.btn-dark{background:var(--brand-schwarz);color:#fff}
+.btn-dark:hover{filter:brightness(1.08)}
+.btn-ghost{background:var(--paper-sunk);color:var(--fg-1);border:1px solid var(--border-subtle);box-shadow:none}
+.btn-ok{background:var(--status-success);color:#fff}
+.btn-warn{background:var(--status-warning);color:#fff}
+
+main{max-width:1120px;margin:0 auto;padding:20px 16px 48px}
+
+/* login */
+.login-wrap{min-height:70vh;display:grid;place-items:center;padding:24px}
+.login-card{
+  width:min(420px,100%);background:var(--paper-raised);border-radius:var(--radius-lg);
+  box-shadow:var(--shadow-float);overflow:hidden;border:1px solid var(--border-hairline);
+}
+.login-card .pad{padding:28px 24px 24px}
+.login-card h1{font-family:var(--font-display);font-weight:900;font-size:26px;margin-bottom:6px}
+.login-card p{color:var(--fg-2);font-size:14px;margin-bottom:16px;line-height:1.45}
+.login-card label{display:block;font-family:var(--font-meta);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--fg-3);font-weight:700;margin-bottom:6px}
+.login-card input{
+  width:100%;padding:12px 14px;border-radius:var(--radius-md);border:1px solid var(--border-subtle);
+  background:var(--paper);margin-bottom:14px;font-family:var(--font-mono);font-size:14px;font-weight:600;
+}
+.login-card input:focus{outline:2px solid rgba(229,32,44,.35);border-color:var(--brand-rot)}
+.login-err{color:var(--status-error);font-size:13px;font-weight:600;margin:10px 0 0;min-height:1.2em}
+.login-hint{margin-top:14px;padding:12px;background:var(--paper-sunk);border-radius:var(--radius-md);font-size:12px;color:var(--fg-2);line-height:1.45}
+.login-hint code{font-family:var(--font-mono);font-size:11px;background:var(--paper-raised);padding:1px 5px;border-radius:3px}
+
+/* hero strip */
+.hero{
+  background:var(--brand-schwarz);color:var(--paper);border-radius:var(--radius-lg);
+  padding:18px 20px;margin-bottom:16px;box-shadow:var(--shadow-raised);
+  display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;align-items:center;
+}
+.hero h2{font-family:var(--font-display);font-weight:900;font-size:22px;margin-bottom:4px}
+.hero p{color:rgba(251,250,246,.72);font-size:13px;max-width:520px}
+.hero-stats{display:flex;gap:10px;flex-wrap:wrap}
+.hero-stat{
+  background:rgba(254,240,4,.14);border:1px solid rgba(254,240,4,.28);color:var(--brand-gold);
+  border-radius:var(--radius-md);padding:10px 14px;min-width:88px;text-align:center;
+}
+/* dashboard bars */
+.dash-panel{
+  background:var(--paper-raised);border:1px solid var(--border-hairline);border-radius:var(--radius-lg);
+  box-shadow:var(--shadow-card);padding:14px 16px;margin-bottom:16px;
+}
+.dash-panel h3{
+  font-family:var(--font-meta);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--fg-3);font-weight:700;margin-bottom:10px;
+}
+.stack-bar{
+  display:flex;height:14px;border-radius:var(--radius-pill);overflow:hidden;
+  background:var(--paper-sunk);border:1px solid var(--border-hairline);
+}
+.stack-bar > i{display:block;height:100%;min-width:0;transition:width .25s var(--ease)}
+.stack-bar > i.seg-blocked{background:var(--brand-rot)}
+.stack-bar > i.seg-missed{background:#c41e28}
+.stack-bar > i.seg-due{background:var(--status-warning)}
+.stack-bar > i.seg-prog{background:#0D199E}
+.stack-bar > i.seg-done{background:var(--status-success)}
+.stack-bar > i.seg-idle{background:var(--bone)}
+.stack-bar.lg{height:18px}
+.stack-bar.sm{height:8px;border-radius:var(--radius-sm)}
+.bar-legend{display:flex;flex-wrap:wrap;gap:10px 14px;margin-top:10px;font-size:12px;color:var(--fg-2);font-weight:600}
+.bar-legend span{display:inline-flex;align-items:center;gap:6px}
+.bar-legend i{width:10px;height:10px;border-radius:2px;display:inline-block}
+.meter{margin-top:10px}
+.meter-row{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:4px;font-size:12px}
+.meter-row .lbl{color:var(--fg-3);font-weight:600}
+.meter-row .val{font-family:var(--font-mono);font-weight:800;font-variant-numeric:tabular-nums;color:var(--fg-1)}
+.meter-track{
+  height:10px;background:var(--paper-sunk);border-radius:var(--radius-pill);overflow:hidden;
+  border:1px solid var(--border-hairline);
+}
+.meter-track > i{
+  display:block;height:100%;border-radius:var(--radius-pill);
+  background:linear-gradient(90deg,var(--brand-rot),#ff5a62);
+  box-shadow:inset 0 0 0 1px rgba(26,21,25,.06);
+}
+.meter-track > i.ok{background:linear-gradient(90deg,var(--status-success),#4caf70)}
+.meter-track > i.warn{background:linear-gradient(90deg,var(--status-warning),#e0a030)}
+.meter-track > i.blue{background:linear-gradient(90deg,#0D199E,#3d4fd4)}
+.meter-track > i.gold{background:linear-gradient(90deg,#C9A227,#FEF004)}
+.meter-track > i.green{background:linear-gradient(90deg,#1B7A3D,#3DDC84)}
+/* Stacked segment colors — knowledge */
+.seg-gold{background:linear-gradient(90deg,#C9A227,#FEF004)}
+.seg-green{background:linear-gradient(90deg,#1B7A3D,#3DDC84)}
+.seg-blue{background:linear-gradient(90deg,#0D199E,#3d4fd4)}
+/* Stacked segment colors — competitiveness drivers */
+.seg-act{background:linear-gradient(90deg,#E67E22,#F5A623)}
+.seg-comp{background:linear-gradient(90deg,#0D9488,#2DD4BF)}
+.seg-res{background:linear-gradient(90deg,#1B7A3D,#3DDC84)}
+.seg-rel{background:linear-gradient(90deg,#6D28D9,#A78BFA)}
+.seg-eng{background:linear-gradient(90deg,#BE185D,#F472B6)}
+.seg-know{background:linear-gradient(90deg,#C9A227,#FEF004)}
+.card-bars{margin-top:12px;display:flex;flex-direction:column;gap:8px}
+.card-bars .meter{margin-top:0}
+.card-bars .stack-bar{height:9px}
+.card-bars .meter-row{font-size:11px;margin-bottom:3px}
+.dual-bars{margin-top:10px;display:flex;flex-direction:column;gap:10px}
+.dual-bars .stack-bar{height:10px}
+.dual-bars .meter-row{font-size:11px;margin-bottom:3px}
+.know-level{
+  display:flex;align-items:center;justify-content:space-between;gap:8px;
+  margin-top:4px;padding-top:6px;border-top:1px dashed var(--border-hairline);
+  font-size:11px;font-weight:700;color:var(--fg-2);
+}
+.know-level b{font-family:var(--font-mono);font-size:14px;color:var(--fg-1);font-variant-numeric:tabular-nums}
+.know-legend{display:flex;flex-wrap:wrap;gap:8px 12px;margin-top:8px;font-size:11px;color:var(--fg-3);font-weight:600}
+.know-legend span{display:inline-flex;align-items:center;gap:5px}
+.know-legend i{width:9px;height:9px;border-radius:2px;display:inline-block}
+.know-legend i.gold,.know-legend i.seg-gold{background:linear-gradient(90deg,#C9A227,#FEF004)}
+.know-legend i.green,.know-legend i.seg-green{background:linear-gradient(90deg,#1B7A3D,#3DDC84)}
+.know-legend i.blue,.know-legend i.seg-blue{background:linear-gradient(90deg,#0D199E,#3d4fd4)}
+.know-legend i.seg-act{background:linear-gradient(90deg,#E67E22,#F5A623)}
+.know-legend i.seg-comp{background:linear-gradient(90deg,#0D9488,#2DD4BF)}
+.know-legend i.seg-res{background:linear-gradient(90deg,#1B7A3D,#3DDC84)}
+.know-legend i.seg-rel{background:linear-gradient(90deg,#6D28D9,#A78BFA)}
+.know-legend i.seg-eng{background:linear-gradient(90deg,#BE185D,#F472B6)}
+.know-legend i.seg-know{background:linear-gradient(90deg,#C9A227,#FEF004)}
+.comp-badge{
+  display:inline-flex;align-items:center;gap:6px;margin-top:0;
+  padding:5px 10px;border-radius:var(--radius-pill);
+  background:rgba(13,25,158,.08);border:1px solid rgba(13,25,158,.2);
+  font-size:11px;font-weight:700;color:#0D199E;
+}
+.comp-badge b{font-family:var(--font-mono);font-size:14px;font-variant-numeric:tabular-nums}
+.comp-badge .sub{font-weight:600;opacity:.75;font-size:10px}
+.comp-panel .comp-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px 12px;margin-top:8px;font-size:11px;color:var(--fg-2)}
+.comp-panel .comp-grid b{font-family:var(--font-mono);color:var(--fg-1)}
+.rank-chip{
+  display:inline-flex;align-items:center;gap:4px;
+  font-family:var(--font-mono);font-weight:800;font-size:12px;
+  color:#0D199E;font-variant-numeric:tabular-nums;
+}
+/* Small rank bubble on the left of the Compete bar row — number only (2, 3, 11) */
+.rank-bubble{
+  flex:0 0 auto;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-width:22px;
+  height:18px;
+  padding:0 6px;
+  border-radius:var(--radius-pill);
+  font-family:var(--font-mono);
+  font-weight:900;
+  font-size:11px;
+  line-height:1;
+  font-variant-numeric:tabular-nums;
+  color:#0D199E;
+  background:rgba(13,25,158,.12);
+  border:1px solid rgba(13,25,158,.28);
+  box-shadow:none;
+  pointer-events:none;
+  white-space:nowrap;
+}
+.compete-row{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  min-width:0;
+}
+.compete-row .compete-main{
+  flex:1 1 auto;
+  min-width:0;
+}
+.compete-row .compete-main .meter{margin-top:0}
+.compete-row .compete-main .stack-bar{margin-top:0}
+.kpi-score{
+  display:flex;align-items:center;gap:12px;margin-top:10px;padding-right:56px;
+}
+.kpi-score .pct{
+  font-family:var(--font-mono);font-weight:800;font-size:18px;font-variant-numeric:tabular-nums;
+  color:var(--fg-1);min-width:3.2em;
+}
+.kpi-score .meter{flex:1;margin-top:0}
+.ktile .meter{margin-top:10px}
+.ktile .meter-track{height:8px}
+.hero-stat b{display:block;font-family:var(--font-mono);font-size:22px;font-weight:800;color:#fff;font-variant-numeric:tabular-nums}
+.hero-stat span{font-family:var(--font-meta);font-size:10px;letter-spacing:.12em;text-transform:uppercase}
+
+/* legend — interactive status filters */
+.legend{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}
+.legend .leg-btn{
+  display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:var(--radius-pill);
+  background:var(--paper-raised);border:1px solid var(--border-hairline);font-size:12px;color:var(--fg-2);font-weight:600;
+  cursor:pointer;font-family:inherit;transition:border-color .12s,box-shadow .12s,background .12s,color .12s;
+}
+.legend .leg-btn:hover{border-color:var(--border-strong);box-shadow:var(--shadow-card);color:var(--fg-1)}
+.legend .leg-btn:focus-visible{outline:2px solid rgba(229,32,44,.4);outline-offset:2px}
+.legend .leg-btn.on{border-color:var(--brand-rot);background:rgba(229,32,44,.06);color:var(--fg-1);box-shadow:var(--shadow-raised)}
+.bar-legend .leg-btn{
+  display:inline-flex;align-items:center;gap:6px;border:0;background:transparent;cursor:pointer;
+  font:inherit;font-size:12px;font-weight:600;color:var(--fg-2);padding:2px 4px;border-radius:var(--radius-sm);
+}
+.bar-legend .leg-btn:hover{color:var(--fg-1);background:var(--paper-sunk)}
+.hero-stat{cursor:pointer;transition:transform .12s,filter .12s}
+.hero-stat:hover{transform:translateY(-1px);filter:brightness(1.08)}
+.dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.dot-red{background:var(--status-error)}.dot-amber{background:var(--status-warning)}
+.dot-blue{background:#0D199E}.dot-green{background:var(--status-success)}.dot-ok{background:var(--stone-300)}
+
+/* status process widget */
+.sw-backdrop{
+  position:fixed;inset:0;background:rgba(26,21,25,.48);z-index:30;display:none;
+  align-items:center;justify-content:center;padding:16px;
+}
+.sw-backdrop.on{display:flex}
+.sw{
+  width:min(560px,100%);max-height:min(86vh,720px);overflow:auto;
+  background:var(--paper-raised);border-radius:var(--radius-lg);box-shadow:var(--shadow-float);
+  border:1px solid var(--border-hairline);
+}
+.sw-head{padding:16px 18px 12px;border-bottom:1px solid var(--border-hairline);position:sticky;top:0;background:var(--paper-raised);z-index:1}
+.sw-head h3{font-family:var(--font-display);font-weight:900;font-size:18px;margin-bottom:4px}
+.sw-head p{font-size:13px;color:var(--fg-2);line-height:1.4}
+.sw-x{
+  float:right;width:34px;height:34px;border:1px solid var(--border-subtle);border-radius:var(--radius-md);
+  background:var(--paper-sunk);font-size:18px;line-height:1;display:grid;place-items:center;color:var(--fg-2);cursor:pointer;
+}
+.sw-process{
+  display:flex;flex-wrap:wrap;gap:6px;margin-top:12px;
+}
+.sw-process button{
+  flex:1 1 100px;border:1px solid var(--border-hairline);background:var(--paper-sunk);border-radius:var(--radius-md);
+  padding:8px 6px;font-size:11px;font-weight:700;color:var(--fg-2);cursor:pointer;font-family:var(--font-meta);
+  letter-spacing:.04em;text-transform:uppercase;
+}
+.sw-process button.on{background:var(--brand-schwarz);color:var(--paper);border-color:var(--brand-schwarz)}
+.sw-process button .n{display:block;font-family:var(--font-mono);font-size:14px;margin-top:2px;font-variant-numeric:tabular-nums}
+.sw-body{padding:12px 16px 18px}
+.sw-row{
+  border:1px solid var(--border-hairline);border-radius:var(--radius-md);padding:12px;margin-bottom:10px;
+  background:var(--paper);cursor:pointer;transition:border-color .12s,box-shadow .12s;
+}
+.sw-row:hover{border-color:var(--border-strong);box-shadow:var(--shadow-card)}
+.sw-row .top{display:flex;justify-content:space-between;gap:10px;align-items:flex-start;margin-bottom:6px}
+.sw-row .agent{font-weight:800;font-size:14px}
+.sw-row .mail{font-size:12px;color:var(--fg-3);font-weight:600;line-height:1.25} /* role under name */
+.sw-row .task{font-size:13px;font-weight:700;color:var(--fg-1);margin-bottom:4px}
+.sw-row .brief{font-size:12px;color:var(--fg-2);line-height:1.4;margin-bottom:8px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.sw-row .meta{font-size:11px;color:var(--fg-3);font-weight:600;margin-bottom:6px}
+.sw-empty{text-align:center;padding:28px 12px;color:var(--fg-2);font-size:13px}
+
+.sec{
+  font-family:var(--font-meta);font-size:11px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--fg-3);font-weight:700;margin:20px 0 10px;
+}
+
+/* agent cards */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px;overflow:visible;padding-top:4px}
+.card{
+  background:var(--paper-raised);border:1px solid var(--border-hairline);border-radius:var(--radius-lg);
+  box-shadow:var(--shadow-card);padding:0;overflow:visible;cursor:pointer;position:relative;
+  transition:box-shadow var(--ease) 160ms,transform var(--ease) 160ms,border-color var(--ease) 160ms;
+}
+.card:hover{box-shadow:var(--shadow-raised);transform:translateY(-1px);border-color:var(--border-subtle)}
+.card.needs{border-color:rgba(229,32,44,.35);box-shadow:0 0 0 1px rgba(229,32,44,.12),var(--shadow-raised)}
+.card-top{height:4px;background:var(--stone-200)}
+.card.needs .card-top{background:var(--brand-rot)}
+.card-body{padding:34px 14px 16px 14px;padding-right:72px;position:relative;min-height:110px;overflow:visible}
+/* Avatar sits top-right; comic Owner-ask bubble anchors on its top-right corner */
+.card .avatar-slot{
+  position:absolute;top:34px;right:12px;width:48px;height:48px;z-index:4;
+  overflow:visible;
+}
+
+.card .avatar{
+  width:48px;height:48px;border-radius:var(--radius-md);
+  object-fit:cover;object-position:center top;background:var(--paper-sunk);
+  border:1px solid var(--border-hairline);box-shadow:var(--shadow-card);
+  display:block;
+}
+.card .avatar-fallback{
+  width:48px;height:48px;border-radius:var(--radius-md);
+  background:var(--brand-schwarz);color:var(--paper);display:grid;place-items:center;
+  font-family:var(--font-display);font-weight:800;font-size:14px;letter-spacing:.02em;
+  border:1px solid var(--border-hairline);
+}
+/* Comic speech bubble — top-right angle of avatar; 2-word Owner confirm */
+.card .comic-say{
+  position:absolute;
+  /* fully outside avatar: sit above the 48×48 photo */
+  left:auto;right:-4px;top:auto;bottom:calc(100% + 8px);
+  z-index:6;
+  max-width:100px;padding:5px 8px 6px;
+  background:#FFFEF2;color:var(--brand-schwarz);
+  border:2.5px solid var(--brand-schwarz);border-radius:12px;
+  font-family:var(--font-display);font-weight:900;font-size:10px;line-height:1.1;
+  letter-spacing:.02em;text-align:center;text-transform:none;
+  box-shadow:2px 2px 0 rgba(26,21,25,.16);
+  white-space:nowrap;overflow:visible;
+  pointer-events:none;animation:comic-pop .35s var(--ease) both;
+}
+
+.card .comic-say::after{
+  content:"";position:absolute;right:14px;top:100%;bottom:auto;
+  width:8px;height:8px;margin-top:-4px;
+  background:#FFFEF2;border-right:2.5px solid var(--brand-schwarz);
+  border-bottom:2.5px solid var(--brand-schwarz);transform:rotate(45deg);
+}
+
+.card.needs .comic-say{border-color:var(--brand-rot);color:var(--brand-rot)}
+.card.needs .comic-say::after{border-color:var(--brand-rot)}
+@keyframes comic-pop{
+  from{opacity:0;transform:scale(.6) translate(4px,-4px)}
+  to{opacity:1;transform:scale(1) translate(0,0)}
+}
+.card .nm{
+  font-family:var(--font-display);font-weight:800;font-size:17px;margin-bottom:2px;padding-right:4px;
+  line-height:1.15;min-height:calc(1.15em * 2); /* always reserve two name lines */
+}
+.card .nm .fn,.card .nm .ln{display:block}
+/* Second line under name = role only (never email) */
+.card .rl{
+  color:var(--fg-3);font-size:13px;margin-bottom:10px;padding-right:4px;line-height:1.25;
+  font-weight:600;
+}
+.badges{
+  display:flex;flex-wrap:nowrap;align-items:center;gap:3px;
+  width:100%;max-width:100%;min-width:0;
+}
+.b{
+  font-family:var(--font-mono);font-size:clamp(8px, 2.1vw, 10px);font-weight:700;
+  padding:2px 5px;border-radius:var(--radius-pill);
+  background:var(--paper-sunk);color:var(--fg-2);border:1px solid var(--border-hairline);
+  flex:1 1 0;min-width:0;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  text-align:center;line-height:1.2;
+  box-sizing:border-box;
+}
+.b.red{background:rgba(229,32,44,.1);color:var(--brand-rot);border-color:rgba(229,32,44,.25)}
+.b.amber{background:rgba(199,122,0,.12);color:var(--status-warning);border-color:rgba(199,122,0,.25)}
+.b.blue{background:rgba(13,25,158,.08);color:#0D199E;border-color:rgba(13,25,158,.18)}
+.b.green{background:rgba(46,125,79,.1);color:var(--status-success);border-color:rgba(46,125,79,.22)}
+.card-foot{
+  margin-top:12px;display:flex;align-items:center;justify-content:flex-end;
+  gap:8px;min-width:0;
+}
+.card-foot .status-line{font-size:11px;color:var(--fg-3);font-weight:600;flex:1 1 auto;text-align:left}
+.card-foot .status-line em{color:var(--brand-rot);font-style:normal;font-weight:800}
+.card-foot{align-items:flex-end}
+.card-foot .now-lines{
+  flex:1 1 auto;min-width:0;text-align:left;
+  font-size:10.5px;font-style:italic;font-weight:500;font-family:var(--font-body);
+  color:var(--fg-3);line-height:1.35;
+}
+.card-foot .now-lines span{
+  display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.card-foot .now-lines span.muted{opacity:.75}
+.card-foot .rank-pill{
+  flex-shrink:0;font-family:var(--font-mono);font-size:10px;font-weight:700;
+  padding:3px 8px;border-radius:var(--radius-pill);
+  background:rgba(13,25,158,.08);color:#0D199E;border:1px solid rgba(13,25,158,.18);
+}
+
+
+/* empty */
+.empty{
+  text-align:center;padding:40px 20px;background:var(--paper-raised);border-radius:var(--radius-lg);
+  border:1px dashed var(--border-subtle);color:var(--fg-2);
+}
+.empty h3{font-family:var(--font-display);font-weight:800;color:var(--fg-1);margin-bottom:6px}
+
+/* drawer */
+.drawer{position:fixed;inset:0;background:rgba(26,21,25,.45);display:none;justify-content:flex-end;z-index:20}
+.drawer.on{display:flex}
+.panel{
+  width:min(540px,100%);background:var(--paper);overflow-y:auto;
+  box-shadow:var(--shadow-float);animation:slideIn 200ms var(--ease);
+}
+@keyframes slideIn{from{transform:translateX(12px);opacity:.6}to{transform:none;opacity:1}}
+.panel-head{
+  position:sticky;top:0;background:var(--paper-raised);border-bottom:1px solid var(--border-subtle);
+  padding:14px 16px;z-index:2;
+}
+.panel-head .x{
+  float:right;width:36px;height:36px;border:1px solid var(--border-subtle);border-radius:var(--radius-md);
+  background:var(--paper-sunk);font-size:18px;line-height:1;display:grid;place-items:center;color:var(--fg-2);
+}
+.panel-head h2{font-family:var(--font-display);font-weight:900;font-size:20px;padding-right:44px}
+.panel-head .rl{color:var(--fg-3);font-size:13px;margin-top:2px}
+.panel-body{padding:16px}
+.run{
+  background:var(--paper-raised);border:1px solid var(--border-hairline);border-radius:var(--radius-lg);
+  padding:12px 14px;margin-bottom:10px;box-shadow:var(--shadow-card);cursor:pointer;
+}
+.run.hot{border-color:rgba(229,32,44,.4)}
+.run .row{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
+.run .title{font-weight:800;font-size:14px}
+.run .id{font-family:var(--font-mono);font-size:11px;color:var(--fg-3);font-weight:700;margin-right:6px}
+.chip{
+  font-family:var(--font-meta);font-size:10px;letter-spacing:.08em;text-transform:uppercase;font-weight:700;
+  padding:3px 8px;border-radius:var(--radius-pill);border:1px solid var(--border-hairline);white-space:nowrap;
+}
+.chip.due{background:rgba(199,122,0,.12);color:var(--status-warning)}
+.chip.in_progress{background:rgba(13,25,158,.1);color:#0D199E}
+.chip.done{background:rgba(46,125,79,.12);color:var(--status-success)}
+.chip.missed,.chip.blocked{background:rgba(229,32,44,.1);color:var(--brand-rot)}
+.meta{font-size:12px;color:var(--fg-3);margin-top:4px;font-family:var(--font-mono)}
+.bar{height:6px;background:var(--paper-sunk);border-radius:var(--radius-pill);margin-top:10px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--brand-rot);border-radius:var(--radius-pill)}
+.det{display:none;margin-top:12px;padding-top:12px;border-top:1px solid var(--border-hairline);font-size:13px;color:var(--fg-2);line-height:1.45}
+.run.open .det{display:block}
+.det b{color:var(--fg-1)}
+.det p{margin:0 0 8px}
+.brief{
+  background:var(--paper-sunk);border:1px solid var(--border-hairline);border-radius:var(--radius-md);
+  padding:10px 12px;margin:0 0 10px;font-size:13px;color:var(--fg-1);line-height:1.45;
+}
+.brief .tag{
+  font-family:var(--font-meta);font-size:10px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--brand-rot);font-weight:700;margin-bottom:4px;
+}
+.brief-why{color:var(--fg-2);font-size:12px;margin-top:6px}
+.field{margin:0 0 10px}
+.field .lab{
+  font-family:var(--font-meta);font-size:10px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--fg-3);font-weight:700;margin-bottom:3px;
+}
+.field .val{color:var(--fg-1);font-size:13px;line-height:1.4}
+.agent-brief{
+  background:var(--paper-raised);border:1px solid var(--border-hairline);border-radius:var(--radius-lg);
+  padding:12px 14px;margin-bottom:14px;box-shadow:var(--shadow-card);font-size:13px;line-height:1.45;color:var(--fg-2);
+}
+.agent-brief strong{color:var(--fg-1)}
+.cad-card{
+  background:var(--paper-raised);border:1px solid var(--border-hairline);border-radius:var(--radius-md);
+  padding:12px;margin-bottom:8px;
+}
+.cad-card .ct{font-weight:800;font-size:14px;margin-bottom:6px}
+.cad-card .cid{font-family:var(--font-mono);font-size:11px;color:var(--fg-3);font-weight:700;margin-right:6px}
+.act{display:grid;grid-template-columns:64px 1fr;gap:8px;margin-top:10px}
+.act input,.act textarea{
+  width:100%;padding:8px 10px;border:1px solid var(--border-subtle);border-radius:var(--radius-md);
+  background:var(--paper);font-size:13px;
+}
+.act-btns{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:8px}
+
+/* KPI */
+.kpi-block{
+  background:var(--paper-raised);border:1px solid var(--border-hairline);border-radius:var(--radius-lg);
+  box-shadow:var(--shadow-card);margin-bottom:14px;overflow:hidden;position:relative;
+}
+.kpi-block-head{
+  position:relative;padding:14px 72px 12px 14px;border-bottom:1px solid var(--border-hairline);
+  background:var(--paper-sunk);min-height:64px;
+}
+.kpi-block-head .avatar{
+  position:absolute;top:12px;right:12px;width:48px;height:48px;border-radius:var(--radius-md);
+  object-fit:cover;object-position:center top;background:var(--paper-raised);
+  border:1px solid var(--border-hairline);box-shadow:var(--shadow-card);display:block;
+}
+.kpi-block-head .avatar-fallback{
+  position:absolute;top:12px;right:12px;width:48px;height:48px;border-radius:var(--radius-md);
+  background:var(--brand-schwarz);color:var(--paper);display:grid;place-items:center;
+  font-family:var(--font-display);font-weight:800;font-size:14px;
+  border:1px solid var(--border-hairline);
+}
+.kpi-block-head .nm{
+  font-family:var(--font-display);font-weight:800;font-size:16px;
+  line-height:1.15;min-height:calc(1.15em * 2);
+}
+.kpi-block-head .nm .fn,.kpi-block-head .nm .ln{display:block}
+.kpi-block-head .rl{color:var(--fg-3);font-size:12px;margin-top:2px}
+.kgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;padding:12px 14px 14px}
+.ktile{
+  background:var(--paper);border:1px solid var(--border-hairline);border-radius:var(--radius-md);
+  padding:12px;box-shadow:none;
+}
+.ktile.miss{border-color:rgba(229,32,44,.4)}
+.ktile .m{font-size:13px;font-weight:600;color:var(--fg-2);min-height:36px;line-height:1.3}
+.ktile .v{font-family:var(--font-mono);font-size:20px;font-weight:800;margin-top:8px;font-variant-numeric:tabular-nums}
+.ktile .v.missed{color:var(--brand-rot)}
+.ktile .tg{font-size:11px;color:var(--fg-3);margin-top:4px}
+
+.toast{
+  position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--brand-schwarz);color:#fff;
+  padding:10px 16px;border-radius:var(--radius-pill);font-size:13px;font-weight:600;box-shadow:var(--shadow-float);
+  z-index:30;display:none;
+}
+.toast.on{display:block}
+
+@media(max-width:640px){
+  .top-inner{align-items:stretch}
+  .tabs,.actions{width:100%}
+  .tab,.btn{flex:1;text-align:center}
+  .hero{padding:16px}
+}
+
+/* Agent chat (OpenRouter) */
+.chat-wrap{margin-top:8px;border:1px solid var(--border-subtle);border-radius:var(--radius-lg);background:var(--paper-raised);overflow:hidden}
+.chat-head{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:10px 12px;border-bottom:1px solid var(--border-hairline);background:var(--paper-sunk)}
+.chat-head h3{font-family:var(--font-display);font-size:13px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;margin:0}
+.chat-head .hint{font-size:11px;color:var(--fg-3);font-weight:600}
+.chat-log{max-height:320px;overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:10px;background:var(--paper)}
+.chat-msg{max-width:92%;padding:9px 11px;border-radius:12px;font-size:13px;line-height:1.45;white-space:pre-wrap;word-break:break-word}
+.chat-msg.user{align-self:flex-end;background:var(--brand-schwarz);color:#fff;border-bottom-right-radius:4px}
+.chat-msg.assistant{align-self:flex-start;background:#FFFEF2;border:1.5px solid var(--border-subtle);color:var(--fg-1);border-bottom-left-radius:4px}
+.chat-msg .who{display:block;font-family:var(--font-meta);font-size:10px;letter-spacing:.1em;text-transform:uppercase;opacity:.7;margin-bottom:4px;font-weight:700}
+.chat-msg .ch{font-weight:600;opacity:.85;letter-spacing:.06em}
+.chat-msg.tg{box-shadow:inset 3px 0 0 #2AABEE}
+.chat-msg.err{border-color:var(--brand-rot);color:var(--brand-rot)}
+.chat-form{display:flex;gap:8px;padding:10px;border-top:1px solid var(--border-hairline);background:var(--paper-raised)}
+.chat-form textarea{flex:1;min-height:88px;max-height:280px;resize:vertical;border:1px solid var(--border-subtle);border-radius:var(--radius-md);padding:10px 12px;font:14px/1.45 var(--font-body);background:var(--paper)}
+.chat-form textarea:focus{outline:2px solid rgba(229,32,44,.25);border-color:var(--brand-rot)}
+.chat-form button{align-self:flex-end;white-space:nowrap}
+.chat-empty{color:var(--fg-3);font-size:12px;text-align:center;padding:18px 8px}
+.chat-head h3{text-transform:none;letter-spacing:0;font-size:15px}
+/* Compete drivers accordion — closed by default */
+.cidx-acc{margin-top:8px;border-top:1px solid var(--border-hairline);padding-top:8px}
+.cidx-acc > summary{
+  cursor:pointer;list-style:none;font-size:12px;font-weight:700;color:var(--fg-3);
+  font-family:var(--font-meta);letter-spacing:.08em;text-transform:uppercase;
+  display:flex;justify-content:space-between;align-items:center;
+}
+.cidx-acc > summary::-webkit-details-marker{display:none}
+.cidx-acc > summary::after{content:"▸";font-size:11px}
+.cidx-acc[open] > summary::after{content:"▾"}
+.cidx-acc .cidx-row,.cidx-acc .comp-grid span{font-size:13px}
+.panel-head .rl{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+
+/* Seminar / Quick Meeting modal */
+#sem-modal.on{display:flex;align-items:flex-start;justify-content:center;padding:24px 12px;overflow-y:auto}
+.sem-panel{
+  width:min(560px,100%);background:var(--paper);border-radius:var(--radius-lg);
+  box-shadow:var(--shadow-float);border:1px solid var(--border-hairline);margin:auto;
+}
+.sem-head{
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  padding:14px 16px;border-bottom:1px solid var(--border-hairline);background:var(--paper-raised);
+  border-radius:var(--radius-lg) var(--radius-lg) 0 0;
+}
+.sem-head h2{margin:0;font-family:var(--font-display);font-size:18px;font-weight:800}
+.sem-body{padding:16px}
+.sem-lead{font-size:13px;color:var(--fg-2);line-height:1.45;margin:0 0 14px}
+.sem-label{display:block;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--fg-3);margin:10px 0 6px}
+.sem-input,.sem-ta{
+  width:100%;box-sizing:border-box;border:1px solid var(--border-subtle);border-radius:var(--radius-md);
+  padding:8px 10px;font:13px/1.4 var(--font-body);background:var(--paper-raised);color:var(--fg-1);
+}
+.sem-ta{min-height:120px;resize:vertical}
+.sem-select{max-width:160px}
+.sem-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.sem-active-title{font-family:var(--font-display);font-weight:800;font-size:16px;margin:0 0 8px}
+.sem-material{
+  white-space:pre-wrap;word-break:break-word;font-size:13.5px;line-height:1.45;color:var(--fg-1);
+  background:var(--paper-sunk);border-radius:var(--radius-md);padding:12px;margin-bottom:14px;
+  border:1px solid var(--border-hairline);max-height:180px;overflow-y:auto;
+}
+.sem-prog-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px;font-size:12px;font-weight:700;color:var(--fg-3);text-transform:uppercase;letter-spacing:.08em}
+.sem-prog-head b{font-size:16px;color:var(--fg-1);font-family:var(--font-display)}
+.sem-prog{height:12px;background:var(--paper-sunk);border-radius:999px;overflow:hidden;border:1px solid var(--border-hairline)}
+.sem-prog i{display:block;height:100%;background:linear-gradient(90deg,var(--brand-schwarz),var(--brand-rot));border-radius:999px;transition:width .35s ease}
+.sem-prog-meta{font-size:12px;margin:6px 0 14px}
+.sem-sec{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--fg-3);margin:14px 0 8px}
+.sem-q-list{display:flex;flex-direction:column;gap:8px;margin-bottom:12px}
+.sem-q{border:1px solid var(--border-hairline);border-radius:var(--radius-md);background:var(--paper-raised);overflow:hidden}
+.sem-q.open{border-color:rgba(229,32,44,.3)}
+.sem-q-btn{
+  display:block;width:100%;text-align:left;border:0;background:transparent;padding:10px 12px;cursor:pointer;color:inherit;font:inherit;
+}
+.sem-q-btn.static{cursor:default}
+.sem-q-who{display:block;font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--fg-3);margin-bottom:4px}
+.sem-q-text{display:block;font-size:13.5px;line-height:1.4;color:var(--fg-1);font-weight:600}
+.sem-q-hint{display:block;font-size:11px;color:var(--brand-rot);margin-top:4px;font-weight:600}
+.sem-ans-wrap{padding:0 12px 10px}
+.sem-ans{width:100%;box-sizing:border-box;min-height:56px;border:1px solid var(--border-subtle);border-radius:var(--radius-md);padding:8px;font:13px/1.4 var(--font-body)}
+.sem-a{padding:0 12px 10px;font-size:13px;line-height:1.45;color:var(--fg-2);font-style:italic}
+.sem-ask-row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.sem-ask-row .sem-input:not(.sem-select){flex:1 1 160px}
+
+
+
+/* Agent report to Owner */
+.owner-snap{
+  background:var(--paper-raised);border:1px solid var(--border-hairline);border-radius:var(--radius-lg);
+  padding:14px;margin-bottom:14px;box-shadow:var(--shadow-card);
+}
+.owner-snap .job{
+  font-size:14px;line-height:1.45;color:var(--fg-1);margin:0 0 10px;font-weight:600;
+}
+.owner-snap .now-work-list{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:10px}
+.owner-snap .now-work-list li{font-size:13.5px;line-height:1.45;color:var(--fg-1);font-weight:500}
+.owner-snap .now-work-list li b{font-weight:800;color:var(--fg-1)}
+.owner-snap .now-work-list li .st{
+  font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;
+  color:var(--fg-3);margin-left:6px;font-style:normal;
+}
+.owner-snap .now-work-list li .ex{display:block;margin-top:3px;color:var(--fg-2);font-weight:500;font-size:13px}
+.owner-snap .now-head{
+  font-family:var(--font-meta);font-size:11px;font-weight:700;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--fg-3);margin:0 0 8px;
+}
+.owner-snap .briefing{
+  font-size:14px;line-height:1.5;color:var(--fg-1);margin:0;
+  padding:12px 14px;background:var(--paper-sunk);border-radius:var(--radius-md);
+  border-left:3px solid var(--brand-rot);
+}
+.owner-snap .briefing em{font-style:normal;font-weight:800;color:var(--brand-schwarz)}
+.report-card{
+  background:var(--paper-raised);border:1px solid var(--border-hairline);border-radius:var(--radius-lg);
+  padding:14px;margin-bottom:10px;box-shadow:var(--shadow-card);
+}
+.report-card.hot{border-color:rgba(229,32,44,.45);box-shadow:0 0 0 1px rgba(229,32,44,.1)}
+.report-card .rc-top{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;margin-bottom:8px}
+.report-card .rc-title{font-weight:800;font-size:15px;line-height:1.3;margin:0;color:var(--fg-1)}
+.report-card .rc-state{
+  flex-shrink:0;font-family:var(--font-meta);font-size:11px;font-weight:700;letter-spacing:.06em;
+  text-transform:uppercase;padding:5px 9px;border-radius:var(--radius-pill);white-space:nowrap;
+}
+.report-card .rc-state.stuck{background:rgba(229,32,44,.1);color:var(--brand-rot)}
+.report-card .rc-state.missed{background:rgba(229,32,44,.08);color:var(--brand-rot)}
+.report-card .rc-state.doing{background:rgba(47,100,180,.1);color:#2F64B4}
+.report-card .rc-state.done{background:rgba(46,125,79,.1);color:var(--status-success)}
+.report-card .rc-say{
+  font-size:13px;line-height:1.5;color:var(--fg-2);margin:0 0 10px;
+}
+.report-card .rc-say strong{color:var(--fg-1);font-weight:700}
+.report-card .rc-pct-row{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:4px}
+.report-card .rc-pct-row .lbl{font-size:11px;font-weight:700;color:var(--fg-3);text-transform:uppercase;letter-spacing:.08em;font-family:var(--font-meta)}
+.report-card .rc-pct-row .val{font-family:var(--font-display);font-weight:800;font-size:18px;color:var(--fg-1)}
+.report-card .rc-bar{height:8px;background:var(--paper-sunk);border-radius:999px;overflow:hidden;border:1px solid var(--border-hairline)}
+.report-card .rc-bar i{display:block;height:100%;background:linear-gradient(90deg,#2F64B4,var(--brand-rot));border-radius:999px;transition:width .25s var(--ease)}
+.report-card .rc-bar i.done{background:var(--status-success)}
+.report-card .rc-bar i.hot{background:var(--brand-rot)}
+.report-card .rc-next{
+  margin-top:10px;padding-top:10px;border-top:1px solid var(--border-hairline);
+  font-size:12px;color:var(--fg-3);line-height:1.4;
+}
+.report-card .rc-next b{color:var(--fg-2)}
+.owner-sec{margin:18px 0 10px;font-family:var(--font-meta);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--fg-3);font-weight:700}
+.owner-empty{padding:16px;text-align:center;color:var(--fg-3);font-size:13px;background:var(--paper-sunk);border-radius:var(--radius-lg)}
+.acc-not-started{
+  margin:12px 0 8px;border:1px solid var(--border-subtle);border-radius:var(--radius-lg);
+  background:var(--paper-sunk);overflow:hidden;
+}
+.acc-not-started > summary{
+  cursor:pointer;padding:12px 14px;font-size:13px;font-weight:700;color:var(--fg-2);
+  list-style:none;display:flex;justify-content:space-between;align-items:center;gap:8px;
+}
+.acc-not-started > summary::-webkit-details-marker{display:none}
+.acc-not-started > summary::after{content:"▸";color:var(--fg-3);font-size:12px}
+.acc-not-started[open] > summary::after{content:"▾"}
+.acc-not-started .acc-body{padding:0 12px 12px}
+.ns-item{
+  display:flex;justify-content:space-between;gap:10px;align-items:flex-start;
+  padding:10px 12px;margin-bottom:6px;background:var(--paper-raised);
+  border:1px solid var(--border-hairline);border-radius:var(--radius-md);font-size:13px;
+}
+.ns-item .t{font-weight:600;color:var(--fg-1);line-height:1.3}
+.ns-item .tag{flex-shrink:0;font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--fg-3);padding:3px 8px;border-radius:999px;background:var(--paper-sunk)}
+.tech-fold{margin-top:18px;border-top:1px dashed var(--border-subtle);padding-top:12px}
+.tech-fold summary{
+  cursor:pointer;font-size:12px;font-weight:700;color:var(--fg-3);list-style:none;
+  font-family:var(--font-meta);letter-spacing:.08em;text-transform:uppercase;
+}
+.tech-fold summary::-webkit-details-marker{display:none}
+.tech-fold[open] summary{margin-bottom:10px;color:var(--fg-2)}
+
+
+/* Bubble opens chat */
+.comic-say.comic-say-btn{pointer-events:auto;cursor:pointer;transition:transform .12s var(--ease),box-shadow .12s var(--ease);}
+.comic-say.comic-say-btn:hover{
+  transform:translateY(-2px) scale(1.03);
+  box-shadow:3px 3px 0 rgba(26,21,25,.22);
+}
+.comic-say.comic-say-btn:focus-visible{
+  outline:2px solid var(--brand-rot);outline-offset:2px;
+}
+/* Chat fits drawer mockup */
+.panel-body{display:flex;flex-direction:column;gap:0;min-height:0}
+.chat-wrap{
+  position:sticky;top:0;z-index:3;margin-top:0;margin-bottom:14px;
+  max-height:min(42vh,360px);display:flex;flex-direction:column;
+  box-shadow:var(--shadow-raised);
+}
+.chat-wrap .chat-log{flex:1;min-height:120px;max-height:none}
+.chat-wrap.has-agent-ask{border-color:rgba(229,32,44,.45)}
+.chat-agent-q{
+  margin:0;padding:8px 12px;font-size:12px;line-height:1.4;
+  background:rgba(229,32,44,.06);border-bottom:1px solid rgba(229,32,44,.2);
+  color:var(--fg-1);font-weight:600;
+}
+.chat-agent-q span{color:var(--brand-rot);font-weight:800}
+.report-card .rc-issue{
+  margin:8px 0 0;padding:8px 10px;border-radius:var(--radius-md);
+  background:rgba(229,32,44,.06);border:1px solid rgba(229,32,44,.22);
+  font-size:12px;line-height:1.4;color:var(--fg-1);
+}
+.report-card .rc-issue b{color:var(--brand-rot)}
+
+
+/* Agent speech — italic body; **essence only** is bold (not labels / chrome) */
+.chat-msg.assistant{
+  font-weight:400;font-style:italic;
+}
+.chat-msg.assistant .who{font-style:normal;font-weight:700}
+.chat-msg.assistant strong,
+.chat-msg.assistant b{
+  font-weight:800;font-style:italic;color:var(--brand-schwarz-ink);
+}
+.agent-voice{font-weight:400;font-style:italic}
+.agent-voice strong,.agent-voice b{font-weight:800;font-style:italic;color:var(--brand-schwarz-ink)}
+.owner-snap .briefing{font-weight:400;font-style:normal}
+.owner-snap .briefing .who-line{font-weight:700;font-style:normal;color:var(--fg-2)}
+.owner-snap .briefing .meta-note{font-weight:500;font-style:normal;color:var(--fg-3);font-size:12px}
+.owner-snap .briefing strong,.owner-snap .briefing b{font-weight:800}
+.report-card .rc-say{font-weight:400;font-style:italic}
+.report-card .rc-say strong,.report-card .rc-say b{font-weight:800;font-style:italic}
+.chat-agent-q{font-weight:500;font-style:normal}
+.chat-agent-q .agent-voice{font-weight:400;font-style:italic}
+.chat-agent-q .agent-voice strong{font-weight:800;font-style:italic}
+</style>
+</head>
+<body>
+<div class="ribbon"></div>
+<div id="app"></div>
+<div class="toast" id="toast"></div>
+<script>
+const $ = q => document.querySelector(q);
+const normalizeKey = k => (k||'').trim().replace(/^Bearer\s+/i,'').trim().replace(/^["']|["']$/g,'');
+let KEY = normalizeKey(localStorage.getItem('dasorg_key')||'');
+let view = 'board'; const chatHist={}; let chatBusy=false, agents = [], cur = null;
+
+const STATUS = {
+  due: 'Due now',
+  in_progress: 'In progress',
+  done: 'Done',
+  missed: 'Missed',
+  blocked: 'Blocked'
+};
+
+function toast(msg){
+  const t = $('#toast'); t.textContent = msg; t.classList.add('on');
+  setTimeout(()=>t.classList.remove('on'), 2400);
+}
+
+async function api(p, o={}){
+  // Open board: no API key required for now
+  const headers = {
+    'content-type': 'application/json',
+    ...(o.headers||{})
+  };
+  if (KEY) headers['authorization'] = 'Bearer ' + KEY;
+  const { signal, ...rest } = o;
+  const r = await fetch('/api'+p, { ...rest, headers, signal });
+  if (r.status === 401){
+    // Only if server re-enables DASORG_REQUIRE_KEY=1
+    KEY = '';
+    localStorage.removeItem('dasorg_key');
+    sessionStorage.setItem('dasorg_err', 'API key required (DASORG_REQUIRE_KEY=1). Paste key from SECRETS/dasorg.md.');
+    render();
+    throw 0;
+  }
+  const text = await r.text();
+  let data;
+  try { data = JSON.parse(text); } catch {
+    throw new Error(r.ok ? 'Bad JSON from API' : ('HTTP '+r.status+': '+text.slice(0,120)));
+  }
+  if (!r.ok && data && data.error) {
+    const err = new Error(data.error + (data.detail ? (': '+data.detail) : ''));
+    err.data = data;
+    throw err;
+  }
+  return data;
+}
+
+function setKey(){
+  KEY = normalizeKey(document.getElementById('k').value);
+  if (!KEY || KEY.length < 32){
+    sessionStorage.setItem('dasorg_err', 'Key is too short. Copy the full Key value from SECRETS/dasorg.md (64 hex characters).');
+    render();
+    return;
+  }
+  localStorage.setItem('dasorg_key', KEY);
+  sessionStorage.removeItem('dasorg_err');
+  render();
+}
+
+function logout(){
+  KEY = '';
+  localStorage.removeItem('dasorg_key');
+  sessionStorage.removeItem('dasorg_err');
+  render();
+}
+
+function go(v){ view = v; render(); }
+
+function render(){
+  // Open access: no login screen
+  sessionStorage.removeItem('dasorg_err');
+
+  $('#app').innerHTML = `
+    <header class="top">
+      <div class="top-inner">
+        <div class="brand">
+          <h1>DASORG</h1>
+          <div class="sub">Founding Ten · live tasks</div>
+        </div>
+        <nav class="tabs">
+          <button class="tab ${view==='board'?'on':''}" onclick="go('board')">Team board</button>
+          <button class="tab ${view==='kpi'?'on':''}" onclick="go('kpi')">KPI wall</button>
+        </nav>
+        <div class="actions">
+          <button class="btn btn-dark" onclick="openSeminar()" title="Hold a conference / quick meeting — paste text or link">Seminar</button>
+          <button class="btn btn-dark" onclick="doGen()" title="Create due runs for this period">Refresh schedule</button>
+          <button class="btn btn-ghost" onclick="doExport()" title="Write finished runs to MEMORY.md">Export to canon</button>
+          ${KEY ? `<button class="btn btn-ghost" onclick="logout()">Log out</button>` : ``}
+        </div>
+      </div>
+    </header>
+    <main id="body"><p class="sec">Loading…</p></main>
+    <div class="drawer" id="dr" onclick="if(event.target.id==='dr')closeDr()">
+      <div class="panel" id="panel"></div>
+    </div>
+    <div class="sw-backdrop" id="sw" onclick="if(event.target.id==='sw')closeStatusWidget()" role="dialog" aria-modal="true" aria-labelledby="sw-title"></div>
+    <div class="sw-backdrop" id="sem-modal" onclick="if(event.target.id==='sem-modal')closeSeminar()" role="dialog" aria-modal="true"></div>`;
+
+  if (view === 'board') loadBoard();
+  else loadKpi();
+}
+
+/** Status bucket keys for pulse filters / widget */
+const STATUS_BUCKETS = {
+  blocked_missed: {
+    label: 'Blocked / missed',
+    short: 'Fix first',
+    match: r => r.status === 'blocked' || r.status === 'missed',
+    apiStatus: null,
+  },
+  due: {
+    label: 'Due — waiting to start',
+    short: 'Due',
+    match: r => r.status === 'due',
+    apiStatus: 'due',
+  },
+  in_progress: {
+    label: 'In progress',
+    short: 'In work',
+    match: r => r.status === 'in_progress',
+    apiStatus: 'in_progress',
+  },
+  done7: {
+    label: 'Done this week',
+    short: 'Done 7d',
+    match: r => r.status === 'done',
+    apiStatus: 'done',
+  },
+};
+
+let statusWidgetKey = null;
+let runsCache = null;
+
+async function fetchAllRuns(){
+  if (runsCache) return runsCache;
+  try {
+    runsCache = await api('/runs');
+    if (!Array.isArray(runsCache)) runsCache = [];
+  } catch(e) {
+    runsCache = [];
+  }
+  return runsCache;
+}
+
+function invalidateRunsCache(){ runsCache = null; }
+
+function processStripHtml(activeKey, counts){
+  const keys = ['blocked_missed','due','in_progress','done7'];
+  return `<div class="sw-process">${keys.map(k => {
+    const b = STATUS_BUCKETS[k];
+    const n = counts[k]||0;
+    return `<button type="button" class="${k===activeKey?'on':''}" onclick="event.stopPropagation();openStatusWidget('${k}')">
+      ${esc(b.short)}<span class="n">${n}</span>
+    </button>`;
+  }).join('')}</div>`;
+}
+
+function runBrief(r){
+  const n = (r.note || '').trim();
+  if (n) return n;
+  const d = (r.description || '').trim();
+  if (d) return d;
+  return r.done_criterion ? `Done looks like: ${r.done_criterion}` : 'No brief yet — open agent to work this run.';
+}
+
+function agentNameFromSlug(slug){
+  const a = (agents||[]).find(x => x.slug === slug);
+  return a ? a.name : slug;
+}
+
+function agentRoleFromSlug(slug){
+  const a = (agents||[]).find(x => x.slug === slug);
+  return a ? (a.role || '') : '';
+}
+
+/** Concrete Owner ask for comic bubble (specific, no generic OK) (null = no bubble). */
+function ownerAskTwoWords(runsForAgent, slug){
+  // Bubble: 2–3 words = THIS agent's real work/problem. Prefer blocked/missed. No "due list" jargon.
+  const open = (runsForAgent || []).filter(r =>
+    r.status === 'blocked' || r.status === 'missed' || r.status === 'due' || r.status === 'in_progress'
+  );
+  if (!open.length) return null;
+  // Prefer PROBLEM tasks for the bubble (what Boss cares about)
+  const problems = open.filter(r => r.status === 'blocked' || r.status === 'missed');
+  const active = open.filter(r => r.status === 'in_progress');
+  const order = { blocked:0, missed:1, in_progress:2, due:3 };
+  const pool = problems.length ? problems : (active.length ? active : open);
+  pool.sort((a,b) => (order[a.status]??9)-(order[b.status]??9) || String(a.task_id||'').localeCompare(String(b.task_id||'')));
+  const top = pool[0];
+  // Meta "list of dues" is not a Boss bubble — fall through to real work words
+  // Never surface abstract "due list" — only real work / problems
+  let pick = top;
+  if (normalizeTaskId(top.task_id) === 'A1') {
+    pick = open.find(r => normalizeTaskId(r.task_id) !== 'A1') || top;
+  }
+  return fewWordsForBubble(pick, slug || '');
+}
+
+function normalizeTaskId(taskId){
+  const u = String(taskId || '').toUpperCase().trim();
+  const m = u.match(/^([A-Z]{1,3}\d{1,2}|XA)\b/);
+  return m ? m[1] : u.replace(/[^A-Z0-9]/g,'').slice(0, 6);
+}
+
+/** 2–3 words (max 4) for this agent + this task only. */
+function fewWordsForBubble(r, slug){
+  if (!r) return null;
+  const id = normalizeTaskId(r.task_id);
+  const title = String(r.title || '');
+  const defaults = {
+    'lena-sergeeva': 'Needs Boss',
+    'lauda-briana': 'B2B hunt',
+    'alexandra-obnorskaya': 'FBO cover',
+    'roberta-di-maria': 'Off-site',
+    'marika-nowicka': 'Creative',
+    'valentina-korolyeva': 'Contracts',
+    'justina-timber': 'Budget J7',
+    'mina-rutunya': 'Infra',
+    'zina-pevtsova': 'Stock flow',
+    'maya-krasochkina': 'Product truth',
+  };
+
+  // Unique labels by task id — primary source of truth
+  const byId = {
+    A1: 'Needs Boss', A2: 'Daily brief', A3: 'Stale work', A4: 'KPI week', A5: 'Priorities', A6: 'Seminar',
+    L1: 'B2B leads', L2: 'Follow-ups', L3: 'Pipeline', L4: 'Sales deck', L5: 'Dead leads', L6: 'Sales angle',
+    S1: 'FBO cover', S2: 'Reviews', S3: 'Listings', S4: 'Rival scan', S5: 'Unit econ', S6: 'Supply ask',
+    R1: 'SEO blog', R2: 'SERP check', R3: 'Calendar', R4: 'Partners', R5: 'Content audit',
+    XA: 'Off-site',
+    M1: 'Creatives', M2: 'Brand book', M3: 'Motion', M4: 'Asset lib', M5: 'Packaging', M6: 'Brand plain',
+    V1: 'Expiry watch', V2: 'Due diligence', V3: 'Regulatory', V4: 'Legal matrix', V5: 'Contract draft',
+    J1: 'FX check', J2: 'Margins', J3: 'Invoices', J4: 'Price matrix', J5: 'Acquirers', J6: 'Web metrics', J7: 'Budget J7',
+    N1: 'Workers up', N2: 'Token rotate', N3: 'Deploy', N4: 'Snapshot', N5: 'Backups', N6: 'Infra check',
+    Z1: 'Stock health', Z2: 'Shipments', Z3: 'Supply SLA', Z4: 'Landed cost', Z5: '3PL score', Z6: 'HS codes',
+    K1: 'Intel sweep', K2: 'Formula gate', K3: 'Distill', K4: 'Claims audit', K5: 'R&D pipeline', K6: 'Science note',
+    G1: 'Morning report', G2: 'GEO deep-read', G3: 'GEO map', G4: 'AI crawlers', G5: 'Entity pack', G6: 'GEO roll-up',
+  };
+  if (byId[id]) return clampBubbleWords(byId[id]);
+
+  // Role + top-run only (never other agents' notes)
+  const topLow = (title + ' ' + String(r.note||'') + ' ' + id).toLowerCase();
+  const roleOnly = {
+    'justina-timber': [[/purchase|conversion|ads goal/i,'Ads purchase'],[/budget|j7|feasib|spend/i,'Budget J7'],[/matrix|price/i,'Price matrix']],
+    'roberta-di-maria': [[/\bxa\b|external|citation/i,'Off-site'],[/blog|seo/i,'SEO blog'],[/send|emailer/i,'Send copy']],
+    'lauda-briana': [[/lead|b2b|hunt|distributor/i,'B2B leads'],[/deck/i,'Buyer deck'],[/send|emailer/i,'Send copy'],[/pipeline/i,'Pipeline']],
+    'lena-sergeeva': [[/brief/i,'Daily brief'],[/due/i,'Open problems'],[/seminar/i,'Seminar']],
+    'alexandra-obnorskaya': [[/fbo|cover/i,'FBO cover'],[/review/i,'Reviews'],[/listing/i,'Listings']],
+    'marika-nowicka': [[/creative|batch/i,'Creatives'],[/pack|photo|shot/i,'Pack shots'],[/brand/i,'Brand work']],
+    'valentina-korolyeva': [[/sign|contract/i,'You sign'],[/dd|diligence/i,'Due diligence']],
+    'mina-rutunya': [[/token|oauth/i,'Token rotate'],[/deploy/i,'Deploy'],[/health|worker/i,'Workers up']],
+    'zina-pevtsova': [[/stock|cover/i,'Stock health'],[/ship/i,'Shipments']],
+    'maya-krasochkina': [[/claim/i,'Claims audit'],[/formula/i,'Formula gate'],[/intel|research/i,'Intel sweep']],
+    'julian-farah': [[/morning|report|finding|digest/i,'Morning report'],[/telegram|news|uber/i,'GEO research'],[/crawler|bot/i,'AI crawlers'],[/entity|answer/i,'Entity pack']],
+  };
+  for (const [re, lab] of (roleOnly[slug] || [])) {
+    if (re.test(topLow)) return clampBubbleWords(lab);
+  }
+
+  // Distill title: max 3 words
+  let raw = title.replace(/^[A-Z]{1,3}\d+\s*[—–:-]\s*/,'').replace(/\s+/g,' ').trim();
+  if (!raw) raw = defaults[slug] || 'Open work';
+  const stop = new Set(['the','a','an','of','to','for','and','or','on','in','at','this','that','every','from','with','one','our','her','his','is','are','be','as','when','before','after','only']);
+  let words = raw.split(/\s+/).filter(w => {
+    const k = w.toLowerCase().replace(/[^a-z0-9]/g,'');
+    return k && !stop.has(k) && !['purchase','goal','goals','only'].includes(k);
+  }).slice(0, 3);
+  let label = words.map(w => w.replace(/[^a-zA-Z0-9/-]/g,'')).filter(Boolean).join(' ');
+  if (!label || /^purchase/i.test(label)) label = defaults[slug] || 'Open work';
+  return clampBubbleWords(label);
+}
+
+function clampBubbleWords(s){
+  let w = String(s||'').trim().split(/\s+/).filter(Boolean);
+  if (w.length > 3) w = w.slice(0, 3);
+  let out = w.join(' ');
+  if (out.length > 22) out = w.slice(0, 2).join(' ');
+  // never the collapsed generic
+  if (/^purchase\s*goal$/i.test(out)) out = 'Open work';
+  return out;
+}
+
+/** After all cards computed — force unique bubble text across the board */
+function uniquifyOwnerAsks(list){
+  const used = new Map(); // lower -> count
+  return list.map(a => {
+    let ask = a.ownerAsk;
+    if (!ask) return a;
+    const base = ask;
+    let key = ask.toLowerCase();
+    let n = used.get(key) || 0;
+    if (n > 0) {
+      // disambiguate with agent first name — still short
+      const fn = (a.name || a.slug || '?').split(/[\s-]/)[0];
+      const short = fn.slice(0, 6);
+      ask = clampBubbleWords(base.split(/\s+/).slice(0, 2).join(' ') + ' ' + short);
+      key = ask.toLowerCase();
+      let k = 2;
+      while (used.has(key) && k < 5) {
+        ask = clampBubbleWords(base.split(/\s+/).slice(0, 1).join(' ') + ' ' + short + k);
+        key = ask.toLowerCase();
+        k++;
+      }
+    }
+    used.set(key, (used.get(key) || 0) + 1);
+    return { ...a, ownerAsk: ask };
+  });
+}
+
+
+
+
+
+
+function comicBubbleHtml(ask, slug){
+  if (!ask) return '';
+  const s = slug || '';
+  // data-* avoids broken onclick quotes; bubble opens chat with this agent
+  return `<div class="comic-say comic-say-btn" role="button" tabindex="0"
+    data-slug="${esc(s)}" data-ask="${esc(ask)}"
+    title="Open chat — ${esc(ask)}"
+    onclick="event.stopPropagation();openAgentChat(this.dataset.slug, this.dataset.ask)"
+    onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();event.stopPropagation();openAgentChat(this.dataset.slug, this.dataset.ask)}">${esc(ask)}</div>`;
+}
+
+function statusRowHtml(r){
+  const role = agentRoleFromSlug(r.agent_slug);
+  const pct = Math.max(0, Math.min(100, +r.percent || (r.status==='done'?100:0)));
+  const st = r.status || '';
+  return `<div class="sw-row" onclick="closeStatusWidget();openAgent('${esc(r.agent_slug)}')">
+    <div class="top">
+      <div>
+        <div class="agent">${esc(agentNameFromSlug(r.agent_slug))}</div>
+        <div class="mail">${esc(role || '—')}</div>
+      </div>
+      <span class="b ${st==='blocked'||st==='missed'?'red':st==='due'?'amber':st==='in_progress'?'blue':'green'}">${esc(st)}</span>
+    </div>
+    <div class="task">${esc(r.title || r.task_id || 'Task')}</div>
+    <div class="brief">${esc(runBrief(r))}</div>
+    <div class="meta">Run #${r.id} · due ${esc(r.due_date||'—')} · ${esc(r.cadence||'')} · ${pct}%</div>
+    ${meterHtml('Completeness', pct, st==='done'||pct>=80?'ok':st==='in_progress'?'blue':pct>0?'warn':'')}
+  </div>`;
+}
+
+async function openStatusWidget(key){
+  const bucket = STATUS_BUCKETS[key];
+  if (!bucket) return;
+  statusWidgetKey = key;
+  const el = document.getElementById('sw');
+  if (!el) return;
+  el.classList.add('on');
+  el.innerHTML = `<div class="sw"><div class="sw-head"><button type="button" class="sw-x" onclick="closeStatusWidget()" aria-label="Close">×</button>
+    <h3 id="sw-title">Loading…</h3><p>Fetching runs…</p></div></div>`;
+
+  const all = await fetchAllRuns();
+  const counts = { blocked_missed:0, due:0, in_progress:0, done7:0 };
+  all.forEach(r => {
+    if (r.status==='blocked'||r.status==='missed') counts.blocked_missed++;
+    else if (r.status==='due') counts.due++;
+    else if (r.status==='in_progress') counts.in_progress++;
+    else if (r.status==='done') counts.done7++;
+  });
+  let rows = all.filter(bucket.match);
+  // for done7 prefer recent if we have completed_at
+  if (key === 'done7') {
+    const weekAgo = Date.now() - 8*24*3600*1000;
+    const recent = rows.filter(r => r.completed_at && new Date(r.completed_at).getTime() >= weekAgo);
+    if (recent.length) rows = recent;
+  }
+  // sort: hot first
+  const order = { blocked:0, missed:1, due:2, in_progress:3, done:4 };
+  rows.sort((a,b) => (order[a.status]??9)-(order[b.status]??9) || String(a.due_date).localeCompare(String(b.due_date)));
+
+  const listHtml = rows.length
+    ? rows.slice(0, 40).map(statusRowHtml).join('')
+    : `<div class="sw-empty">No runs in this status right now.</div>`;
+
+  el.innerHTML = `<div class="sw" onclick="event.stopPropagation()">
+    <div class="sw-head">
+      <button type="button" class="sw-x" onclick="closeStatusWidget()" aria-label="Close">×</button>
+      <h3 id="sw-title">${esc(bucket.label)}</h3>
+      <p>${rows.length} run${rows.length===1?'':'s'} · click a row to open the agent. Process strip switches status.</p>
+      ${processStripHtml(key, counts)}
+    </div>
+    <div class="sw-body">${listHtml}</div>
+  </div>`;
+
+  // mark legend buttons
+  document.querySelectorAll('.legend .leg-btn').forEach(btn => {
+    btn.classList.toggle('on', btn.getAttribute('data-status') === key);
+  });
+}
+
+function closeStatusWidget(){
+  statusWidgetKey = null;
+  const el = document.getElementById('sw');
+  if (el){ el.classList.remove('on'); el.innerHTML = ''; }
+  document.querySelectorAll('.legend .leg-btn').forEach(btn => btn.classList.remove('on'));
+}
+
+function sumNeeds(s){
+  return (+s.missed||0) + (+s.blocked||0) + (+s.due||0) + (+s.prog||0);
+}
+
+/** Org chart order — CoS (Lena) on top, then heads as in ORG.md hierarchy */
+const ORG_ORDER = [
+  'lena-sergeeva',        // Chief of Staff
+  'lauda-briana',         // Commerce
+  'alexandra-obnorskaya', // Marketplaces
+  'roberta-di-maria',
+  'julian-farah',     // Content · SEO · DA · GEO
+  'marika-nowicka',       // Brand
+  'valentina-korolyeva',  // Legal
+  'justina-timber',       // Finance
+  'mina-rutunya',         // Sysadmin
+  'zina-pevtsova',        // Logistics
+  'maya-krasochkina'      // R&D and Intelligence
+];
+
+async function loadBoard(){
+  agents = await api('/agents');
+  invalidateRunsCache();
+  const allRuns = await fetchAllRuns();
+  const runsByAgent = {};
+  (allRuns || []).forEach(r => {
+    (runsByAgent[r.agent_slug] ??= []).push(r);
+  });
+  const list = [...agents].sort((a,b)=>{
+    const ia = ORG_ORDER.indexOf(a.slug);
+    const ib = ORG_ORDER.indexOf(b.slug);
+    const ra = ia < 0 ? 999 : ia;
+    const rb = ib < 0 ? 999 : ib;
+    if (ra !== rb) return ra - rb;
+    return String(a.name||'').localeCompare(String(b.name||''));
+  }).map(a => ({
+    ...a,
+    ownerAsk: ownerAskTwoWords(runsByAgent[a.slug] || [], a.slug),
+    openRuns: runsByAgent[a.slug] || [],
+  }));
+  const totals = list.reduce((acc,a)=>{
+    acc.due += +a.stats.due||0;
+    acc.prog += +a.stats.prog||0;
+    acc.missed += +a.stats.missed||0;
+    acc.blocked += +a.stats.blocked||0;
+    acc.done7 += +a.stats.done7||0;
+    return acc;
+  }, {due:0,prog:0,missed:0,blocked:0,done7:0});
+  const heat = totals.missed + totals.blocked;
+  const pool = totals.blocked + totals.missed + totals.due + totals.prog + totals.done7;
+  const healthPct = pool ? Math.round((totals.done7 / pool) * 100) : 100;
+  const loadPct = pool ? Math.round(((totals.due + totals.prog) / pool) * 100) : 0;
+  const askN = list.filter(a => a.ownerAsk).length;
+  const kAvg = knowledgeOrgAvg(list);
+  const cAvg = competitivenessOrgAvg(list);
+
+  $('#body').innerHTML = `
+    <section class="hero">
+      <div>
+        <h2>${heat ? 'Attention needed' : (askN ? 'Confirmations waiting' : 'Team is clear')}</h2>
+        <p>${heat
+          ? 'Org chart order (CoS first). Comic bubbles on avatars = two-word asks for your confirm.'
+          : askN
+            ? `${askN} agent${askN===1?'':'s'} need a brief Owner confirm (comic bubble on avatar).`
+            : 'No blocked or missed runs. Click a status pill for the work widget.'}</p>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat" role="button" tabindex="0" onclick="openStatusWidget('blocked_missed')" title="Open blocked & missed"><b>${totals.blocked}</b><span>Blocked</span></div>
+        <div class="hero-stat" role="button" tabindex="0" onclick="openStatusWidget('blocked_missed')" title="Open blocked & missed"><b>${totals.missed}</b><span>Missed</span></div>
+        <div class="hero-stat" role="button" tabindex="0" onclick="openStatusWidget('due')" title="Open due runs"><b>${totals.due}</b><span>Due</span></div>
+        <div class="hero-stat" role="button" tabindex="0" onclick="openStatusWidget('in_progress')" title="Open in-progress runs"><b>${totals.prog}</b><span>In work</span></div>
+        <div class="hero-stat" role="button" tabindex="0" onclick="openStatusWidget('done7')" title="Open done this week"><b>${totals.done7}</b><span>Done 7d</span></div>
+      </div>
+    </section>
+
+    <section class="dash-panel">
+      <h3>Org pulse · work + knowledge</h3>
+      ${stackBarHtml(totals, 'lg')}
+      <div class="bar-legend">
+        <button type="button" class="leg-btn" onclick="openStatusWidget('blocked_missed')"><i class="seg-blocked" style="background:var(--brand-rot)"></i> Blocked ${totals.blocked}</button>
+        <button type="button" class="leg-btn" onclick="openStatusWidget('blocked_missed')"><i class="seg-missed" style="background:#c41e28"></i> Missed ${totals.missed}</button>
+        <button type="button" class="leg-btn" onclick="openStatusWidget('due')"><i class="seg-due" style="background:var(--status-warning)"></i> Due ${totals.due}</button>
+        <button type="button" class="leg-btn" onclick="openStatusWidget('in_progress')"><i class="seg-prog" style="background:#0D199E"></i> In work ${totals.prog}</button>
+        <button type="button" class="leg-btn" onclick="openStatusWidget('done7')"><i class="seg-done" style="background:var(--status-success)"></i> Done 7d ${totals.done7}</button>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-top:14px">
+        ${meterHtml('Weekly done share', healthPct, healthPct>=60?'ok':healthPct>=30?'warn':'')}
+        ${meterHtml('Open load (due + in work)', loadPct, 'warn')}
+      </div>
+      <div class="dual-bars" style="margin-top:14px">
+        <div class="meter">
+          <div class="meter-row">
+            <span class="lbl">Knowledge (org avg · gold+green+blue)</span>
+            <span class="val">${kAvg.overall}%</span>
+          </div>
+          ${knowledgeStackBarHtml(kAvg, 'lg')}
+        </div>
+        <div class="meter">
+          <div class="meter-row">
+            <span class="lbl">Competitiveness (org · stacked drivers · relative)</span>
+            <span class="val">${cAvg.pct}% · mid ≈ 50</span>
+          </div>
+          ${competitivenessStackBarHtml(cAvg.components, cAvg.pct, 'lg')}
+        </div>
+      </div>
+      <div class="know-legend">
+        <span><i class="seg-gold"></i> Corporate</span>
+        <span><i class="seg-green"></i> Self-learned</span>
+        <span><i class="seg-blue"></i> Research</span>
+        <span>Knowledge is strict — most agents stay under ~30% (room to learn)</span>
+      </div>
+      <div class="know-legend" style="margin-top:8px">
+        <span><i class="seg-act"></i> Activity</span>
+        <span><i class="seg-comp"></i> Completion</span>
+        <span><i class="seg-res"></i> Results</span>
+        <span><i class="seg-rel"></i> Reliability</span>
+        <span><i class="seg-eng"></i> Engagement</span>
+        <span><i class="seg-know"></i> Knowledge</span>
+        <span>Compete is relative/generous — top can hit 80–90% when peers are idle</span>
+      </div>
+      <div class="dual-bars" style="margin-top:14px">
+        <div class="meter">
+          <div class="meter-row">
+            <span class="lbl">Knowledge</span>
+            <span class="val">${kAvg.overall}%</span>
+          </div>
+          ${knowledgeStackBarHtml(kAvg, 'lg')}
+        </div>
+        <div class="meter">
+          <div class="meter-row">
+            <span class="lbl">Competitiveness (org · stacked drivers · relative)</span>
+            <span class="val">${cAvg.pct}% · mid ≈ 50</span>
+          </div>
+          ${competitivenessStackBarHtml(cAvg.components, cAvg.pct, 'lg')}
+        </div>
+      </div>
+      </section>
+
+    <div class="legend">
+      <button type="button" class="leg-btn" data-status="blocked_missed" onclick="openStatusWidget('blocked_missed')"><i class="dot dot-red"></i> Blocked / missed — fix first</button>
+      <button type="button" class="leg-btn" data-status="due" onclick="openStatusWidget('due')"><i class="dot dot-amber"></i> Due — waiting to start</button>
+      <button type="button" class="leg-btn" data-status="in_progress" onclick="openStatusWidget('in_progress')"><i class="dot dot-blue"></i> In progress</button>
+      <button type="button" class="leg-btn" data-status="done7" onclick="openStatusWidget('done7')"><i class="dot dot-green"></i> Done this week</button>
+    </div>
+    <div class="sec">Org chart · CoS first · click a card · or a status above</div>
+    <div class="grid">${uniquifyOwnerAsks(list).map(cardHtml).join('')}</div>`;
+}
+
+function stackBarHtml(s, size){
+  const b = +s.blocked||0, m = +s.missed||0, d = +s.due||0, p = +s.prog||0, done = +s.done7||0;
+  const t = b+m+d+p+done;
+  if (!t) return `<div class="stack-bar ${size||''}"><i class="seg-idle" style="width:100%"></i></div>`;
+  const w = n => Math.max(n?2:0, Math.round((n/t)*100));
+  let segs = '';
+  if (b) segs += `<i class="seg-blocked" style="width:${w(b)}%" title="Blocked ${b}"></i>`;
+  if (m) segs += `<i class="seg-missed" style="width:${w(m)}%" title="Missed ${m}"></i>`;
+  if (d) segs += `<i class="seg-due" style="width:${w(d)}%" title="Due ${d}"></i>`;
+  if (p) segs += `<i class="seg-prog" style="width:${w(p)}%" title="In work ${p}"></i>`;
+  if (done) segs += `<i class="seg-done" style="width:${w(done)}%" title="Done 7d ${done}"></i>`;
+  return `<div class="stack-bar ${size||''}">${segs}</div>`;
+}
+
+function meterHtml(label, pct, tone){
+  const p = Math.max(0, Math.min(100, +pct||0));
+  const cls = tone === 'ok' ? 'ok' : tone === 'warn' ? 'warn' : tone === 'blue' ? 'blue' : tone === 'gold' ? 'gold' : tone === 'green' ? 'green' : '';
+  return `<div class="meter">
+    <div class="meter-row"><span class="lbl">${esc(label)}</span><span class="val">${p}</span></div>
+    <div class="meter-track"><i class="${cls}" style="width:${p}%"></i></div>
+  </div>`;
+}
+
+/** Org averages from agent.knowledge — stacked gold|green|blue (conservative fill) */
+function knowledgeOrgAvg(list){
+  const rows = (list || []).map(a => a.knowledge).filter(Boolean);
+  if (!rows.length) return { overall: 0, self_learned: 0, research: 0, level: 0, corporate: 0 };
+  const avg = k => Math.round(rows.reduce((s, r) => s + (+r[k] || 0), 0) / rows.length);
+  const corporate = avg('corporate');
+  const self_learned = avg('self_learned');
+  const research = avg('research');
+  return {
+    corporate,
+    self_learned,
+    research,
+    overall: corporate + self_learned + research,
+    level: avg('level')
+  };
+}
+
+/** Org averages for competitiveness stacked bar */
+function competitivenessOrgAvg(list){
+  const rows = (list || []).map(a => a.competitiveness).filter(c => c && c.index != null);
+  const empty = {
+    index: 5,
+    pct: 50,
+    components: { activity: 5, completion: 5, results: 5, reliability: 5, engagement: 5, knowledge: 5 }
+  };
+  if (!rows.length) return empty;
+  const avg = k => rows.reduce((s, r) => s + (+(r.components && r.components[k]) || 0), 0) / rows.length;
+  const components = {
+    activity: Math.round(avg('activity') * 10) / 10,
+    completion: Math.round(avg('completion') * 10) / 10,
+    results: Math.round(avg('results') * 10) / 10,
+    reliability: Math.round(avg('reliability') * 10) / 10,
+    engagement: Math.round(avg('engagement') * 10) / 10,
+    knowledge: Math.round(avg('knowledge') * 10) / 10
+  };
+  const index = rows.reduce((s, r) => s + (+r.index || 0), 0) / rows.length;
+  // Generous relative scale: index 0–10 → fill 0–100% (top can show 80–90%)
+  const pct = Math.max(0, Math.min(100, Math.round(index * 10)));
+  return { index: Math.round(index * 10) / 10, pct, components };
+}
+
+/** One knowledge track: gold | green | blue stacked (widths = segment %, empty = still to learn) */
+function knowledgeStackBarHtml(k, size){
+  const gold = Math.max(0, +((k && k.corporate) || 0));
+  const green = Math.max(0, +((k && k.self_learned) || 0));
+  const blue = Math.max(0, +((k && k.research) || 0));
+  let segs = '';
+  if (gold > 0) segs += `<i class="seg-gold" style="width:${gold}%" title="Corporate ${gold}%"></i>`;
+  if (green > 0) segs += `<i class="seg-green" style="width:${green}%" title="Self-learned ${green}%"></i>`;
+  if (blue > 0) segs += `<i class="seg-blue" style="width:${blue}%" title="Research ${blue}%"></i>`;
+  if (!segs) segs = `<i class="seg-idle" style="width:100%" title="Still to learn"></i>`;
+  return `<div class="stack-bar ${size || 'sm'}">${segs}</div>`;
+}
+
+/**
+ * One competitiveness track: drivers stacked with separate colors.
+ * totalPct is generous relative fill (index×10), segments share that fill by weight×score.
+ */
+function competitivenessStackBarHtml(components, totalPct, size){
+  const weights = {
+    activity: 0.18,
+    completion: 0.22,
+    results: 0.2,
+    reliability: 0.18,
+    engagement: 0.12,
+    knowledge: 0.1
+  };
+  const classes = {
+    activity: 'seg-act',
+    completion: 'seg-comp',
+    results: 'seg-res',
+    reliability: 'seg-rel',
+    engagement: 'seg-eng',
+    knowledge: 'seg-know'
+  };
+  const labels = {
+    activity: 'Activity',
+    completion: 'Completion',
+    results: 'Results',
+    reliability: 'Reliability',
+    engagement: 'Engagement',
+    knowledge: 'Knowledge'
+  };
+  const c = components || {};
+  const keys = Object.keys(weights);
+  const contrib = keys.map(k => Math.max(0, (+c[k] || 0) * weights[k]));
+  const sum = contrib.reduce((a, b) => a + b, 0);
+  const fill = Math.max(0, Math.min(100, +totalPct || 0));
+  if (fill <= 0 || sum <= 0) {
+    return `<div class="stack-bar ${size || 'sm'}"><i class="seg-idle" style="width:100%" title="No competitiveness signal"></i></div>`;
+  }
+  let segs = '';
+  keys.forEach((k, i) => {
+    const w = Math.max(contrib[i] > 0 ? 1 : 0, Math.round((contrib[i] / sum) * fill));
+    if (w > 0) {
+      segs += `<i class="${classes[k]}" style="width:${w}%" title="${labels[k]} ${(+c[k] || 0).toFixed(1)}/10"></i>`;
+    }
+  });
+  return `<div class="stack-bar ${size || 'sm'}">${segs}</div>`;
+}
+
+/** Card/drawer: single knowledge stacked bar (conservative) */
+function knowledgeBarsHtml(k, compact){
+  if (!k) {
+    return `<div class="card-bars"><div class="meter-row"><span class="lbl">Knowledge</span><span class="val">—</span></div>
+      <div class="stack-bar sm"><i class="seg-idle" style="width:100%"></i></div></div>`;
+  }
+  const gold = +k.corporate || 0;
+  const green = +k.self_learned || 0;
+  const blue = +k.research || 0;
+  const overall = Math.max(0, Math.min(100, +k.overall || (gold + green + blue)));
+  const level = Math.max(0, Math.min(10, +k.level || Math.round(overall / 10)));
+  return `<div class="card-bars">
+    <div class="meter">
+      <div class="meter-row">
+        <span class="lbl">'Knowledge'</span>
+        <span class="val">${overall}%</span>
+      </div>
+      ${knowledgeStackBarHtml(k, compact ? 'sm' : '')}
+    </div>
+    ${compact ? '' : `<div class="know-level"><span>Still to learn · level</span><b>${level}/10</b></div>`}
+  </div>`;
+}
+
+/** Card/drawer: single competitiveness stacked bar + rank (relative, can be generous) */
+function competitivenessHtml(c, compact){
+  if (!c || c.index == null) return '';
+  const idx = Math.max(0, Math.min(10, +c.index || 0));
+  // Relative/generous: index 0–10 maps to 0–100% fill — top can reach 80–90% when peers idle
+  const pct = Math.round(idx * 10);
+  const dept = c.department ? String(c.department) : '';
+  const dIdx = c.department_index != null ? (+c.department_index).toFixed(1) : '—';
+  const comp = c.components || {};
+  const bar = competitivenessStackBarHtml(comp, pct, compact ? 'sm' : '');
+  const bubble = rankBubbleHtml(c);
+
+  if (compact) {
+    // Left bubble = rank number only (2, 3, 11) — same row as the compete bar
+    return `<div class="card-bars" style="margin-top:8px">
+      <div class="meter-row">
+        <span class="lbl">Compete</span>
+        <span class="val">${pct}%</span>
+      </div>
+      <div class="compete-row">
+        ${bubble}
+        <div class="compete-main">${bar}</div>
+      </div>
+    </div>`;
+  }
+
+  // Full panel: bar + % only; drivers closed in accordion (Owner request)
+  const fmtC = (v) => (v == null || v === '') ? '—' : (+v).toFixed(1);
+  const deptLine = dept
+    ? `<div class="cidx-row"><span>Dept (${esc(dept)})</span><b>${esc(String(dIdx))}${c.rank_department != null ? ` · #${Math.round(c.rank_department)}/${c.rank_department_of || '—'}` : ''}</b></div>`
+    : '';
+  return `<div class="dash-panel comp-panel" style="margin:12px 0 0;padding:12px">
+    <h3 style="margin-bottom:6px">Compete</h3>
+    <div class="meter-row" style="margin-bottom:6px">
+      <span class="lbl">Compete</span>
+      <span class="val">${pct}%</span>
+    </div>
+    <div class="compete-row" style="margin-bottom:8px">
+      ${bubble}
+      <div class="compete-main">${bar}</div>
+    </div>
+    <details class="cidx-acc">
+      <summary>Drivers</summary>
+      <div class="comp-grid" style="margin-top:8px">
+        ${deptLine}
+        <span>Activity</span><b>${fmtC(comp.activity)}</b>
+        <span>Completion</span><b>${fmtC(comp.completion)}</b>
+        <span>Results</span><b>${fmtC(comp.results)}</b>
+        <span>Reliability</span><b>${fmtC(comp.reliability)}</b>
+        <span>Engagement</span><b>${fmtC(comp.engagement)}</b>
+        <span>Knowledge</span><b>${fmtC(comp.knowledge)}</b>
+      </div>
+    </details>
+  </div>`;
+}
+
+// Board-local first (Worker serves /assets/agents/* incl. Julian); site CDN fallback for mail/legacy
+const AVATAR_CDN = '/assets/agents/';
+const AVATAR_CDN_FALLBACK = 'https://www.dasexperten.com/assets/agents/';
+
+/** Agent mailboxes — Ten + Julian (GEO) @ dasexperten.com */
+const AGENT_EMAIL = {
+  'lena-sergeeva': 'lena@dasexperten.com',
+  'lauda-briana': 'lauda@dasexperten.com',
+  'alexandra-obnorskaya': 'alexandra@dasexperten.com',
+  'roberta-di-maria': 'roberta@dasexperten.com',
+  'julian-farah': 'julian@dasexperten.com',
+  'marika-nowicka': 'marika@dasexperten.com',
+  'valentina-korolyeva': 'valentina@dasexperten.com',
+  'justina-timber': 'justina@dasexperten.com',
+  'mina-rutunya': 'mina@dasexperten.com',
+  'zina-pevtsova': 'zina@dasexperten.com',
+  'maya-krasochkina': 'maya@dasexperten.com'
+};
+
+function initials(name){
+  return String(name||'?').split(/\s+/).filter(Boolean).slice(0,2).map(w=>w[0]).join('').toUpperCase();
+}
+
+/** Always first name + rest of name on two lines (equal card headers) */
+function nameTwoLines(name){
+  const parts = String(name||'').trim().split(/\s+/).filter(Boolean);
+  if (!parts.length) return '<span class="fn">—</span><span class="ln">&nbsp;</span>';
+  if (parts.length === 1) return `<span class="fn">${esc(parts[0])}</span><span class="ln">&nbsp;</span>`;
+  const first = parts[0];
+  const rest = parts.slice(1).join(' ');
+  return `<span class="fn">${esc(first)}</span><span class="ln">${esc(rest)}</span>`;
+}
+
+/** Plain-language briefs for technical specialists (what / why / done looks like) */
+const AGENT_ROLE_BRIEF = {
+  'lena-sergeeva': 'Chief of Staff / Central Executive Officer — routes and distributes only. The Ten report to Mr. Aram (not to Lena). She sequences work and packs one decision for him; she does not execute production herself.',
+  'lauda-briana': 'Commerce — finds and qualifies B2B buyers/distributors, runs the sales pipeline and decks. Does not approve prices or touch marketplaces.',
+  'alexandra-obnorskaya': 'Marketplaces — owns WB/Ozon/etc listings, FBO cover, reviews/Q&A, rival scans. Does not set the price matrix or run wholesale B2B.',
+  'roberta-di-maria': 'Content · SEO · DA · GEO head — off-site awareness, blog, SERP, UGC/partners. Delegates full GEO + AI-optimization craft to Julian; shares technical SEO with Mina; does not buy links or invent metrics.',
+  'julian-farah': 'GEO Specialist — AI visibility craft, early research, finding reports for Owner. Not a department head.',
+  'marika-nowicka': 'Brand — visual identity, creatives, packaging, motion. Always gates product claims through product-skill; does not invent formulas.',
+  'valentina-korolyeva': 'Legal — contracts, NDA, due diligence, regulatory watch. Drafts only; Owner always signs.',
+  'justina-timber': 'Finance — price matrix, invoices, FX, budgets. Every spend-bearing decision gets her feasibility check before Owner approves money.',
+  'mina-rutunya': 'Sysadmin — GitHub repos, Cloudflare, bridges, deploys, token rotation, snapshot honesty. Rollback before deploy; never exposes secrets.',
+  'zina-pevtsova': 'Logistics — our warehouses, freight, 3PL, landed cost, answers marketplace supply requests ≤48h. Does not invoice or set list prices.',
+  'maya-krasochkina': 'R&D & Intelligence — product truth, formula gates, claims audit, monthly learning distill from MEMORY.md. Does not launch SKUs alone.'
+};
+
+const TASK_BRIEF = {
+  A1: { what: 'Build today’s open problems for every agent from the cadence clock.', why: 'So Mr. Aram sees only what is actually due — not a wall of noise.', done: 'One list: task id + owner slug + due reason.' },
+  A2: { what: 'Write Mr. Aram’s daily brief: moved / blocked / one decision.', why: 'Protects Mr. Aram’s attention; one decision max per brief. Lena packs — she does not replace him as the report target.', done: 'Brief for Mr. Aram; ends with exactly one decision for him.' },
+  A3: { what: 'Sweep stale branches and unanswered escalations (>14 days).', why: 'Stops work rotting in half-finished threads.', done: 'No branch open >14 days without Owner visibility.' },
+  A4: { what: 'Monday KPI roll-up across all ten agents.', why: 'Weekly signal of health before the week starts.', done: 'Roll-up sent or posted for Owner.' },
+  A5: { what: 'Monthly priority reconciliation between departments.', why: 'Resolves conflicts when two heads need the same week.', done: 'Priorities ordered; conflicts escalated once.' },
+  L1: { what: 'Hunt ≥5 qualified B2B leads (distributors / importers / buyers).', why: 'Pipeline fuel for Commerce.', done: '≥5 qualified leads logged with verdict.' },
+  L2: { what: 'Follow-up sweep for leads stuck ~day 4 without reply.', why: 'Prevents cold threads dying silently.', done: 'All day-4 leads touched or closed with reason.' },
+  L3: { what: 'Fortnightly pipeline review (stage, next action, worth-it verdict).', why: 'Keeps deals honest — drop dead weight early.', done: 'Pipeline reviewed; each live deal has next step.' },
+  L4: { what: 'Refresh B2B deck when market/event demands it.', why: 'Deck must match current offer and proof.', done: 'Deck link/artifact attached to the run.' },
+  L5: { what: 'Monthly cull of dead leads.', why: 'Clean CRM so metrics stay real.', done: 'Dead leads closed; active set is clean.' },
+  S1: { what: 'Check FBO days-of-cover inside marketplace warehouses.', why: 'Hero SKUs out of stock = lost rank and ads waste.', done: 'Hero OOS = 0; near-OOS has supply request or plan.' },
+  S2: { what: 'Answer marketplace reviews and Q&A (keep SLA).', why: 'Unanswered reviews kill conversion and rating.', done: 'No unanswered review older than 48h.' },
+  S3: { what: 'Monthly listing audit (content, rank, compliance).', why: 'Listings drift; audit catches silent decay.', done: 'Audit note filed with actions.' },
+  S4: { what: 'Weekly rival price and rank scan.', why: 'See attacks before margin or rank collapse.', done: 'Scan note with deltas vs last week.' },
+  S5: { what: 'Monthly unit economics vs Justina’s matrix.', why: 'Marketplace wins can still lose money.', done: 'Below-floor SKUs named or cleared.' },
+  S6: { what: 'Raise supply request to Zina when FBO cover breaks.', why: 'Joint FBO gap needs logistics, not hope.', done: 'Request raised with SKU/qty/urgency.' },
+  XA: { what: 'External awareness of www.dasexperten.com (citations, partners, UGC, PR).', why: 'Primary growth lever off-site, not endless homepage polish.', done: 'Cycle logged; drafts ready; Owner sends outbound.' },
+  R1: { what: 'Ship or ready one SEO blog post this week.', why: 'Steady organic surface area.', done: 'Post published or Owner-ready with URL/draft link.' },
+  R2: { what: 'Fortnightly SERP / keyword movement check.', why: 'See if content is actually ranking.', done: 'Note with top-10 movement and next bets.' },
+  R3: { what: 'Monthly content calendar for next month.', why: 'Align Brand/Commerce before production week.', done: 'Calendar updated and shared.' },
+  R4: { what: 'Fortnightly UGC / creator / partner batch.', why: 'Social proof and co-marketing fuel.', done: 'Batch logged; deliverables tracked.' },
+  R5: { what: 'Quarterly content audit.', why: 'Kill/update dead pages; double down on winners.', done: 'Audit with keep/update/kill actions.' },
+  R6: { what: 'DA / GEO honesty rollup (real metrics only).', why: 'No vanity DA; GEO live vs pending must be honest.', done: 'Rollup with real sources; no invented numbers.' },
+  M1: { what: 'Weekly creative batch (product-skill gated).', why: 'Feed marketplaces and campaigns with on-brand assets.', done: 'Assets delivered or linked; claims checked.' },
+  M2: { what: 'Monthly brand-book audit.', why: 'Kill off-book visuals before they spread.', done: 'Off-book live assets = 0 or flagged for kill.' },
+  M3: { what: 'Fortnightly motion / video piece.', why: 'Motion is brand reach; score before heavy spend.', done: 'Piece delivered; virality score noted if available.' },
+  M4: { what: 'Quarterly character/reference library hygiene.', why: 'Broken refs = broken brand consistency.', done: 'Library clean; refs valid.' },
+  M5: { what: 'Packaging / dieline work on event.', why: 'Pack is product truth in physical form.', done: 'Pack artifact with product-skill check.' },
+  V1: { what: 'Monthly contract expiry watch.', why: 'No silent lapses on supply/distribution contracts.', done: 'Expiring contracts listed; none unnoticed.' },
+  V2: { what: 'Counterparty due diligence before first shipment.', why: 'Legal risk before goods move.', done: 'DD complete before ship date.' },
+  V3: { what: 'Quarterly regulatory/cert watch (RU/UAE/VN lanes).', why: 'Compliance gaps compound by quarter.', done: 'Gaps named or cleared for the quarter.' },
+  V4: { what: 'Quarterly legal-matrix upkeep.', why: 'Playbook for contracts must match reality.', done: 'Matrix file current.' },
+  V5: { what: 'Draft contract/annex on event (Owner signs).', why: 'Speed without signing authority.', done: 'Draft ready; turnaround ≤3 days when possible.' },
+  J1: { what: 'Weekly FX check across pricing zones.', why: 'Zones drift off base rate and destroy margin.', done: 'Zones OK or flagged with impact.' },
+  J2: { what: 'Monthly margin-by-channel review.', why: 'Channel mix can hide losers.', done: 'Below-target channels named.' },
+  J3: { what: 'Issue CI/PL on event within 24h.', why: 'Ops and buyers blocked without docs.', done: 'Invoice issued ≤24h or delay explained.' },
+  J4: { what: 'Quarterly price matrix refresh.', why: 'Stale matrix poisons everyone else’s numbers.', done: 'Matrix age ≤90 days.' },
+  J5: { what: 'Quarterly payment-rail / acquirer review.', why: 'Fees and declines eat margin silently.', done: 'Review note with actions.' },
+  J6: { what: 'Monthly GA/Clarity/CRO/SEO performance package.', why: 'Content and ads need real measurement.', done: 'Metrics pack for Roberta/Owner.' },
+  J7: { what: 'Budget + financial feasibility on every spend-bearing decision.', why: 'No informal budgets; Owner only approves after model.', done: 'Spend without feasibility review = 0.' },
+  N1: { what: 'Weekly worker/bridge health check.', why: 'Broken bridges stop every agent’s tools.', done: 'Health OK or incidents logged with owner.' },
+  N2: { what: 'Quarterly two-repo token rotation (architektura + organization).', why: 'Rotation drift = auth failures that look like bugs.', done: 'Both repos match; drift incidents = 0.' },
+  N3: { what: 'Deploy with stated rollback path (event).', why: 'No irreversible deploys without undo plan.', done: 'Deployed + rollback documented.' },
+  N4: { what: 'Monthly snapshot-vs-live reconciliation.', why: 'Docs lie; live system is truth.', done: 'Drift report to Owner.' },
+  N5: { what: 'Monthly backup restore test.', why: 'Unrestored backups are fiction.', done: 'Restore proven or incident opened.' },
+  N6: { what: 'Monthly infra honesty (demo panels marked).', why: 'Demo data must never look live.', done: 'Demo SEO/GEO panels clearly marked.' },
+  Z1: { what: 'Weekly stock health at our warehouses.', why: 'Upstream OOS becomes marketplace death later.', done: 'Our warehouse OOS = 0 or plan named.' },
+  Z2: { what: 'Weekly shipment tracking vs ETA.', why: 'Late freight = buyer trust and cash delay.', done: 'Exceptions flagged; ETA health known.' },
+  Z3: { what: 'Answer Alexandra supply requests ≤48h.', why: 'FBO gap is a joint red if logistics is silent.', done: '100% answered within 48h or escalated.' },
+  Z4: { what: 'Monthly landed-cost recalc vs Justina.', why: 'Freight surprise kills quoted margin.', done: 'Variance ≤10% or graded with cause.' },
+  Z5: { what: 'Quarterly 3PL scorecard.', why: 'Bad 3PL is a silent tax.', done: 'Scorecard filed.' },
+  Z6: { what: 'Quarterly HS-code review.', why: 'Wrong HS = customs risk and delay.', done: 'HS codes current for active SKUs.' },
+  K1: { what: 'Fortnightly market/competitor intel sweep.', why: 'R&D and sales need external signal.', done: 'Sweep note; ≥2/month rhythm.' },
+  K2: { what: 'Run formula through 3 gates (event).', why: 'No launch without gate truth.', done: 'Gate result logged pass/fail + why.' },
+  K3: { what: 'Monthly learning distill from MEMORY.md / runs.', why: 'Org only improves if lessons are harvested.', done: 'Distill run logged; amendments proposed.' },
+  K4: { what: 'Quarterly claims-source audit.', why: 'Unsourced claims = legal/brand landmines.', done: 'Unsourced live claims = 0.' },
+  K5: { what: 'Quarterly R&D pipeline ranking.', why: 'Focus scarce R&D capacity.', done: 'Pipeline ranked with next bets.' },
+  G1: { what: 'Very early morning: Telegram (telegramer) + AI/GEO news + Ubersuggest/other sites → short finding report for Boss.', why: 'Boss can skim any day and stay current on AI visibility without drowning in links.', done: 'Short report filed; one interesting finding + why it matters + source.' },
+  G2: { what: 'Deep-read one das-intelligence SEO/GEO/CO skill (SKILL.md) or one external GEO/AI method (YouTube/web/Telegram).', why: 'He must continuously learn the full SEO + GEO + CO skill family from das-intelligence, not only news.', done: 'LEARNING entry: skill path or source + takeaway; curriculum checkbox advanced when ready.' },
+  G3: { what: 'Weekly GEO map honesty update for dasexperten.com.', why: 'Live vs pending AI sources must never be vanity fiction.', done: 'Map updated; gaps honest.' },
+  G4: { what: 'AI-crawler policy draft vs live (Mina applies).', why: 'Crawl rules are infra — drafts only until Mina reviews.', done: 'Draft note; zero silent applies.' },
+  G5: { what: 'Answer-first / entity pack for one priority page.', why: 'Citability wins generative answers.', done: 'Draft for Roberta; product-skill checked.' },
+  G6: { what: 'Monthly GEO honesty roll-up.', why: 'No invented AI rankings.', done: 'Roll-up to Roberta with real sources only.' }
+};
+
+function taskBrief(id, fallbackDesc, fallbackDone){
+  const b = TASK_BRIEF[id];
+  if (b) {
+    return `<div class="brief">
+      <div class="tag">What this is · for specialists</div>
+      <div><strong>${esc(b.what)}</strong></div>
+      <div class="brief-why"><strong>Why it matters:</strong> ${esc(b.why)}</div>
+      <div class="brief-why"><strong>Done looks like:</strong> ${esc(b.done)}</div>
+    </div>`;
+  }
+  const d = fallbackDesc || '—';
+  const done = fallbackDone || '—';
+  return `<div class="brief">
+      <div class="tag">What this is · for specialists</div>
+      <div><strong>${esc(d)}</strong></div>
+      <div class="brief-why"><strong>Done looks like:</strong> ${esc(done)}</div>
+    </div>`;
+}
+
+
+/** Shared: open runs sorted for "what they are doing now". */
+function openRunsNow(runs){
+  const open = (runs || []).filter(r =>
+    r.status === 'due' || r.status === 'in_progress' || r.status === 'blocked' || r.status === 'missed'
+  );
+  const rank = { blocked: 0, missed: 1, in_progress: 2, due: 3 };
+  open.sort((a, b) => (rank[a.status] ?? 9) - (rank[b.status] ?? 9)
+    || String(a.task_id || '').localeCompare(String(b.task_id || '')));
+  return open;
+}
+
+function runNowTitle(r){
+  const id = (typeof normalizeTaskId === 'function') ? normalizeTaskId(r.task_id) : String(r.task_id || '');
+  const brief = (typeof TASK_BRIEF !== 'undefined') ? (TASK_BRIEF[id] || TASK_BRIEF[r.task_id]) : null;
+  let line = brief && brief.what
+    ? String(brief.what).replace(/\.$/, '')
+    : (typeof plainTitle === 'function' ? plainTitle(r.title, r.task_id) : (r.title || id));
+  return String(line).replace(/\s+/g, ' ').trim();
+}
+
+function runNowExplain(r){
+  const id = (typeof normalizeTaskId === 'function') ? normalizeTaskId(r.task_id) : String(r.task_id || '');
+  const brief = (typeof TASK_BRIEF !== 'undefined') ? (TASK_BRIEF[id] || TASK_BRIEF[r.task_id]) : null;
+  let explain = (brief && brief.why) || r.description || '';
+  explain = String(explain).replace(/\s+/g, ' ').trim();
+  if (explain.length > 160) explain = explain.slice(0, 157) + '…';
+  return explain;
+}
+
+/** Drawer top: list of open tasks with short explain (not static role bio). */
+function nowWorkingSummaryHtml(runs, tasks){
+  const focus = openRunsNow(runs).slice(0, 5);
+  if (!focus.length) {
+    return `<p class="now-head">Working on now</p><p class="job" style="margin:0;color:var(--fg-3);font-weight:500">Nothing open on the board right now.</p>`;
+  }
+  const taskById = {};
+  (tasks || []).forEach(t => { taskById[t.id] = t; });
+  const items = focus.map(r => {
+    const title = runNowTitle(r);
+    let explain = runNowExplain(r);
+    if (!explain && taskById[r.task_id] && taskById[r.task_id].description) {
+      explain = String(taskById[r.task_id].description).replace(/\s+/g, ' ').trim();
+      if (explain.length > 160) explain = explain.slice(0, 157) + '…';
+    }
+    const stLabel = r.status === 'in_progress' ? 'In progress'
+      : r.status === 'due' ? 'Due'
+      : r.status === 'blocked' ? 'Blocked'
+      : r.status === 'missed' ? 'Delayed' : r.status;
+    const pct = Math.max(0, Math.min(100, +r.percent || 0));
+    const st = pct > 0 && r.status === 'in_progress' ? `${stLabel} · ${pct}%` : stLabel;
+    return `<li><b>${esc(title)}</b><span class="st">${esc(st)}</span>${explain ? `<span class="ex">${esc(explain)}</span>` : ''}</li>`;
+  }).join('');
+  return `<p class="now-head">Working on now</p><ul class="now-work-list">${items}</ul>`;
+}
+
+/** Card bottom: 2–3 short italic lines — what they are busy with now (not the bubble ask). */
+function cardNowLinesHtml(runs){
+  const focus = openRunsNow(runs).slice(0, 3);
+  if (!focus.length) {
+    return `<div class="now-lines"><span class="muted">Clear — nothing open</span></div>`;
+  }
+  const lines = focus.map(r => {
+    let line = runNowTitle(r);
+    if (line.length > 52) line = line.slice(0, 50) + '…';
+    const tag = r.status === 'in_progress' ? ' · in work'
+      : r.status === 'blocked' ? ' · blocked'
+      : r.status === 'missed' ? ' · delayed'
+      : '';
+    return `<span title="${esc(line)}">${esc(line)}${esc(tag)}</span>`;
+  }).join('');
+  return `<div class="now-lines">${lines}</div>`;
+}
+
+function cardHtml(a){
+  const s = a.stats || {};
+  const ask = a.ownerAsk || null;
+  const needs = (+s.missed||0) + (+s.blocked||0) > 0 || !!ask;
+  const open = (+s.due||0) + (+s.prog||0) + (+s.missed||0) + (+s.blocked||0);
+  const done7 = +s.done7||0;
+  // Bubble = Owner ask. Footer = 2–3 italic current-work lines (no ask echo).
+  // Rank lives only as left #n bubble on Compete bar (not in foot).
+  const nowLines = cardNowLinesHtml(a.openRuns || a.runs || []);
+  const av = AVATAR_CDN + encodeURIComponent(a.slug) + '.png';
+  const avFb = AVATAR_CDN_FALLBACK + encodeURIComponent(a.slug) + '.png';
+  const ini = initials(a.name);
+  return `
+    <article class="card ${needs?'needs':''}" onclick="openAgent('${a.slug}')">
+      <div class="card-top"></div>
+      <div class="card-body">
+        <div class="avatar-slot">
+          ${comicBubbleHtml(ask, a.slug)}
+          <img class="avatar" src="${av}" alt="" width="48" height="48" loading="lazy"
+            data-fb="${esc(avFb)}"
+            onerror="if(!this.dataset.tried){this.dataset.tried=1;this.src=this.dataset.fb;return;}this.style.display='none';const fb=this.nextElementSibling;if(fb)fb.style.display='grid'">
+          <div class="avatar-fallback" style="display:none" aria-hidden="true">${esc(ini)}</div>
+        </div>
+        <div class="nm">${nameTwoLines(a.name)}</div>
+        <div class="rl" title="${esc(String(a.role||'').replace(/\s*\(under[^)]*\)/gi,'').replace(/[\r\n]+/g,' ').trim() || '—')}">${esc(String(a.role||'').replace(/\s*\(under[^)]*\)/gi,'').replace(/[\r\n]+/g,' ').trim() || '—')}</div>
+        <div class="badges">
+          ${s.blocked?`<span class="b red">Blocked ${s.blocked}</span>`:''}
+          ${s.missed?`<span class="b red">Missed ${s.missed}</span>`:''}
+          ${s.due?`<span class="b amber">Due ${s.due}</span>`:''}
+          ${s.prog?`<span class="b blue">In work ${s.prog}</span>`:''}
+          <span class="b green">Done 7d ${done7}</span>
+        </div>
+        <div class="dual-bars">
+          ${knowledgeBarsHtml(a.knowledge, true)}
+          ${competitivenessHtml(a.competitiveness, true)}
+        </div>
+        <div class="card-foot">
+          ${nowLines}
+        </div>
+      </div>
+    </article>`;
+}
+
+/** Small left bubble next to Compete bar — #2, #5 (no /11 total) */
+function rankBubbleHtml(c){
+  if (!c || c.rank_org == null) return '';
+  const rankN = Math.round(+c.rank_org);
+  if (!Number.isFinite(rankN) || rankN < 1) return '';
+  return `<span class="rank-bubble" title="Competitiveness rank vs org">#${rankN}</span>`;
+}
+
+async function loadAgentChatHistory(slug){
+  try {
+    const res = await api('/agents/'+slug+'/chat/history?limit=100');
+    if (res && res.ok && Array.isArray(res.messages) && res.messages.length) {
+      chatHist[slug] = res.messages.map(m => ({
+        role: m.role,
+        content: m.content,
+        channel: m.channel || 'board',
+        at: m.created_at || null
+      }));
+      return true;
+    }
+  } catch (e) { /* offline / empty */ }
+  return false;
+}
+
+async function openAgent(slug, opts){
+  opts = opts || {};
+  const d = await api('/agents/'+slug);
+  cur = d;
+  const runs = d.runs || [];
+  const activeRuns = runs.filter(r => r.status === 'in_progress' || r.status === 'blocked' || r.status === 'missed')
+    .sort((a,b) => {
+      const rank = { blocked:0, missed:1, in_progress:2 };
+      return (rank[a.status]??9) - (rank[b.status]??9);
+    });
+  const notStarted = runs.filter(r => r.status === 'due');
+  const doneRuns = runs.filter(r => r.status === 'done').slice(0, 5);
+  const st = { blocked:0, missed:0, due:0, prog:0, done7:0 };
+  runs.forEach(r => {
+    if (r.status==='blocked') st.blocked++;
+    else if (r.status==='missed') st.missed++;
+    else if (r.status==='due') st.due++;
+    else if (r.status==='in_progress') st.prog++;
+    else if (r.status==='done') st.done7++;
+  });
+  const ask = opts.agentAsk || ownerAskTwoWords(d.runs || [], d.agent.slug);
+  const she = ownerSheHe(d.agent.slug, d.agent.name);
+  const first = (d.agent.name||'').split(' ')[0] || d.agent.name;
+  const briefing = ownerBriefing(first, she, activeRuns, notStarted, ask);
+  const nowWorkHtml = nowWorkingSummaryHtml(d.runs || [], d.tasks || []);
+  const focusChat = !!opts.focusChat;
+  const hasAsk = !!ask;
+
+  // Server history (board + Telegram) — same field for both channels
+  await loadAgentChatHistory(slug);
+
+  // If agent has something to ask Owner and chat is empty — she opens first
+  if (hasAsk && !(chatHist[slug] && chatHist[slug].length)) {
+    chatHist[slug] = [{
+      role: 'assistant',
+      content: agentOpensWithAsk(first, ask, activeRuns),
+      channel: 'board'
+    }];
+  }
+
+  $('#panel').innerHTML = `
+    <div class="panel-head">
+      <button class="x" onclick="closeDr()" aria-label="Close">×</button>
+      <h2>${esc(d.agent.name)}</h2>
+      <div class="rl" title="${esc(String(d.agent.role||'').replace(/\s*\(under[^)]*\)/gi,'').replace(/[\r\n]+/g,' ').trim() || '—')}">${esc(String(d.agent.role||'').replace(/\s*\(under[^)]*\)/gi,'').replace(/[\r\n]+/g,' ').trim() || '—')}</div>
+      ${ask ? `<div class="comic-say comic-say-btn" style="position:static;display:inline-block;margin-top:8px"
+        role="button" tabindex="0" title="Jump to message"
+        onclick="focusAgentChat()">${esc(ask)}</div>` : ''}
+    </div>
+    <div class="panel-body">
+      <div class="owner-snap">
+        <div class="job now-work">${nowWorkHtml}</div>
+        <p class="briefing">${briefing}</p>
+        ${d.knowledge ? `<div class="dash-panel" style="margin:12px 0 0;padding:12px">
+          <h3 style="margin-bottom:8px">Knowledge</h3>
+          <p style="font-size:12px;color:var(--fg-3);margin:0 0 8px;line-height:1.4">
+            One bar · gold + green + blue stacked. Strict fill — lots of room still to learn (most agents under ~30%).
+          </p>
+          ${knowledgeBarsHtml(d.knowledge, false)}
+          <div class="know-legend">
+            <span><i class="seg-gold"></i> Corporate</span>
+            <span><i class="seg-green"></i> Self-learned</span>
+            <span><i class="seg-blue"></i> Research</span>
+          </div>
+        </div>` : ''}
+        ${competitivenessHtml(d.competitiveness, false)}
+      </div>
+
+      <div class="chat-wrap ${hasAsk?'has-agent-ask':''}" id="agent-chat">
+        <div class="chat-head">
+          <h3>${esc(first)}</h3>
+          <span class="hint">Board + Telegram · Boss / Mr. Aram</span>
+        </div>
+        ${hasAsk ? `<p class="chat-agent-q"><span>${she.poss === 'his' ? 'His' : 'Her'} ask:</span> <span class="agent-voice">${esc(ask)}</span> — answer below.</p>` : ''}
+        <div class="chat-log" id="chat-log">${renderChatLog(d.agent.slug, d.agent.name)}</div>
+        <form class="chat-form" onsubmit="return sendChat(event, '${d.agent.slug}', '${esc(d.agent.name)}')">
+          <textarea id="chat-in" rows="4" placeholder="${hasAsk ? 'Reply… Enter send · Ctrl+Enter line' : 'Message '+esc(first)+'… Enter send · Ctrl+Enter line'}"
+            onkeydown="return chatKeydown(event, '${d.agent.slug}', '${esc(d.agent.name)}')"></textarea>
+          <button type="submit" class="btn btn-primary" id="chat-send">Send</button>
+        </form>
+      </div>
+
+      <div class="owner-sec">${she.subjCap} is working on</div>
+      ${activeRuns.length
+        ? activeRuns.map(r => reportCard(r, she)).join('')
+        : `<div class="owner-empty">${she.subjCap} has nothing in progress right now.${notStarted.length ? ` ${notStarted.length} not started — folded below.` : ''}</div>`}
+
+      ${notStarted.length ? `
+        <details class="acc-not-started">
+          <summary><span>Not started yet · ${notStarted.length}</span></summary>
+          <div class="acc-body">
+            ${notStarted.map(r => `
+              <div class="ns-item">
+                <span class="t">${esc(plainTitle(r.title, r.task_id))}</span>
+                <span class="tag">Not started</span>
+              </div>`).join('')}
+          </div>
+        </details>
+      ` : ''}
+
+      ${doneRuns.length ? `
+        <div class="owner-sec">Recently finished</div>
+        ${doneRuns.map(r => reportCard(r, she, true)).join('')}
+      ` : ''}
+
+      <details class="tech-fold">
+        <summary>Ops controls (progress %, notes, codes)</summary>
+        <p style="font-size:12px;color:var(--fg-3);margin:0 0 10px">For updating the board — not the main Owner read.</p>
+        ${[...activeRuns, ...notStarted].length
+          ? [...activeRuns, ...notStarted].map(runRow).join('')
+          : '<div class="owner-empty">No open runs to edit.</div>'}
+      </details>
+    </div>`;
+  $('#dr').classList.add('on');
+
+  if (focusChat) {
+    requestAnimationFrame(() => {
+      focusAgentChat();
+    });
+  }
+}
+
+async function openAgentChat(slug, ask){
+  await openAgent(slug, { focusChat: true, agentAsk: ask || null });
+}
+function focusAgentChat(){
+  const box = document.getElementById('agent-chat');
+  const ta = document.getElementById('chat-in');
+  if (box) box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  if (ta) { ta.focus(); }
+}
+
+/**
+ * Boss-facing note only. Ops dumps / file paths / quota walls → short plain summary or ''.
+ * Never show BACKLOGS paths, SSOT, ACCELERATED MODE walls of text to Owner.
+ */
+function humanizeNote(note){
+  if (!note) return '';
+  let n = String(note).trim();
+  // Hard drop: internal canon dumps
+  if (/BACKLOGS\/|ACCELERATED|SSOT:|das-architektura\/|link opps\/day|B2B touches\/day|White-hat only/i.test(n)) {
+    if (/ACCELERATED|DA target|link opp/i.test(n)) {
+      return 'Growth mode is on: team daily quotas (links, creatives, B2B, ads). White-hat only.';
+    }
+    return '';
+  }
+  if (/ADS LEARNING:|Do not execute Ads/i.test(n)) {
+    return 'Ads learning note for the intelligence pack — no ads execution here.';
+  }
+  // kill ticket / API dump language
+  n = n.replace(/^GOALS?\s*#?\d*\s*UPDATE:\s*/i, '');
+  n = n.replace(/^REASSIGN intent:\s*/i, '');
+  n = n.replace(/\bAPI cleared[^.]*\./gi, '');
+  n = n.replace(/\bONLY UI left:\s*/gi, 'Your UI step left. ');
+  n = n.replace(/\bbegin_checkout\b/gi, '');
+  n = n.replace(/\bATC\b/g, '');
+  n = n.replace(/\bYT subscriptions?\b/gi, '');
+  n = n.replace(/\bCCG soft biddable off\b/gi, '');
+  n = n.replace(/\bPACKAGE DELIVERED\.?\s*/gi, '');
+  n = n.replace(/\bClaims standby[^.]*\./gi, '');
+  n = n.replace(/\s+/g, ' ').replace(/\s*,\s*,/g, ',').trim();
+  n = n.replace(/^[\s,;:.-]+|[\s,;:.-]+$/g, '');
+  // if still looks like code / path dump, drop
+  if (/include\s*=|biddable|mutate|soft goals|\.md\b|\/[A-Z0-9_-]+\/[A-Z0-9_-]+/i.test(n) && n.length > 50) {
+    if (/purchase/i.test(n)) return 'Almost purchase-only; one UI step left for you.';
+    return '';
+  }
+  if (n.length > 110) n = n.slice(0, 107) + '…';
+  return n;
+}
+
+/** Short Boss line for a run card: what + simple status — not ops note wall */
+function bossRunSummary(r, doneView){
+  const brief = TASK_BRIEF[r.task_id];
+  const what = brief && brief.what
+    ? brief.what
+    : casualWork(r.title, r.task_id);
+  const note = humanizeNote(r.note);
+  if (doneView || r.status === 'done') {
+    return note ? `Done. ${note}` : 'Done.';
+  }
+  if (r.status === 'blocked') {
+    return note ? `Stuck: ${note}` : 'Stuck — needs a clear path.';
+  }
+  if (r.status === 'missed') {
+    return note ? `Late: ${note}` : 'Ran late — catching up.';
+  }
+  const pct = Math.max(0, Math.min(100, +r.percent || 0));
+  // Prefer brief "what" as the human summary
+  let s = what;
+  if (pct > 0 && isComplexProgress(r, doneView)) s += ` About ${pct}% done.`;
+  else if (r.status === 'in_progress') s += ' In progress.';
+  else s += ' Not finished yet.';
+  if (note && note.length < 80) s += ' ' + note;
+  return s;
+}
+
+function casualWork(title, taskId){
+  const brief = TASK_BRIEF[taskId];
+  let raw = (brief && brief.what) ? brief.what : plainTitle(title, taskId);
+  raw = String(raw).replace(/^Budget \+ financial feasibility on every spend-bearing decision.*$/i, 'budget / J7');
+  return String(raw)
+    .replace(/^Ship or ready one SEO blog post this week\.?$/i, 'SEO blog')
+    .replace(/^Build today's open problems.+$/i, 'open problems')
+    .replace(/^Write Mr\. Aram.+$/i, 'daily brief')
+    .replace(/^External awareness.+$/i, 'XA draft')
+    .replace(/\.$/, '');
+}
+function agentOpensWithAsk(first, ask, activeRuns){
+  // Meaning fixed; wording varies by persona + light rotation (no template grind).
+  const top = activeRuns && activeRuns[0];
+  const askClean = String(ask || '').replace(/\?+$/, '');
+  const packs = {
+    'Ads purchase': {
+      need: ['Need purchase-only locked in Ads', 'Ads only work if conversions are purchase-only', 'Purchase-only must be locked before I trust Ads'],
+      a: ['you lock purchase-only in the Ads UI now', 'flip purchase-only in UI yourself', 'set purchase-only in UI today'],
+      b: ['I send you a 3-click path and wait', 'I leave a short click-path for you', 'I document the UI path and pause'],
+      rec: ['A', 'A — cleaner numbers', 'A if you want clean bidding today'],
+    },
+    'Send draft': {
+      need: ['Need one green light — then I send, no second ask', 'I am ready to send once you say so', 'Need send once; I will not re-confirm'],
+      a: ['you say send → I send via emailer and report the text', 'green-light send — I go emailer and show what went out', 'say send and I execute, then paste the text'],
+      b: ['you want draft-only first for your eyes', 'hold send; eyes on draft first', 'draft only until you read it'],
+      rec: ['A if copy is ready', 'A — send means send', 'A when the line is good enough'],
+    },
+    'Budget check': {
+      need: ['Need budget / J7 before any spend', 'Spend waits on J7 / your nod', 'Need the money path clear (J7)'],
+      a: ['full J7 then you approve', 'I finish J7, you decide', 'feasibility first, then your yes'],
+      b: ['pause spend talk for now', 'park spend until later', 'no spend chat this week'],
+      rec: ['A', 'A — safer', 'A before any cash moves'],
+    },
+    'Pack shots': {
+      need: ['Need real pack shots before product visuals', 'No product visual without real pack references', 'Pack-shot references first'],
+      a: ['use SSOT product photos only', 'stick to SSOT pack shots', 'only real product photos from SSOT'],
+      b: ['you point me to the reference folder', 'you name the reference set', 'you drop the reference path'],
+      rec: ['A', 'A — brand red line', 'A unless you have better refs'],
+    },
+    'Creative batch': {
+      need: ['Need keep or rework on creative', 'Creative is up — keep or rework?', 'Batch ready for your eye'],
+      a: ['keep current batch', 'ship as-is', 'keep this round'],
+      b: ['rework with your one note', 'one note from you, I rework', 'rework after your single direction'],
+      rec: ['B if something feels off', 'A if it already hits', 'B when taste is wrong'],
+    },
+    'Infra token': {
+      need: ['Need confirm before token or deploy', 'Infra change needs your nod', 'Token/deploy — confirm first'],
+      a: ['rotate/deploy with rollback ready', 'go ahead, rollback in hand', 'proceed only with rollback'],
+      b: ['hold infra change', 'no change yet', 'park the infra move'],
+      rec: ['A only if rollback is ready', 'B if unsure', 'A when rollback is real'],
+    },
+    'Claim source': {
+      need: ['Source-or-silence on claims', 'No unsourced claims', 'Claims need sources'],
+      a: ['publish only sourced lines', 'sourced lines only', 'keep only what is sourced'],
+      b: ['kill unsourced lines for now', 'cut unsourced until later', 'drop soft claims'],
+      rec: ['A', 'A — brand safety', 'A always'],
+    },
+    'Ads call': {
+      need: ['Need call on ads pause vs leave', 'Ads: pause or leave running?', 'Measurement dirty — pause or hold course?'],
+      a: ['pause until measurement is clean', 'pause until numbers are honest', 'pause for a clean read'],
+      b: ['leave running; watch daily', 'keep live, watch daily', 'leave on with daily watch'],
+      rec: ['A if numbers are dirty', 'B if spend is tiny', 'A when goals are wrong'],
+    },
+    'Access grant': {
+      need: ['Need access grant to continue', 'Blocked on access', 'Access gate — need you'],
+      a: ['you grant access now', 'grant me access today', 'open access now'],
+      b: ['I work read-only until then', 'I stay read-only for now', 'I patch around without access'],
+      rec: ['A', 'A if this is on the critical path', 'B only if grant is slow'],
+    },
+    'Sign packet': {
+      need: ['Packet ready — only you sign', 'Need your signature on the packet', 'Legal packet waiting on you'],
+      a: ['you sign this version', 'sign as-is', 'sign this draft'],
+      b: ['I revise one clause first', 'one clause rework first', 'I tweak one point then you sign'],
+      rec: ['A if terms match matrix', 'B if something smells off', 'A when Finance already nodded'],
+    },
+    'Stock cover': {
+      need: ['Cover risk — push supply or hold?', 'Stock/FBO cover needs a call', 'Supply: push or hold?'],
+      a: ['push supply', 'move supply now', 'push stock in'],
+      b: ['hold and watch cover', 'hold, watch days-of-cover', 'no push yet'],
+      rec: ['A if cover is red', 'B if cover is soft yellow', 'A when marketplace will stock out'],
+    },
+    'XA draft': {
+      need: ['XA draft ready for send decision', 'External draft waiting on send', 'XA line ready'],
+      a: ['green-light send via emailer', 'send it (emailer)', 'you say send — I go'],
+      b: ['hold; I tighten the draft', 'hold for one tighten pass', 'not yet — I sharpen tone'],
+      rec: ['B if tone is soft', 'A if the line is sharp', 'A when the target is warm'],
+    },
+    'SEO blog': {
+      need: ['SEO blog nearly ready', 'Blog draft waiting on publish path', 'SEO post ready enough'],
+      a: ['publish this draft', 'publish now', 'go live with this'],
+      b: ['one more edit cycle then publish', 'one edit pass, then publish', 'hold for one polish'],
+      rec: ['A if claims are sourced', 'B if claims are thin', 'A when sources are clean'],
+    },
+    'Price matrix': {
+      need: ['Price matrix change needs you', 'Matrix move — your call after Finance', 'Pricing change on the table'],
+      a: ['Finance models → you approve', 'model first, then you approve', 'Justina models, you sign off'],
+      b: ['no change; quote from current matrix only', 'keep matrix as-is', 'no specials — matrix only'],
+      rec: ['B until you ask for a special', 'A only if you want a real change', 'B by default'],
+    },
+    'Daily brief': {
+      need: ['Daily brief ready — one decision', 'Brief is up; one call from you', 'CoS brief ready'],
+      a: ['take my recommended decision', 'go with my pick', 'my recommended line'],
+      b: ['pick the other option in the brief', 'take the alternate', 'the other fork in the brief'],
+      rec: ['A', 'A unless you hate the risk', 'A for speed'],
+    },
+    'Needs Boss': {
+      need: ['Open problems ready for a scan', 'Today open problems is up', 'Open problems for your eye'],
+      a: ['I keep priority as listed', 'keep my order', 'run as listed'],
+      b: ['you reorder top 3', 'you reshuffle top three', 'you set top 3'],
+      rec: ['A', 'B if something burns', 'A by default'],
+    },
+    'KPI rollup': {
+      need: ['KPI roll-up ready', 'Weekly KPIs are up', 'Roll-up ready'],
+      a: ['accept the roll-up as-is', 'accept as filed', 'take the roll-up'],
+      b: ['I deep-dive one red line', 'I dig the worst red', 'deep-dive one miss'],
+      rec: ['B if anything is red', 'A if all green', 'B on first red'],
+    },
+    'Unblock me': {
+      need: ['I am blocked — need a path', 'Blocked; need your call', 'Cannot move without you'],
+      a: ['you decide now', 'unblock with a decision now', 'you pick the path now'],
+      b: ['I park it and move to the next due', 'I park and continue elsewhere', 'I switch to the next due'],
+      rec: ['A if critical path', 'B if not urgent', 'A when others wait on this'],
+    },
+    'Recover miss': {
+      need: ['Recovering a miss', 'Late item — recovering', 'Missed window; catching up'],
+      a: ['finish the missed item first', 'close the miss first', 'finish what slipped'],
+      b: ['skip and start the new due', 'leave miss; start new due', 'park miss for later'],
+      rec: ['A', 'A unless you deprioritize', 'A by default'],
+    },
+    'Need call': {
+      need: ['Need a short decision', 'Need your call', 'One decision from you'],
+      a: ['go with my default plan', 'my default path', 'I run my plan'],
+      b: ['you set a different direction', 'you point another way', 'you rename the goal'],
+      rec: ['A', 'A for speed', 'B if you already know'],
+    },
+  };
+  const pack = packs[ask] || packs[askClean] || {
+    need: [
+      'Need a short decision on ' + (askClean || 'this work'),
+      'Need your call on ' + (askClean || 'this'),
+      'Please decide on ' + (askClean || 'this item'),
+    ],
+    a: ['I follow my recommended path', 'I run the plan I already have', 'go with my recommendation'],
+    b: ['you set a different direction', 'you name another path', 'you pick the other option'],
+    rec: ['A', 'A for speed', 'A unless you object'],
+  };
+  const pick = (arr) => {
+    const a = Array.isArray(arr) ? arr : [arr];
+    // rotate by time + slug hash so same agent not always same line
+    const h = (first + askClean + String(Date.now()).slice(0, -5)).split('').reduce((n, c) => n + c.charCodeAt(0), 0);
+    return a[h % a.length];
+  };
+  const need = pick(pack.need);
+  const optA = pick(pack.a);
+  const optB = pick(pack.b);
+  const rec = pick(pack.rec);
+
+  // Auto-open = pure English only (never RU greeting + EN body). Live LLM chat matches Boss language fully.
+  const open = 'Hey, Boss.';
+
+  // A and B each on their own line (Owner rule)
+  const lean = pick([
+    `I would take ${rec}.`,
+    `My lean: ${rec}.`,
+    `I recommend ${rec}.`,
+  ]);
+  let s = `${open} ${need}.`;
+  if (top) {
+    const work = casualWork(top.title, top.task_id);
+    const pct = Math.max(0, Math.min(100, +top.percent || 0));
+    if (pct > 0 && top.status === 'in_progress') {
+      s += ` On ${work} at about ${pct} percent.`;
+    } else if (top.status === 'blocked') {
+      s += ` Blocked on ${work}.`;
+    } else if (top.status === 'missed') {
+      s += ` Catching up on ${work}.`;
+    }
+  }
+  s += `\n(A) ${optA}\n(B) ${optB}\n${lean} ${pick(['What do you want?', 'Your call?', 'Which way?'])}`;
+  return s;
+}
+
+
+
+
+/** Pronouns for drawer chrome — Julian is he; Founding Ten women are she. */
+function ownerSheHe(slug, name){
+  if (slug === 'julian-farah') {
+    return { subj: 'he', obj: 'him', poss: 'his', subjCap: 'He' };
+  }
+  return { subj: 'she', obj: 'her', poss: 'her', subjCap: 'She' };
+}
+function plainTitle(title, taskId){
+  const brief = TASK_BRIEF[taskId];
+  if (brief && brief.what) return brief.what;
+  return String(title||'').replace(/^[A-Z]{1,3}\d+\s*[—–:-]\s*/,'') || title || 'Work item';
+}
+function ownerBriefing(first, she, active, notStarted, ask){
+  // No "Name → Boss:" prefix (Owner request)
+  const who = '';
+  const meta = ask ? ` <span class="meta-note">${she.subjCap} will open chat with A/B options.</span>` : '';
+  if (ask && active.length){
+    const top = active[0];
+    const pct = Math.max(0, Math.min(100, +top.percent || 0));
+    const work = casualWork(top.title, top.task_id);
+    const note = humanizeNote(top.note);
+    const speech = `Need you on <strong>${esc(ask)}</strong>. I'm ${esc(work)}${pct?` (~${pct}%)`:''}.${note?` ${esc(note)}`:''}`;
+    return `${who}<span class="agent-voice">${speech}</span>${meta}`;
+  }
+  if (active.length){
+    const top = active[0];
+    const pct = Math.max(0, Math.min(100, +top.percent || 0));
+    const work = casualWork(top.title, top.task_id);
+    const note = humanizeNote(top.note);
+    let speech;
+    if (top.status === 'blocked')
+      speech = `Blocked on ${esc(work)}${pct?` (~${pct}%)`:''}.${note?` ${esc(note)}`:''}`;
+    else if (top.status === 'missed')
+      speech = `Late on ${esc(work)} — recovering${pct?` (~${pct}%)`:''}.`;
+    else
+      speech = `On ${esc(work)}${pct?` — ~${pct}%`:''}.${note?` ${esc(note)}`:''}`;
+    return `${who}<span class="agent-voice">${speech}</span>${ask?meta:''}`;
+  }
+  if (notStarted.length)
+    return `${who}<span class="agent-voice">${notStarted.length} not started. Nothing in progress.</span>`;
+  return `${who}<span class="agent-voice">Clear.</span>`;
+}
+
+
+
+
+function reportState(status, doneView){
+  if (doneView || status === 'done') return { cls:'done', label:'Done' };
+  if (status === 'blocked') return { cls:'stuck', label:'Stuck' };
+  if (status === 'missed') return { cls:'missed', label:'Delayed' };
+  if (status === 'in_progress') return { cls:'doing', label:'In progress' };
+  return { cls:'doing', label: status || '—' };
+}
+function isComplexProgress(r, doneView){
+  // Bar only when partial progress is meaningful (1–99). Binary done/not-done → checkbox.
+  if (doneView || r.status === 'done') return false;
+  const pct = Math.max(0, Math.min(100, +r.percent || 0));
+  if (r.status === 'in_progress' && pct > 0 && pct < 100) return true;
+  if (r.status === 'blocked' && pct > 0 && pct < 100) return true;
+  if (r.status === 'missed' && pct > 0 && pct < 100) return true;
+  return false;
+}
+function taskCheckHtml(r, doneView){
+  if (doneView || r.status === 'done') return '<span class="task-check done" title="Done" aria-label="Done"></span>';
+  if (r.status === 'blocked') return '<span class="task-check stuck" title="Stuck" aria-label="Stuck"></span>';
+  if (r.status === 'missed') return '<span class="task-check missed" title="Missed" aria-label="Missed"></span>';
+  // due / in_progress at 0% — empty square
+  return '<span class="task-check wait" title="Not done" aria-label="Not done"></span>';
+}
+function reportCard(r, she, doneView){
+  const st = reportState(r.status, doneView);
+  const what = casualWork(r.title, r.task_id);
+  const pct = doneView ? 100 : Math.max(0, Math.min(100, +r.percent || 0));
+  const complex = isComplexProgress(r, doneView);
+  const barCls = doneView || pct>=100 ? 'done' : (r.status==='blocked'||r.status==='missed' ? 'hot' : '');
+  const summary = bossRunSummary(r, doneView);
+  const say = esc(summary);
+  let issue = '';
+  if (r.status === 'blocked' && !/Stuck/i.test(summary)) {
+    issue = `<div class="rc-issue"><b>Snag:</b> Needs a clear path.</div>`;
+  }
+  // Short title for card header (bubble-style), full plain summary in body
+  const titleShow = String(r.title || what || 'Work').replace(/^[A-Z]{1,3}\d+\s*[—–:-]\s*/, '');
+  const progressUi = complex
+    ? `<div class="rc-pct-row">
+        <span class="lbl">Done level</span>
+        <span class="val">${pct}%</span>
+      </div>
+      <div class="rc-bar"><i class="${barCls}" style="width:${pct}%"></i></div>`
+    : `<div class="rc-check-row">
+        ${taskCheckHtml(r, doneView)}
+        <span class="lab">${doneView || r.status==='done' ? 'Done' : r.status==='blocked' ? 'Stuck' : r.status==='missed' ? 'Missed' : 'Not done'}</span>
+      </div>`;
+  return `
+    <article class="report-card ${st.cls==='stuck'||st.cls==='missed'?'hot':''}">
+      <div class="rc-top">
+        <h3 class="rc-title">${esc(titleShow)}</h3>
+        <span class="rc-state ${st.cls}">${st.label}</span>
+      </div>
+      <p class="rc-say">${say}</p>
+      ${issue}
+      ${progressUi}
+    </article>`;
+}
+
+
+
+
+
+function runRow(r){
+  const hot = r.status === 'missed' || r.status === 'blocked';
+  const label = STATUS[r.status] || r.status;
+  const brief = TASK_BRIEF[r.task_id];
+  const oneLiner = brief ? brief.what : (r.description || r.title || '');
+  return `
+    <div class="run ${hot?'hot':''}" id="run${r.id}" onclick="this.classList.toggle('open')">
+      <div class="row">
+        <div style="min-width:0;flex:1">
+          <span class="id">${esc(r.task_id)}</span>
+          <span class="title">${esc(r.title)}</span>
+          <div class="meta" style="white-space:normal;margin-top:4px;color:var(--fg-2);font-family:var(--font-body);font-size:12px;line-height:1.35">
+            ${esc(oneLiner)}
+          </div>
+          <div class="meta">Due ${esc(r.due_date)} · ${esc(r.cadence||'')}${r.exported_at ? ' · exported to MEMORY' : ''}</div>
+        </div>
+        <span class="chip ${r.status}">${label}</span>
+      </div>
+      ${(() => {
+        const p = Math.max(0, Math.min(100, +r.percent||0));
+        const complex = r.status==='in_progress' && p>0 && p<100;
+        if (complex) return `<div class="meter" style="margin-top:10px">
+          <div class="meter-row"><span class="lbl">Progress</span><span class="val">${p}%</span></div>
+          <div class="meter-track"><i class="${p>=40?'blue':''}" style="width:${p}%"></i></div>
+        </div>`;
+        const done = r.status==='done' || p>=100;
+        const cls = done?'done':r.status==='blocked'?'stuck':r.status==='missed'?'missed':'wait';
+        const lab = done?'Done':r.status==='blocked'?'Stuck':r.status==='missed'?'Missed':'Not done';
+        return `<div class="rc-check-row" style="margin-top:10px"><span class="task-check ${cls}"></span><span class="lab">${lab}</span></div>`;
+      })()}
+      <div class="det" onclick="event.stopPropagation()">
+        ${taskBrief(r.task_id, r.description, r.done_criterion)}
+        <div class="field">
+          <div class="lab">Ops notes (from system)</div>
+          <div class="val">${esc(r.description||'—')}</div>
+        </div>
+        <div class="field">
+          <div class="lab">Acceptance / done criterion</div>
+          <div class="val">${esc(r.done_criterion||'—')}</div>
+        </div>
+        ${r.note ? `<div class="field"><div class="lab">Latest progress note</div><div class="val">${esc(r.note)}</div></div>` : ''}
+        ${r.kpi_value ? `<div class="field"><div class="lab">KPI value recorded</div><div class="val">${esc(r.kpi_value)}</div></div>` : ''}
+        ${r.artifact ? `<div class="field"><div class="lab">Artifact</div><div class="val">${esc(r.artifact)}</div></div>` : ''}
+        <div class="act">
+          <input id="pct${r.id}" type="number" min="0" max="100" placeholder="%" value="${r.percent||0}">
+          <input id="nt${r.id}" placeholder="Short note (what changed for specialists)">
+          <div class="act-btns">
+            <button class="btn btn-dark" onclick="prog(${r.id})">Save progress</button>
+            <button class="btn btn-ok" onclick="compl(${r.id})">Mark done</button>
+            <button class="btn btn-warn" onclick="blk(${r.id})">Block</button>
+          </div>
+        </div>
+      </div>
+    </div>`;
+}
+
+async function prog(id){
+  await api('/runs/'+id+'/progress',{method:'POST',body:JSON.stringify({
+    percent: +($('#pct'+id).value||0),
+    note: $('#nt'+id).value
+  })});
+  toast('Progress saved');
+  invalidateRunsCache();
+  openAgent(cur.agent.slug);
+}
+async function compl(id){
+  await api('/runs/'+id+'/complete',{method:'POST',body:JSON.stringify({
+    note: $('#nt'+id).value || undefined
+  })});
+  toast('Marked done');
+  invalidateRunsCache();
+  openAgent(cur.agent.slug);
+  loadBoard();
+}
+async function blk(id){
+  await api('/runs/'+id+'/block',{method:'POST',body:JSON.stringify({
+    note: $('#nt'+id).value || 'blocked'
+  })});
+  toast('Marked blocked');
+  invalidateRunsCache();
+  openAgent(cur.agent.slug);
+  loadBoard();
+}
+function closeDr(){ $('#dr').classList.remove('on'); }
+
+async function loadKpi(){
+  if (!agents.length) {
+    try { agents = await api('/agents'); } catch(e) { agents = []; }
+  }
+  const kpi = await api('/kpi');
+  const by = {};
+  (Array.isArray(kpi)?kpi:[]).forEach(k => (by[k.agent_slug]??=[]).push(k));
+  const orderedSlugs = [
+    ...ORG_ORDER.filter(s => by[s]),
+    ...Object.keys(by).filter(s => !ORG_ORDER.includes(s)).sort()
+  ];
+  const blocks = orderedSlugs.map(slug => {
+    const ks = by[slug] || [];
+    const ag = agents.find(a => a.slug === slug) || {};
+    const name = ag.name || slug.replace(/-/g,' ');
+    const role = ag.role || '';
+    const av = AVATAR_CDN + encodeURIComponent(slug) + '.png';
+    const avFb = AVATAR_CDN_FALLBACK + encodeURIComponent(slug) + '.png';
+    const ini = initials(name);
+    const okN = ks.filter(k => k.status==='ok' || (k.value!=null && k.status!=='missed')).length;
+    const missN = ks.filter(k => k.status==='missed').length;
+    const nsN = ks.length - okN - missN;
+    const scorePct = ks.length ? Math.round((okN / ks.length) * 100) : 0;
+    const tiles = ks.sort((a,b)=>(b.status==='missed')-(a.status==='missed')).map(k => {
+      const show = k.value != null ? esc(String(k.value))
+        : (k.status === 'missed' ? 'MISSED' : k.status === 'not_started' ? '—' : 'MISSED');
+      const fill = k.status==='ok' || (k.value!=null && k.status!=='missed') ? 100
+        : k.status==='missed' ? 100 : 12;
+      const tone = k.status==='missed' ? '' : (k.value!=null ? 'ok' : 'blue');
+      return `<div class="ktile ${k.status==='missed'?'miss':''}">
+        <div class="m">${esc(k.metric)}</div>
+        <div class="v ${show==='MISSED'?'missed':''}">${show}</div>
+        <div class="tg">Target ${esc(k.target)} · ${esc(k.period||'')}</div>
+        <div class="meter">
+          <div class="meter-track"><i class="${tone}" style="width:${k.status==='missed'?100:fill}%;${k.status==='missed'?'background:var(--brand-rot)':''}"></i></div>
+        </div>
+      </div>`;
+    }).join('');
+    return `<section class="kpi-block">
+      <div class="kpi-block-head">
+        <img class="avatar" src="${av}" alt="" width="48" height="48" loading="lazy"
+          data-fb="${esc(avFb)}"
+          onerror="if(!this.dataset.tried){this.dataset.tried=1;this.src=this.dataset.fb;return;}this.style.display='none';this.nextElementSibling.style.display='grid'">
+        <div class="avatar-fallback" style="display:none" aria-hidden="true">${esc(ini)}</div>
+        <div class="nm">${nameTwoLines(name)}</div>
+        <div class="rl">${esc(role)}</div>
+        <div class="kpi-score">
+          <div class="pct">${scorePct}%</div>
+          <div class="meter">
+            <div class="meter-row"><span class="lbl">On track</span><span class="val">${okN}/${ks.length}</span></div>
+            <div class="meter-track"><i class="${scorePct>=60?'ok':scorePct>=30?'warn':''}" style="width:${scorePct}%"></i></div>
+          </div>
+        </div>
+        <div style="margin-top:8px;padding-right:56px">
+          ${stackBarHtml({ blocked:0, missed:missN, due:nsN, prog:0, done7:okN }, 'sm')}
+        </div>
+      </div>
+      <div class="kgrid">${tiles}</div>
+    </section>`;
+  }).join('');
+
+  // org-wide KPI summary
+  const allK = Array.isArray(kpi) ? kpi : [];
+  const allOk = allK.filter(k => k.status==='ok' || (k.value!=null && k.status!=='missed')).length;
+  const allMiss = allK.filter(k => k.status==='missed').length;
+  const allNs = allK.length - allOk - allMiss;
+  const allPct = allK.length ? Math.round((allOk / allK.length) * 100) : 0;
+
+  $('#body').innerHTML = `
+    <section class="hero">
+      <div>
+        <h2>KPI wall</h2>
+        <p>Numbers come only from real completed runs. Empty periods show <b style="color:var(--brand-gold)">MISSED</b> or — never a fake zero.</p>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat"><b>${allOk}</b><span>On track</span></div>
+        <div class="hero-stat"><b>${allMiss}</b><span>Missed</span></div>
+        <div class="hero-stat"><b>${allNs}</b><span>Not started</span></div>
+        <div class="hero-stat"><b>${allPct}%</b><span>Coverage</span></div>
+      </div>
+    </section>
+    <section class="dash-panel">
+      <h3>Org KPI mix this period</h3>
+      ${stackBarHtml({ blocked:0, missed:allMiss, due:allNs, prog:0, done7:allOk }, 'lg')}
+      <div class="bar-legend">
+        <span><i style="background:var(--status-success)"></i> On track ${allOk}</span>
+        <span><i style="background:var(--status-warning)"></i> Not started ${allNs}</span>
+        <span><i style="background:var(--brand-rot)"></i> Missed ${allMiss}</span>
+      </div>
+      ${meterHtml('Org coverage (on track / all KPIs)', allPct, allPct>=60?'ok':allPct>=30?'warn':'')}
+    </section>
+    <div class="legend">
+      <span><i class="dot dot-red"></i> MISSED — no completed run in period</span>
+      <span><i class="dot dot-ok"></i> — not started yet this period</span>
+      <span><i class="dot dot-green"></i> On track — has a real value</span>
+    </div>
+    <div class="sec">Org chart · CoS first</div>
+    ${blocks || '<div class="empty"><h3>No KPI definitions</h3></div>'}`;
+}
+
+async function doGen(){
+  try {
+    const r = await api('/admin/generate',{method:'POST',body:'{}'});
+    toast(`Schedule: +${r.created||0} due · ${r.missed||0} missed`);
+    invalidateRunsCache();
+    if (view==='board') loadBoard();
+  } catch(e){ if(e) toast('Generate failed'); }
+}
+async function doExport(){
+  try {
+    const r = await api('/admin/export',{method:'POST',body:'{}'});
+    toast(`Exported ${r.exported??r.runs??0} runs to MEMORY.md`);
+  } catch(e){ if(e) toast('Export failed'); }
+}
+
+/* ========== Seminar / Quick Meeting ========== */
+let seminarState = null;
+let seminarPollTimer = null;
+
+function closeSeminar(){
+  const el = document.getElementById('sem-modal');
+  if (el){ el.classList.remove('on'); el.innerHTML = ''; }
+  if (seminarPollTimer){ clearInterval(seminarPollTimer); seminarPollTimer = null; }
+}
+
+async function openSeminar(){
+  const el = document.getElementById('sem-modal');
+  if (!el) return;
+  el.classList.add('on');
+  el.innerHTML = `<div class="sem-panel" onclick="event.stopPropagation()">
+    <div class="sem-head">
+      <h2>Seminar · Quick meeting</h2>
+      <button class="x" onclick="closeSeminar()" aria-label="Close">×</button>
+    </div>
+    <div class="sem-body" id="sem-body"><p class="muted">Loading…</p></div>
+  </div>`;
+  await refreshSeminarPanel();
+  if (seminarPollTimer) clearInterval(seminarPollTimer);
+  seminarPollTimer = setInterval(() => { refreshSeminarPanel(true); }, 8000);
+}
+
+async function refreshSeminarPanel(soft){
+  const body = document.getElementById('sem-body');
+  if (!body) return;
+  try {
+    seminarState = await api('/seminars/active');
+  } catch (e) {
+    if (!soft) body.innerHTML = `<p class="muted">Could not load seminar API.</p>`;
+    return;
+  }
+  const s = seminarState && seminarState.active;
+  const qs = (seminarState && seminarState.questions) || [];
+  const digs = (seminarState && seminarState.digests) || [];
+  const roster = (seminarState && seminarState.roster) || 0;
+  const pct = s ? Math.max(0, Math.min(100, +s.progress || 0)) : 0;
+
+  if (!s) {
+    body.innerHTML = `
+      <p class="sem-lead">Paste a link, notes, or any material. Agents digest it; the bar shows how far the room has gone. Questions stay open while the bar moves.</p>
+      <label class="sem-label">Title <span class="muted">(optional)</span></label>
+      <input id="sem-title" class="sem-input" placeholder="e.g. Token rotation sync" />
+      <label class="sem-label">Material</label>
+      <textarea id="sem-body-in" class="sem-ta" rows="6" placeholder="Paste text, URL, or briefing…"></textarea>
+      <div class="sem-actions">
+        <button class="btn btn-dark" onclick="startSeminar()">Start seminar</button>
+      </div>`;
+    return;
+  }
+
+  const qHtml = qs.length
+    ? qs.map(q => {
+        const open = !(q.answer && String(q.answer).trim());
+        const who = esc(q.agent_slug || 'someone');
+        if (open) {
+          return `<div class="sem-q open" id="semq-${q.id}">
+            <button type="button" class="sem-q-btn" onclick="toggleSemAnswer(${q.id})">
+              <span class="sem-q-who">${who}</span>
+              <span class="sem-q-text">${esc(q.question)}</span>
+              <span class="sem-q-hint">tap to answer</span>
+            </button>
+            <div class="sem-ans-wrap" id="semans-${q.id}" hidden>
+              <textarea class="sem-ans" id="semans-in-${q.id}" rows="2" placeholder="Your answer… Enter to send"
+                onkeydown="return semAnswerKey(event, '${esc(s.id)}', ${q.id})"></textarea>
+            </div>
+          </div>`;
+        }
+        return `<div class="sem-q done">
+          <div class="sem-q-btn static">
+            <span class="sem-q-who">${who}</span>
+            <span class="sem-q-text">${esc(q.question)}</span>
+          </div>
+          <div class="sem-a">${esc(q.answer)}</div>
+        </div>`;
+      }).join('')
+    : `<p class="muted">No questions yet — agents can ask below while the bar moves.</p>`;
+
+  const digList = digs.length
+    ? digs.map(d => esc(d.agent_slug)).join(', ')
+    : 'none yet';
+
+  body.innerHTML = `
+    <div class="sem-active-title">${esc(s.title || 'Seminar')}</div>
+    <div class="sem-material">${esc(s.body)}</div>
+    <div class="sem-prog-head">
+      <span>Digest progress</span>
+      <b>${pct}%</b>
+    </div>
+    <div class="sem-prog" aria-valuenow="${pct}" aria-valuemin="0" aria-valuemax="100">
+      <i style="width:${pct}%"></i>
+    </div>
+    <p class="sem-prog-meta muted">Digested: ${digs.length}/${roster || '—'} · ${esc(digList)}</p>
+
+    <div class="sem-sec">Questions</div>
+    <div class="sem-q-list">${qHtml}</div>
+
+    <div class="sem-sec">Ask as agent</div>
+    <div class="sem-ask-row">
+      <select id="sem-ask-slug" class="sem-input sem-select">
+        ${(agents || []).map(a => `<option value="${esc(a.slug)}">${esc(a.name)}</option>`).join('') || '<option value="owner">Owner</option>'}
+      </select>
+      <input id="sem-ask-text" class="sem-input" placeholder="Qualifying question…"
+        onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();postSemQuestion()}" />
+      <button class="btn btn-dark" onclick="postSemQuestion()">Ask</button>
+    </div>
+    <div class="sem-actions">
+      <button class="btn btn-ghost" onclick="markSemDigest()">Mark me digested (Owner as agent)</button>
+      <button class="btn btn-ghost" onclick="closeActiveSeminar()">Close seminar</button>
+    </div>`;
+}
+
+async function startSeminar(){
+  const title = (document.getElementById('sem-title')?.value || '').trim();
+  const body = (document.getElementById('sem-body-in')?.value || '').trim();
+  if (!body){ toast('Paste material first'); return; }
+  try {
+    seminarState = await api('/seminars', { method: 'POST', body: JSON.stringify({ title, body }) });
+    toast('Seminar started');
+    await refreshSeminarPanel();
+  } catch (e) { toast('Start failed'); }
+}
+
+async function postSemQuestion(){
+  const s = seminarState && seminarState.active;
+  if (!s) return;
+  const slug = document.getElementById('sem-ask-slug')?.value || 'owner';
+  const q = (document.getElementById('sem-ask-text')?.value || '').trim();
+  if (!q) return;
+  try {
+    seminarState = await api('/seminars/' + encodeURIComponent(s.id) + '/questions', {
+      method: 'POST', body: JSON.stringify({ agent_slug: slug, question: q })
+    });
+    await refreshSeminarPanel();
+  } catch (e) { toast('Ask failed'); }
+}
+
+function toggleSemAnswer(qid){
+  const wrap = document.getElementById('semans-' + qid);
+  if (!wrap) return;
+  const show = wrap.hasAttribute('hidden');
+  document.querySelectorAll('.sem-ans-wrap').forEach(el => el.setAttribute('hidden', ''));
+  if (show) {
+    wrap.removeAttribute('hidden');
+    const ta = document.getElementById('semans-in-' + qid);
+    if (ta) ta.focus();
+  }
+}
+
+function semAnswerKey(ev, sid, qid){
+  if (ev.key === 'Enter' && !ev.shiftKey) {
+    ev.preventDefault();
+    submitSemAnswer(sid, qid);
+    return false;
+  }
+  return true;
+}
+
+async function submitSemAnswer(sid, qid){
+  const ta = document.getElementById('semans-in-' + qid);
+  const answer = (ta && ta.value || '').trim();
+  if (!answer) return;
+  try {
+    seminarState = await api('/seminars/' + encodeURIComponent(sid) + '/questions/' + qid + '/answer', {
+      method: 'POST', body: JSON.stringify({ answer })
+    });
+    await refreshSeminarPanel();
+  } catch (e) { toast('Answer failed'); }
+}
+
+async function markSemDigest(){
+  const s = seminarState && seminarState.active;
+  if (!s) return;
+  const slug = document.getElementById('sem-ask-slug')?.value || (agents[0] && agents[0].slug);
+  if (!slug) return;
+  try {
+    seminarState = await api('/seminars/' + encodeURIComponent(s.id) + '/digest', {
+      method: 'POST', body: JSON.stringify({ agent_slug: slug })
+    });
+    toast('Digest noted for ' + slug);
+    await refreshSeminarPanel();
+  } catch (e) { toast('Digest failed'); }
+}
+
+async function closeActiveSeminar(){
+  const s = seminarState && seminarState.active;
+  if (!s) return;
+  try {
+    await api('/seminars/' + encodeURIComponent(s.id) + '/close', { method: 'POST', body: '{}' });
+    toast('Seminar closed');
+    seminarState = { active: null };
+    await refreshSeminarPanel();
+  } catch (e) { toast('Close failed'); }
+}
+
+function esc(s){
+  return String(s??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+/** Render agent speech: **essence** → <strong>; rest italic via CSS. Labels stay normal weight. */
+function formatAgentSpeech(s){
+  let t = esc(s);
+  // **essence** or __essence__ → bold (only the core idea, not whole paragraph)
+  t = t.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+  t = t.replace(/__([^_]+)__/g, '<strong>$1</strong>');
+  return t;
+}
+
+function renderChatLog(slug, name){
+  const hist = chatHist[slug] || [];
+  if (!hist.length){
+    return `<div class="chat-empty">Board chat + Telegram with this agent — one thread. Learning from both.</div>`;
+  }
+  const first = (name||'').split(' ')[0] || name || 'Agent';
+  return hist.map(m => {
+    const isTg = (m.channel || '') === 'telegram' || /^\[Telegram\]/i.test(m.content || '');
+    const cls = (m.role === 'user' ? 'user' : (m.role === 'error' ? 'assistant err' : 'assistant')) + (isTg ? ' tg' : '');
+    const who = m.role === 'user' ? 'You' : first;
+    const ch = isTg ? ' · Telegram' : '';
+    let raw = m.content || '';
+    if (isTg && m.role === 'user') raw = raw.replace(/^\[Telegram\]\s*/i, '');
+    const body = m.role === 'assistant' ? formatAgentSpeech(raw) : esc(raw);
+    return `<div class="chat-msg ${cls}"><span class="who">${esc(who)}<span class="ch">${esc(ch)}</span></span>${body}</div>`;
+  }).join('');
+}
+/** Enter = send; Ctrl/Cmd/Shift+Enter = newline */
+function chatKeydown(ev, slug, name){
+  if (ev.key !== 'Enter') return true;
+  if (ev.ctrlKey || ev.metaKey || ev.shiftKey) return true; // allow newline
+  ev.preventDefault();
+  sendChat(ev, slug, name);
+  return false;
+}
+
+async function sendChat(ev, slug, name){
+  if (ev && ev.preventDefault) ev.preventDefault();
+  if (chatBusy) {
+    toast('Still working on the last message…');
+    return false;
+  }
+  const ta = document.getElementById('chat-in');
+  const text = (ta && ta.value || '').trim();
+  if (!text) return false;
+  chatHist[slug] = chatHist[slug] || [];
+  chatHist[slug].push({ role:'user', content:text, channel:'board' });
+  ta.value = '';
+  chatBusy = true;
+  const setBusyUi = (busy, statusText) => {
+    const b = document.getElementById('chat-send');
+    if (b) b.disabled = !!busy;
+    const logEl = document.getElementById('chat-log');
+    if (!logEl) return;
+    if (busy) {
+      logEl.innerHTML = renderChatLog(slug, name) + `<div class="chat-empty">${esc(statusText || 'Thinking…')}</div>`;
+    } else {
+      logEl.innerHTML = renderChatLog(slug, name);
+    }
+    logEl.scrollTop = logEl.scrollHeight;
+  };
+  const needsReach = /https?:\/\/|telegram|телег|t\.me\/|@\w{4,}|research|найди|источник|прочитай|GEO|очеред/i.test(text);
+  setBusyUi(true, needsReach ? 'Looking up sources…' : 'Thinking…');
+  const ac = new AbortController();
+  const kill = setTimeout(() => ac.abort(), 25000);
+  try {
+    const msgs = chatHist[slug].filter(m => m.role === 'user' || m.role === 'assistant').slice(-10)
+      .map(m => ({ role: m.role, content: m.content }));
+    const res = await api('/agents/'+slug+'/chat', {
+      method:'POST',
+      body: JSON.stringify({ messages: msgs, channel: 'board', use_history: true }),
+      signal: ac.signal
+    });
+    if (res && res.error) throw new Error(res.error + (res.detail ? (': '+res.detail) : ''));
+    if (!res || !res.reply) throw new Error('Empty reply from server');
+    let reply = res.reply;
+    if (res.reach && res.reach.used) {
+      const ch = (res.reach.channels || []).join(', ') || 'reach';
+      reply += `\n\n· ${res.reach.ok ? '📡 live '+ch : '📡 reach miss'}`;
+    }
+    chatHist[slug].push({ role:'assistant', content: reply, channel: res.channel || 'board' });
+    // Refresh from server so Telegram turns that arrived mid-session appear
+    await loadAgentChatHistory(slug);
+  } catch (e) {
+    const msg = (e && e.name === 'AbortError')
+      ? 'Timed out (25s). Close the drawer, hard-refresh, try again.'
+      : ('Chat failed: ' + (e.message || e));
+    chatHist[slug].push({ role:'error', content: msg });
+  } finally {
+    clearTimeout(kill);
+    chatBusy = false;
+    setBusyUi(false);
+  }
+  return false;
+}
+
+render();
+</script>
+</body>
+</html>

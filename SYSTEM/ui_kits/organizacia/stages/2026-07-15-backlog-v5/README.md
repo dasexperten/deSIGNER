@@ -1,13 +1,11 @@
 # organizacia dashboard — UI kit
 
-**Stage:** `2026-07-21-tokens-a11y`  
+**Stage:** `2026-07-15-backlog-v5`  
 **Live board:** https://org.dasexperten.com  
 **Runtime SSOT (code):** [dasexperten/organizacia](https://github.com/dasexperten/organizacia) → `api/ui.html`  
 **Design SSOT (this kit):** `deSIGNER/SYSTEM/ui_kits/organizacia/`
 
-Frozen design record of the **DASORG agent board** at the tokens + a11y stage: ONE gold (#C9A227) + yellow-never-text, blue in-progress passport, honest mono, Fraunces display pair, computed a11y inks + schwarz focus ring. Previous stage `2026-07-15-backlog-v5` archived byte-exact in [`./stages/`](./stages/).
-
-> **Design SSOT rule (restored 2026-07-21):** when the board design advances, this kit and the Worker UI (`organizacia/api/ui.html`) advance **in the same session** — the stage is stamped in both repos. No design change ships without its paper.
+Frozen design record of the **DASORG agent board** at the dual-bar / competitiveness stage (after dual-session merge).
 
 ---
 
