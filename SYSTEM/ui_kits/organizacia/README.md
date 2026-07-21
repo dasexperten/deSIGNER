@@ -18,6 +18,8 @@ Frozen design record of the **DASORG agent board** at the tokens + a11y stage: O
 | **[index.html](./index.html)** | Offline design preview (mock cards + org pulse). Open in a browser. |
 | **[board-ui.snapshot.html](./board-ui.snapshot.html)** | Full stage snapshot of live `api/ui.html` (API-bound; needs Worker to fully run). |
 | **[DESIGN.md](./DESIGN.md)** | Design rules for knowledge + compete bars, rank bubble, tokens. |
+| **[A11Y.md](./A11Y.md)** | Accessibility record: computed inks, thresholds, allowlists, contrast law. |
+| **[a11y-before-after.html](./a11y-before-after.html)** | Visual before/after the Owner accepted (2026-07-21). |
 
 ---
 

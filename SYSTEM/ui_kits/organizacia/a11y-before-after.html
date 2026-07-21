@@ -1,0 +1,193 @@
+<!doctype html><html lang="ru"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>deSIGNER · было → стало → что запишет кит</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800;900&family=Fraunces:opsz,wght@9..144,600..900&family=Manrope:wght@600;800&display=swap" rel="stylesheet">
+<style>
+:root{
+ --paper:#FBFAF6;--raised:#FFF;--sunk:#F3F0E8;--bone:#EDE8DD;
+ --schwarz:#282229;--rot:#E5202C;--gold:#C9A227;--yellow:#FEF004;--ink:#1A1519;
+ --err-ink:#C91C26;--warn:#C77A00;--warn-ink:#955B00;--prog:#0D199E;--prog-hi:#3d4fd4;
+ --fg2:#5d5761;--border:#E3DED4;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font:15px/1.55 "Archivo",system-ui,sans-serif;padding-bottom:80px}
+.ribbon{height:5px;background:linear-gradient(90deg,var(--schwarz) 0 33.3%,var(--rot) 33.3% 66.6%,var(--gold) 66.6% 100%)}
+.wrap{max-width:1060px;margin:0 auto;padding:0 22px}
+header{padding:34px 0 10px}
+h1{font-family:"Fraunces",Georgia,serif;font-optical-sizing:auto;font-weight:900;font-size:34px;line-height:1.08;letter-spacing:.01em}
+.sub{color:var(--fg2);font-size:14px;margin-top:8px;max-width:64ch}
+.stagebar{display:flex;gap:10px;align-items:center;margin:18px 0 6px;flex-wrap:wrap}
+.stage{background:var(--sunk);border:1px solid var(--border);border-radius:8px;padding:6px 12px;font-weight:700;font-size:12.5px}
+.stage.now{background:var(--ink);color:#fff;border-color:var(--ink)}
+.arrow{font-weight:900;color:var(--fg2)}
+.paperlaw{margin:16px 0 0;background:var(--raised);border:1.5px solid var(--ink);border-radius:12px;padding:14px 18px;font-weight:800;font-size:15px;box-shadow:3px 3px 0 var(--bone)}
+.paperlaw b{color:var(--rot)}
+h2{font-family:"Fraunces",Georgia,serif;font-weight:800;font-size:22px;margin:42px 0 4px}
+.h2sub{color:var(--fg2);font-size:13px;margin-bottom:16px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:760px){.grid{grid-template-columns:1fr}}
+.card{background:var(--raised);border:1px solid var(--border);border-radius:14px;overflow:hidden;box-shadow:0 1px 0 var(--bone)}
+.card h3{font-size:15px;font-weight:900;padding:12px 16px;border-bottom:1px solid var(--border);letter-spacing:.02em}
+.split{display:grid;grid-template-columns:1fr 1fr}
+.half{padding:14px 16px}
+.half+.half{border-left:1px dashed var(--border)}
+.tag{display:inline-block;font-size:10.5px;font-weight:900;letter-spacing:.08em;padding:2px 8px;border-radius:99px;margin-bottom:10px}
+.tag.was{background:var(--sunk);color:var(--fg2)}
+.tag.now{background:var(--ink);color:#fff}
+.chip{display:inline-block;font-size:11px;font-weight:800;padding:1px 7px;border-radius:99px;margin-left:6px;vertical-align:1px}
+.chip.f{background:rgba(229,32,44,.12);color:var(--err-ink)}
+.chip.p{background:rgba(46,125,79,.14);color:#22603d}
+.sw{display:inline-block;width:26px;height:26px;border-radius:6px;border:1px solid rgba(0,0,0,.12);vertical-align:middle;margin-right:8px}
+.demo{border:1px solid var(--border);border-radius:9px;padding:10px 12px;margin-top:8px;background:var(--paper)}
+.demo .lbl{font-size:10px;color:var(--fg2);font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin-bottom:5px}
+.grad{height:14px;border-radius:99px;background:linear-gradient(90deg,var(--gold),var(--yellow))}
+.gradb{height:14px;border-radius:99px;background:linear-gradient(90deg,var(--prog),var(--prog-hi))}
+.mono-was{font-family:"Manrope",sans-serif;font-weight:800;font-size:20px}
+.mono-now{font-family:ui-monospace,"SF Mono",Menlo,Consolas,"Liberation Mono",monospace;font-weight:800;font-size:20px}
+.dh-was{font-family:"Archivo";font-weight:900;font-size:24px;letter-spacing:.04em}
+.dh-now{font-family:"Fraunces",Georgia,serif;font-optical-sizing:auto;font-weight:900;font-size:24px}
+.btnrow{display:flex;gap:10px;flex-wrap:wrap;margin-top:6px}
+.fbtn{border:1px solid var(--border);background:var(--raised);border-radius:9px;padding:8px 14px;font-weight:800;font-size:13px}
+.ring-was{outline:2px solid var(--gold);outline-offset:2px}
+.ring-now{outline:2px solid var(--schwarz);outline-offset:2px}
+.warnbtn{border:0;border-radius:9px;padding:8px 14px;font-weight:800;font-size:13px;background:var(--warn)}
+.pinkpad{background:rgba(229,32,44,.1);border-radius:8px;padding:8px 12px;font-weight:700;font-size:13px;margin-top:8px}
+.keep{background:var(--raised);border:1px solid var(--border);border-left:4px solid var(--gold);border-radius:12px;padding:16px 18px}
+.keep li{margin:7px 0 7px 18px;font-size:14px}
+.kit{background:var(--ink);color:#F4F1EA;border-radius:14px;padding:22px 24px;margin-top:8px}
+.kit h3{font-family:"Fraunces",Georgia,serif;font-weight:800;font-size:18px;margin-bottom:12px;color:#fff}
+.kit table{width:100%;border-collapse:collapse;font-size:13.5px}
+.kit td{padding:8px 10px;border-top:1px solid rgba(255,255,255,.14);vertical-align:top}
+.kit td:first-child{font-weight:800;white-space:nowrap;color:var(--yellow)}
+.rule{margin-top:14px;border:1px dashed rgba(255,255,255,.4);border-radius:10px;padding:12px 14px;font-size:13.5px}
+.rule b{color:#fff}
+.zero{margin-top:14px;font-weight:900;font-size:14px;color:#fff}
+.zero i{color:var(--yellow);font-style:normal}
+footer{margin-top:46px;color:var(--fg2);font-size:12.5px;border-top:1px solid var(--border);padding-top:14px}
+</style></head><body>
+<div class="ribbon"></div>
+<div class="wrap">
+<header>
+ <h1>Дизайн борда: было → стало → что запишет кит</h1>
+ <p class="sub">Витрина для осторожного взгляда: слева всегда фактическое <b>было</b>, справа — то, что <b>уже живёт на проде</b> после двух сегодняшних вердиктов. Третий блок — единственное, что ещё предстоит: бумага.</p>
+ <div class="stagebar">
+  <span class="stage">кит-фриз · 2026-07-15-backlog-v5</span><span class="arrow">→</span>
+  <span class="stage now">прод · 2026-07-21 · tokens + a11y · 136 тестов</span><span class="arrow">→</span>
+  <span class="stage">кит-стадия · будет записана</span>
+ </div>
+ <p class="paperlaw">Обновление кита — это <b>бумага</b>: снапшот, правила, штамп стадии. Пикселей на проде оно не меняет — <b>ноль</b>.</p>
+</header>
+
+<h2>А · Уже на проде — было и стало</h2>
+<p class="h2sub">Всё ниже уже выкачено и покрыто тестами (GitHub c7c7b17 = прод 822e15cf). Это не план — это факт для сверки глазами.</p>
+<div class="grid">
+
+<div class="card"><h3>1 · Золото — теперь одно</h3><div class="split">
+ <div class="half"><span class="tag was">БЫЛО</span>
+  <div><span class="sw" style="background:#FEF004"></span><b>#FEF004</b> звался --brand-gold</div>
+  <div class="demo"><div class="lbl">и ходил текстом</div>
+   <span style="color:#FEF004;font-weight:800">МНЕНИЕ АГЕНТА</span><span class="chip f">1.14 ✗</span></div>
+ </div>
+ <div class="half"><span class="tag now">СТАЛО</span>
+  <div><span class="sw" style="background:var(--gold)"></span><b>#C9A227</b> — единственное золото</div>
+  <div><span class="sw" style="background:var(--yellow)"></span><b>#FEF004</b> — жёлтый акцент, <b>никогда текстом</b></div>
+  <div class="demo"><div class="lbl">текст ушёл в ink, золото — в рамку</div>
+   <span style="border-left:3px solid var(--gold);padding-left:8px;color:var(--ink);font-weight:800">МНЕНИЕ АГЕНТА</span><span class="chip p">17.3 ✓</span></div>
+ </div>
+</div>
+ <div class="half" style="border-top:1px dashed var(--border)"><div class="lbl" style="font-size:10px;color:var(--fg2);font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin-bottom:5px">Градиенты метрик — пиксель-в-пиксель прежние</div><div class="grad"></div></div>
+</div>
+
+<div class="card"><h3>2 · Синий — паспорт, не триада</h3><div class="split">
+ <div class="half"><span class="tag was">БЫЛО</span>
+  <div><span class="sw" style="background:var(--prog)"></span>сырой hex <b>×12</b> по коду</div>
+  <div class="demo"><div class="lbl">семантика без имени</div><span style="color:var(--prog);font-weight:800">in progress · 47%</span></div>
+ </div>
+ <div class="half"><span class="tag now">СТАЛО</span>
+  <div><span class="sw" style="background:var(--prog)"></span><b>--status-progress</b> · функциональный токен</div>
+  <div class="demo"><div class="lbl">видом не отличим — 0 изменений</div><span style="color:var(--prog);font-weight:800">in progress · 47%</span><span class="chip p">12.2 ✓</span></div>
+ </div>
+</div>
+ <div class="half" style="border-top:1px dashed var(--border)"><div class="gradb"></div></div>
+</div>
+
+<div class="card"><h3>3 · Mono — честный</h3><div class="split">
+ <div class="half"><span class="tag was">БЫЛО</span>
+  <div class="demo"><div class="lbl">--font-mono: Manrope (не моно)</div><div class="mono-was">87% · 12,40 · 1063</div></div>
+ </div>
+ <div class="half"><span class="tag now">СТАЛО</span>
+  <div class="demo"><div class="lbl">настоящий mono-стек, цифры в колонну</div><div class="mono-now">87% · 12,40 · 1063</div></div>
+ </div>
+</div>
+ <div class="half" style="border-top:1px dashed var(--border);font-size:12.5px;color:var(--fg2)">Manrope не изгнан из системы — он остаётся законом для курсива <b>My view</b> на фото Дайджеста.</div>
+</div>
+
+<div class="card"><h3>4 · Fraunces — парадные выходы</h3><div class="split">
+ <div class="half"><span class="tag was">БЫЛО</span>
+  <div class="demo"><div class="lbl">бренд-заголовок · Archivo 900</div><div class="dh-was">DAS EXPERTEN</div></div>
+ </div>
+ <div class="half"><span class="tag now">СТАЛО</span>
+  <div class="demo"><div class="lbl">бренд-заголовок · Fraunces 900</div><div class="dh-now">DAS EXPERTEN</div></div>
+ </div>
+</div>
+ <div class="half" style="border-top:1px dashed var(--border);font-size:12.5px;color:var(--fg2)">Только два display-момента: шапка борда и логин. Весь хром интерфейса — по-прежнему Archivo. Книга требует пару Archivo + Fraunces — теперь она честна.</div>
+</div>
+
+</div>
+
+<h2 style="margin-top:34px">A11y — контраст стал математикой</h2>
+<p class="h2sub">Формула WCAG пересчитывается из токенов на каждом CI: сменит кто-то хекс — тест переголосует сам.</p>
+<div class="grid">
+<div class="card"><h3>5 · Красный текст</h3><div class="split">
+ <div class="half"><span class="tag was">БЫЛО</span>
+  <div class="demo"><span style="color:var(--rot);font-weight:700">Логин отклонён</span><span class="chip f">4.40 ✗</span></div>
+  <div class="pinkpad"><span style="color:var(--rot)">missed</span><span class="chip f">на заливке ниже ✗</span></div>
+ </div>
+ <div class="half"><span class="tag now">СТАЛО · вычисленный ink</span>
+  <div class="demo"><span style="color:var(--err-ink);font-weight:700">Логин отклонён</span><span class="chip p">5.47 ✓</span></div>
+  <div class="pinkpad"><span style="color:var(--err-ink)">missed</span><span class="chip p">4.67 ✓</span></div>
+ </div>
+</div>
+ <div class="half" style="border-top:1px dashed var(--border);font-size:12.5px;color:var(--fg2)">Бренд-rot никуда не делся: кнопки, рамки, CTA — его. Ink — только мелкому тексту. Допуск-лист: 4 UI-состояния (ховеры + точка) законно остались ротом (порог 3.0, факт 4.40).</div>
+</div>
+
+<div class="card"><h3>6 · Warning, кольца, alt</h3><div class="split">
+ <div class="half"><span class="tag was">БЫЛО</span>
+  <div class="btnrow"><button class="warnbtn" style="color:#fff">Внимание</button><span class="chip f">3.38 ✗</span></div>
+  <div class="btnrow" style="margin-top:12px"><button class="fbtn ring-was">фокус</button><span class="chip f">кольцо 2.32 ✗</span></div>
+  <div style="margin-top:12px;font-size:12.5px;color:var(--fg2)">аватары: alt="" · 2 кнопки × без имени</div>
+ </div>
+ <div class="half"><span class="tag now">СТАЛО</span>
+  <div class="btnrow"><button class="warnbtn" style="color:var(--ink)">Внимание</button><span class="chip p">5.33 ✓</span></div>
+  <div class="btnrow" style="margin-top:12px"><button class="fbtn ring-now">фокус</button><span class="chip p">14.9 ✓</span></div>
+  <div style="margin-top:12px;font-size:12.5px">аватары говорят имена · все 4 × названы</div>
+ </div>
+</div></div>
+</div>
+
+<h2>Б · Не тронуто — охранная грамота</h2>
+<div class="keep"><ul>
+ <li><b>Триада Schwarz / Rot / Gold</b> — священна, синий в бренд не пущен.</li>
+ <li><b>CTA остаются ротом</b> с белым текстом (4.59 ✓) — характер борда прежний.</li>
+ <li><b>Градиенты метрик</b> — пиксель-в-пиксель, сменились только имена в коде.</li>
+ <li><b>Тёмная палуба Дайджеста</b> — золото там легально (6.5 / 4.88) и осталось.</li>
+ <li><b>Manrope-курсив My view</b> — твой закон от 21.07, чтим.</li>
+ <li><b>Archivo</b> — весь рабочий хром, Fraunces не расползается.</li>
+</ul></div>
+
+<h2>В · Что запишет кит — только бумага</h2>
+<div class="kit">
+ <h3>deSIGNER / SYSTEM / ui_kits / organizacia → новая стадия 2026-07-21-tokens-a11y</h3>
+ <table>
+  <tr><td>board-ui.snapshot.html</td><td>полный снапшот ui.html этой стадии — рядом с фризом 15.07, старый не трогаем</td></tr>
+  <tr><td>DESIGN.md</td><td>+ вердикты Owner 21.07: одно золото · жёлтый-никогда-текстом · паспорт синего · честный mono · Fraunces ×2 · вычисленные инки · schwarz-кольцо · оба допуск-листа с цифрами</td></tr>
+  <tr><td>index.html · README.md</td><td>штамп новой стадии, превью-указатели</td></tr>
+  <tr><td>organizacia / docs</td><td>BOARD_UI_DESIGN_SSOT.md: штамп стадии + <b>восстановленное правило</b></td></tr>
+ </table>
+ <div class="rule"><b>Правило Design SSOT (возвращается в силу):</b> дизайн борда продвинулся → кит deSIGNER и Worker обновляются <b>одной сессией</b>, стадия штампуется в обоих репо. Сегодняшние два прохода без кита — последнее исключение.</div>
+ <div class="zero">Изменений пикселей на проде от кита: <i>0</i>. Это акт учёта, не акт дизайна.</div>
+</div>
+
+<footer>Марика Новицка · Das Experten org · стадия 2026-07-21 · прод 822e15cf · GitHub c7c7b17 · контраст посчитан формулой WCAG 2.x, не глазом</footer>
+</div></body></html>
