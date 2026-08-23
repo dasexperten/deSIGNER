@@ -1,6 +1,6 @@
 ---
 name: cardmaker
-description: "Generates marketplace product cards for Das Experten oral care — prompt + image rendered via Google Imagen 4 API ($0.04/image). ALWAYS trigger on: cardmaker, card maker, productcardmaker (legacy name), product card, карточка, marketplace card, listing, листинг, ozon card, amazon card, wb card, wildberries card, карточку для вб, сделай карточку, напиши карточку, карточку для озон, карточку для маркетплейса, product listing, create card, generate card, make a card, or any SKU (DE201, DE206, DE117 etc.) with marketplace context. Also trigger when a product name (SCHWARZ, SYMBIOS, DETOX, THERMO, INNOWEISS, ETALON, GROSSE, ZERO etc.) appears with marketplace, listing, or sales copy intent. Auto-loads Das Experten brand knowledge. No product data re-entry needed. Output: one image-generation prompt, executed through Google Imagen 4 (imagen-4.0-generate-001). Ozon/WB = 3x4 vertical. International = 1x1 square."
+description: "Generates marketplace product cards for Das Experten oral care — prompt + image rendered via Google Imagen 4 API ($0.04/image). ALWAYS trigger on: cardmaker, card maker, productcardmaker (legacy name), product card, карточка, marketplace card, listing, листинг, ozon card, amazon card, wb card, wildberries card, карточку для вб, сделай карточку, напиши карточку, карточку для озон, карточку для маркетплейса, product listing, create card, generate card, make a card, or any SKU (DE201, DE206, DE117 etc.) with marketplace context. Also trigger when a product name (SCHWARZ, SYMBIOS, DETOX, TERMO, INNOWEISS, ETALON, GROSSE, ZERO etc.; THERMO is accepted as a user typo on input and NEVER written back out) appears with marketplace, listing, or sales copy intent. Auto-loads Das Experten brand knowledge. No product data re-entry needed. Output: one image-generation prompt, executed through Google Imagen 4 (imagen-4.0-generate-001). Ozon/WB = 3x4 vertical. International = 1x1 square."
 ---
 
 SOURCE OF TRUTH: deSIGNER/SKILLS/cardmaker — edit here first.
@@ -103,7 +103,7 @@ Immediately upon trigger:
 
 | SKU | Product | Core Active | Top Stat | Format |
 |---|---|---|---|---|
-| DE209 | THERMO 39° | Papain + Lysozyme + Dextranase — thermoactivated at exact body temperature 39°C | first enzyme toothpaste with thermoactivated feature — enzyme activity +40% | paste |
+| DE209 | TERMO 39° | Papain + Lysozyme + Dextranase — thermoactivated at exact body temperature 39°C | first enzyme toothpaste with thermoactivated feature — enzyme activity +40% | paste |
 | DE203 | GINGER FORCE | Ginger root oil 1% | P. gingivalis −65–79% | paste |
 | DE205 | COCOCANNABIS | Hemp seed oil 3% | fluoride-equivalent remineralization | paste |
 | DE206 | SYMBIOS | B. coagulans 4×10¹⁰ CFU | microbiome restoration | paste |
@@ -468,7 +468,7 @@ Auto-select based on product category:
 - DETOX → cinnamaldehyde anti-biofilm suppression lines + eugenol amber phenolic rings, antimicrobial binding sites
 - GINGER FORCE → angular gingerol/shogaol phenolic lattices, anti-inflammatory downregulation arcs, salivary gland activation pathways
 - COCOCANNABIS → omega lipid arcs (hemp), micelle clusters (coconut), green-gold membrane hydration halos
-- THERMO 39° → thermal enzyme activation gradient, papain softening pathways at physiological temperature
+- TERMO 39° → thermal enzyme activation gradient, papain softening pathways at physiological temperature
 - EVOLUTION → CPP-ACP nanocomplexes, amorphous calcium-phosphate delivery nodes, enamel-binding remineralization halos
 - BUDDY MICROBIES → GH12 peptide chains selectively targeting S. mutans, xylitol interference lattice
 
