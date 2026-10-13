@@ -87,3 +87,7 @@ deSIGNER wins.
 ## RangeMe scientific brand cover — 13 October 2026
 
 `ASSETS/campaigns/rangeme/2026-10-13-cover/` holds the approved 4:1 scientific cover: genuine ETALON and INNOWEISS references on a generated laboratory bench, 1600×400 JPEG and 3200×800 PNG exports, editable Canva counterpart, reproducible source, joint prompt, provenance and review notes. Maya/Roberta authored the scientific brief; Otto composed it; Lisa verified physical supports and Marika typography. Earlier rejected draft is excluded.
+
+## RangeMe OttoGraf construction10 — 13 October 2026
+
+`ASSETS/campaigns/rangeme/2026-10-13-ottograf10/` is the final selected scientific cover: five conceptual enzyme forms on connected glass supports, large white editable typography, avatar-safe layout. Includes source construction, generated art, final exports, Canva proof, source and review notes. Supersedes the preceding SCI product-scene cover, retained only as an earlier draft.

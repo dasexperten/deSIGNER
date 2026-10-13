@@ -1,0 +1,10 @@
+{
+  "name": "rangeme-ottograf10",
+  "private": true,
+  "scripts": {
+    "build": "node build.cjs"
+  },
+  "dependencies": {
+    "sharp": "0.35.4"
+  }
+}

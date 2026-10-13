@@ -1,0 +1,62 @@
+[
+  {
+    "text": "Oral care.",
+    "x": 100,
+    "baseline": 270,
+    "size": 138,
+    "font": "Archivo",
+    "weight": 700,
+    "color": "#ffffff",
+    "tracking": 0
+  },
+  {
+    "text": "Expertly",
+    "x": 100,
+    "baseline": 400,
+    "size": 138,
+    "font": "Archivo",
+    "weight": 700,
+    "color": "#ffffff",
+    "tracking": 0
+  },
+  {
+    "text": "considered.",
+    "x": 100,
+    "baseline": 530,
+    "size": 138,
+    "font": "Archivo",
+    "weight": 700,
+    "color": "#ffffff",
+    "tracking": 0
+  },
+  {
+    "text": "Toothbrushes · Toothpastes",
+    "x": 104,
+    "baseline": 600,
+    "size": 66,
+    "font": "Archivo",
+    "weight": 700,
+    "color": "#ffffff",
+    "tracking": 0
+  },
+  {
+    "text": "INNOWEISS · Five-enzyme formula",
+    "x": 1300,
+    "baseline": 130,
+    "size": 60,
+    "font": "Archivo",
+    "weight": 700,
+    "color": "#ffffff",
+    "tracking": 0
+  },
+  {
+    "text": "Conceptual illustration",
+    "x": 1300,
+    "baseline": 205,
+    "size": 60,
+    "font": "Archivo",
+    "weight": 700,
+    "color": "#ffffff",
+    "tracking": 0
+  }
+]

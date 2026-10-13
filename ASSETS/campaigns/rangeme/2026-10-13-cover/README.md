@@ -1,3 +1,5 @@
+> Superseded draft: Owner selected OttoGraf construction10 instead. Current final is ../2026-10-13-ottograf10/.
+
 # RangeMe SCI cover — 13 October 2026
 
 Final raster: RangeMe-SCI-1600.jpg (1600×400); full resolution RangeMe-SCI-3200.png. SHA256 JPG: 0c7403f901e6e381a73bbc8dd0ff505ac55749f285e8632a2217dca0fbd3454f.
