@@ -1,0 +1,9 @@
+# Joint Maya + Roberta brief
+
+Build a sophisticated scientific oral-care brand cover, exact 4:1, minimum 1600×400. One continuous perspective scene: cool clean ivory/white laboratory display surface with subtle material texture and a precision red structural accent, controlled directional light, physically convincing depth. Left40% remains quiet for large bold highly readable black headline: “Oral care. Expertly considered.” plus “Toothbrushes · Toothpastes” and genuine logo.
+
+Right60% features original ETALON reference as hero and original INNOWEISS tube+box. Every tube/box base sits squarely ON the top plane of the single surface, with contact shadow immediately beneath it. Brush rests on that surface or is visibly held by a simple transparent support; no hovering, staircase faces, improbable balancing, or disconnected shadows. Preserve original product pixels, geometry, exact bristle pattern, packaging, proportions and labels. Integrate source-product lighting with the scene.
+
+Scientific quality comes from precise composition, real bristle detail, careful light and restrained 3D display materials, not invented lab equipment or molecules. Optional callouts only “Spiral PBT bristles” with ETALON and “Five-enzyme formula” with INNOWEISS; maximum two, readable at display size. No microscopic cutaway, unverified performance, molecular/biological mechanism, badges, certifications, flags, percent claims, tiny copy, pastel stairs, collages or generic third-party brush. Generate environment only via native imagegen; integrate genuine layers without regenerating products.
+
+Maya selected ETALON DE101 for its source-backed spiral PBT/multi-height design and INNOWEISS DE210 for five enzymes. This is the creative brief recommendation, not a claim that Owner individually selected that brush.

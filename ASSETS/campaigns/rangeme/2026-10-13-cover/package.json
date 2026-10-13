@@ -1,0 +1,10 @@
+{
+  "name": "rangeme-sci-cover-20261013",
+  "private": true,
+  "scripts": {
+    "build": "node brush.cjs && node build.cjs"
+  },
+  "dependencies": {
+    "sharp": "0.35.4"
+  }
+}

@@ -83,3 +83,7 @@ Edit flow: change here → sync to hub → hub distributes.
 Every estate repo carries a `## DESIGN SSOT` block in its root README pointing
 here. Design files elsewhere are working copies / backups; on any conflict,
 deSIGNER wins.
+
+## RangeMe scientific brand cover — 13 October 2026
+
+`ASSETS/campaigns/rangeme/2026-10-13-cover/` holds the approved 4:1 scientific cover: genuine ETALON and INNOWEISS references on a generated laboratory bench, 1600×400 JPEG and 3200×800 PNG exports, editable Canva counterpart, reproducible source, joint prompt, provenance and review notes. Maya/Roberta authored the scientific brief; Otto composed it; Lisa verified physical supports and Marika typography. Earlier rejected draft is excluded.
